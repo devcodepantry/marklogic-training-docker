@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Doing a Join</strong></p>
+<p>Joins can be performed across views.</p>
+<p>For example, imagine wanting to  see purchases for each customer, from a purchases view, as well as market info for each customer, from a factsheets view. </p>
+<p class="code">SELECT purchases.company, purchases.product, purchases.quantity, factsheets.market <br>
+  FROM purchases <br>
+  INNER JOIN factsheets<br>
+  ON purchases.company = factsheets.company_name<br>
+ORDER BY purchases.company</p>
+<p>Result:</p>
+<p><img src="../images/unit06/inner_join_results.png" width="704" height="252" class="image-border"></p>
+<p>By referencing more than one view in the query, and connecting them through a common column value, a join can be performed.</p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0603_x_do_a_join.htm" class="exercise-link">Exercise (Do a Join)</a></p>
+<p>Back: <a href="0602_x_run_a_sql_query.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

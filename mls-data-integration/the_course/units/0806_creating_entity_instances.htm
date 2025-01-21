@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Creating Entity Instances</strong></p>
+<p>By using, and potentially customizing, the functions provided in a conversion module, entity instances can be generated. </p>
+<p><span class="topic-sub-heading"><img src="../images/unit08/generating_enveloped.png" width="699" height="345" class="image-border"></span></p>
+<p class="topic-sub-heading">Mapping Source Values to Properties</p>
+<p>Mapping values from the source documents to properties defined in the model provides a way for the process to  envelope the source data as well as generate canonical values.</p>
+<p><img src="../images/unit08/mappings_cs.png" width="687" height="184" class="image-border"></p>
+<p>In the mappings above, the source nodes are in the right column, and the entity model's properties are in the left column.</p>
+<p class="topic-sub-heading">Converting Documents to Entity Instances</p>
+<p>By using the <strong>es:instance-converter-generate()</strong> function, raw source data is converted into enveloped entity instances. </p>
+<p><img src="../images/unit08/enveloped.png" width="666" height="437" class="image-border"></p>
+<p>The resulting <strong>es:attachments</strong> section in the envelope contains the raw <strong>source data</strong>.</p>
+<p>As part of  the conversion process, values can be calculated and inserted into the entity instances. Like if a price and quantity exist in the source data, a total could be calculated and then stored in the entity instance, as part of the conversion process.</p>
+<p>The conversion process can also be used to assign a default value for missing data. LIke if you know that a required property in your entity instance is not always present in your source data, you can modify the code to ensure the entity instance contains a reasonable default value.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0806_x_create_entity_instances.htm" class="exercise-link">Exercise (Create Entity Instances)</a></p>
+<p>Back: <a href="0805_x_generate_a_model-driven_component.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using CoRB for Batch Processing</strong></p>
+<p>CoRB (Content Reprocessing in Bulk) is an open source project that is for batch processing MarkLogic documents. For example, imagine having a million documents in your database that you want to add canonical data to. Instead of trying to use a simple for loop to transform all million documents at once, which would likely run out of memory, CoRB or the Data Movement SDK can be used.</p>
+<p>The Data Movement SDK provides a way to do batch processing by writing Java code.</p>
+<p>CoRB, done via a custom XQuery or JavaScript transformation module, performs a transformation operation on documents in a MarkLogic database by referencing a list of document URIs.</p>
+<p><img src="../images/unit03/corb.png" width="703" height="509" class="image-border"></p>
+<p>Example <strong>CoRB call</strong> in Linux:</p>
+<p class="code">corb/corb.sh ex05.properties</p>
+<p><em>Example CoRB call in Windows:</em></p>
+<p class="code"><em>corb\corb.bat ex05.properties</em></p>
+<p>Example <strong>properties file</strong>:</p>
+<p><span class="exercise-step"><img src="../images/unit03/corb_properties.png" width="564" height="205" class="image-border"></span></p>
+<p>The URIS-MODULE property is for specifying the URIs of the documents that are to be transformed.</p>
+<p>The PROCESS-MODULE property is for specifying the transformation module that is to be used on the documents.</p>
+<p>ADHOC allows the module to be on the file system rather than having to be in a modules database.</p>
+<p>Example <strong>URI module</strong>:</p>
+<p><img src="../images/unit03/uris.png" width="700" height="210" class="image-border"></p>
+<p>Example <strong>process module</strong>:</p>
+<p><img src="../images/unit03/transformation.png" width="698" height="426" class="image-border"></p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0305_x_use_corb_for_a_batch_process.htm" class="exercise-link">Exercise (Use CoRB for a Batch Process)</a></p>
+<p>Back: <a href="0304_x_query_an_envelope.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

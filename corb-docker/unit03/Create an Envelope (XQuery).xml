@@ -1,0 +1,6 @@
+<export><workspace name="Create an Envelope (XQuery)"><query name="View Document" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">fn:doc("/marketing/contact-cs003.xml") </query><query name="Create Envelope" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">declare variable $uri := "/marketing/contact-cs003.xml";
+
+let $doc := fn:doc($uri)
+let $envelope := &lt;envelope&gt;&lt;source&gt;{$doc}&lt;/source&gt;&lt;/envelope&gt;
+where fn:count($doc/envelope) = 0
+return xdmp:document-insert($uri, $envelope, (), "envelope")</query></workspace></export>

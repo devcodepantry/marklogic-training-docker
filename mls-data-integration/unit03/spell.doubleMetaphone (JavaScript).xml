@@ -1,0 +1,21 @@
+<export><workspace name="spell.doubleMetaphone (JavaScript)"><query name="spell.doubleMetaphone" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+spell.doubleMetaphone("Outback Rides");</query><query name="Check for Equality" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+if (fn.deepEqual(spell.doubleMetaphone('Outback Rides'), spell.doubleMetaphone('At Back Rides'))) {
+  'match';
+} else {
+  'no match';
+}
+</query><query name="Calls from Dee Monolakis" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const docs = [];
+const dm = spell.doubleMetaphone('Dee Monolakis');
+for (const doc of xdmp.directory('/tech-support/')) {
+  if (fn.deepEqual(spell.doubleMetaphone(doc.root.caller), dm)) {
+    docs.push(doc);
+  }
+}
+
+docs;
+</query></workspace></export>

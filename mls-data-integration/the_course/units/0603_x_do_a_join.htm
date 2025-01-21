@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Do a Join</strong></p>
+<p>In this walkthrough exercise, you do a join across the views for calls and factsheets. </p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In <strong>Query Console</strong>, with the <strong>customer360</strong> database selected, click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Click the link for one of the support calls (e.g. <strong>/tech-support/call-002348.json</strong>), to see the contents. </li>
+  <li class="exercise-step">Notice the properties (i.e. id, date_and_time, caller, called_from, customer, reason, resolved, call_taken_by):<br>
+    <br>
+    <img src="../images/unit06/calls_doc.png" width="394" height="191" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Create a <strong>new tab</strong>, have the <strong>customer360</strong> database selected, select <strong>XQuery</strong> for the Query Type, and enter the following, to define and insert a  template to define columns for   data from the calls documents (unit06/<strong>ex03a.txt</strong>):<br>
+    <br>
+    <span class="code">import module &quot;http://marklogic.com/xdmp/tde&quot; at &quot;/MarkLogic/tde.xqy&quot;;<br>
+  <br>
+  let $support-calls-template := <br>
+    &lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;<br>
+  &nbsp;&nbsp;&lt;context&gt;/id&lt;/context&gt;<br>
+  &nbsp;&nbsp;&lt;rows&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;calls&lt;/view-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;date_time&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;dateTime&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../date_and_time&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;customer&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../customer&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;caller&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../caller&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;phone&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../called_from&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;reason&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../reason&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;resolved&lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../resolved&lt;/val&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;uri&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;xdmp:node-uri(.)&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+  &nbsp;&nbsp;&lt;/rows&gt;<br>
+  &lt;/template&gt;<br>
+  <br>
+  return tde:template-insert(&quot;/templates/support-calls-template.xml&quot;, $support-calls-template)</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Create a <strong>new tab</strong>, select <strong>SQL</strong> for the Query Type, and enter the following to query the calls view:<br>
+    <br>
+  <span class="code">SELECT * FROM calls</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the calls data as rows:<br>
+    <br>
+  <img src="../images/unit06/calls_rows.png" width="698" height="291" class="image-border"></li>
+  <li class="exercise-step">Create a new tab, and, with the Query Type set to <strong>SQL</strong>,  enter the following to query the factsheets view (created in the Unit 5 Lab):<br>
+    <br>
+  <span class="code">SELECT * FROM factsheets</span></li>
+  <li class="exercise-step">Click Run. </li>
+  <li class="exercise-step">See the factsheets data as rows: <br>
+    <br>
+  <img src="../images/unit06/factsheets_as_rows.png" width="701" height="359" class="image-border"></li>
+  <li class="exercise-step">Create a new tab and enter the following, to join data from the calls and factsheets views, based on the customer name (<strong>ex03b.txt</strong>):<br>
+    <span class="code"><br>
+    SELECT calls.customer, calls.caller, calls.phone, calls.reason, calls.resolved, factsheets.market, factsheets.notes<br>
+FROM calls<br>
+INNER JOIN factsheets<br>
+ON calls.customer = factsheets.company_name</span><br>
+<br>
+<em>Likewise, you could write the expression as:</em><br>
+<br>
+<span class="code"> SELECT calls.customer, calls.caller, calls.phone, calls.reason, calls.resolved, factsheets.market, factsheets.notes <br>
+FROM calls, factsheets <br>
+WHERE calls.customer = factsheets.company_name </span><br>
+<br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the result, with each row made up of data from the calls view and the factsheets view, based on customer name:<br>
+    <br>
+  <img src="../images/unit06/joined_results.png" width="696" height="128" class="image-border"></li>
+</ol>
+<p>On your own (optional):</p>
+<ol class="exercise-step" start="15">
+  <li class="exercise-step">Write a SQL query to return rows that have the <strong>company_name</strong>, <strong><strong>employees</strong>, <strong>yearly_revenue</strong></strong>,<strong> <strong>market</strong></strong>, and <strong>notes</strong> columns from the <strong><strong>factsheets</strong> <strong>view</strong></strong>, and the <strong>order_date</strong>, <strong>product</strong>, <strong>price</strong>, and <strong>quantity</strong> columns from the <strong>purchases</strong> <strong>view</strong>, based on the  value in the <strong>company</strong> column of the purchases view being equal to the <strong>company_name</strong>  of the factsheets view, with the rows ordered by company. </li>
+  <li class="exercise-step">Check  your result: <br>
+    <br>
+  <img src="../images/unit06/query_and_results_oyo_join.png" width="702" height="474" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0604_creating_an_odbc_app_server.htm" class="exercise-link">Topic (Creating an ODBC App Server)</a></p>
+<p>Back: <a href="0603_doing_a_join.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>View Data to Load</strong></p>
+<p>In this walkthrough exercise, you  view data that you will be loading into the customer360 database.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">On the desktop of your virtual machine, in the mls-data-integration/<strong>unit02</strong> folder, open the <strong>data</strong> folder.</li>
+  <li class="exercise-step">See that there are folders of data, from various silos:<br>
+    <br>
+    <img src="../images/unit02/silos_cs.png" width="657" height="142" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Double-click the<strong> accounting-system</strong> folder, to open it.</li>
+  <li class="exercise-step">See that there are order documents.</li>
+  <li class="exercise-step">See that each order is a separate document.  </li>
+  <li class="exercise-step">Open the <strong>order-10072.json</strong> file in a text editor (right-click - Open With  - gedit):<br>
+    <br>
+  <img src="../images/unit02/order_10072_json.png" width="666" height="341" class="image-border"></li>
+  <li class="exercise-step">  Open the <strong>order-10072.xml</strong> file in a text editor (right-click - Open With - gedit) to view it:<br>
+    <br>
+  <img src="../images/unit02/order_10072_xml.png" width="660" height="246" class="image-border"></li>
+  <li class="exercise-step">Close the files.</li>
+  <li class="exercise-step">In the unit02/data folder, double-click the <strong>marketing-system</strong> folder to open it.</li>
+  <li class="exercise-step">See that there is one .xml file named contacts.xml.</li>
+  <li class="exercise-step">Open the <strong>contacts.xml</strong> file in a text editor.</li>
+  <li class="exercise-step">See that the document contains multiple contacts:<br>
+    <br>
+    <img src="../images/unit02/contacts_xml.png" width="666" height="605" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Imagine inserting these into the database as individual documents.</li>
+  <li class="exercise-step">Close the file.</li>
+  <li class="exercise-step">In the unit02/data/<strong>sales-system</strong> folder, open the <strong>factsheets </strong>folder.</li>
+  <li class="exercise-step">See that there are customer factsheets:<br>
+    <br>
+    <img src="../images/unit02/factsheets_cs.png" width="656" height="148" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Open one of them (e.g. <strong>rollingfastdeliveries.json</strong>) in  a text editor.</li>
+  <li class="exercise-step">See that it contains factsheet data about a company:<br>
+    <br>
+  <img src="../images/unit02/factsheet_rollingfastdeliveries.png" width="665" height="310" class="image-border"></li>
+  <li class="exercise-step">Close the file.</li>
+  <li class="exercise-step">In the unit02/data folder, open the <strong>support-system</strong> folder.</li>
+  <li class="exercise-step">See that there is a .csv file named tech-support-calls_20170123.csv.</li>
+  <li class="exercise-step">Open the <strong>tech-support-calls_20170123.csv</strong> file in a text editor.</li>
+  <li class="exercise-step">See that there is a row for each  call:<br>
+    <br>
+    <img src="../images/unit02/calls_csv_cs.png" width="697" height="389" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Imagine inserting each row as a document into the database.</li>
+  <li class="exercise-step">Close the file.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0202_loading_documents.htm" class="exercise-link">Topic (Loading Documents)</a></p>
+<p>Back: <a href="0201_storing_and_indexing_data.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

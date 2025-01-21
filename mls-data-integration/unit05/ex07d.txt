@@ -1,0 +1,1 @@
+return tde:template-insert("/templates/purchases-second-template.xml", $purchases-second-template)

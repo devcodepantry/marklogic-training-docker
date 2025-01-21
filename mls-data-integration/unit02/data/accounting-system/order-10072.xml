@@ -1,0 +1,36 @@
+<order>
+  <order-num>10072</order-num>
+  <order-date>2017-01-14</order-date>
+  <items>
+    <item>
+      <product>SpeedPro Ultimate</product>
+      <price>999</price>
+      <quantity>1</quantity>
+    </item>
+    <item>
+      <product>Mens Racer Helmet</product>
+      <price>95</price>
+      <quantity>1</quantity>
+    </item> 
+  </items>
+  <ship-to>
+    <first-name>Dave</first-name>
+    <last-name>Delasantos</last-name>
+    <company>Rolling Fast Deliveries</company>
+    <street>800 Market Street</street>
+    <city>San Francisco</city>
+    <state>California</state>
+    <zipcode>94111</zipcode>
+    <phone>415-787-1212</phone>
+    <email>dave@rollingfast.com</email>	
+  </ship-to>
+  <billing>
+    <first-name>Graham</first-name>
+    <last-name>Warman</last-name>
+    <company>Rolling Fast Deliveries</company>
+    <street>800 Market Street</street>
+    <city>San Francisco</city>
+    <state>California</state>
+    <zipcode>94111</zipcode>
+  </billing>
+</order>

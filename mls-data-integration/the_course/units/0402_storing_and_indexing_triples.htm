@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Storing and Indexing Triples</strong></p>
+<p>Triples can be stored <strong>independently</strong> in a MarkLogic database (a.k.a. managed triples), or <strong>embedded</strong> within XML or JSON content documents (a.k.a. unmanaged triples).</p>
+<p>Generally, if a triple is about  content in a particular XML or JSON document, the best practice is to store the triple embedded in the document so that it inherits the permissions of the document, and so that, if the document is deleted, the triple is also deleted.</p>
+<p>To be immediately available for queries, triples are automatically populated into the <strong>triple index</strong> during the loading process, regardless of whether they are embedded in a document or independent. The triple index is turned on by default, from MarkLogic 9 onwards.</p>
+<p class="topic-sub-heading">Loading Triples</p>
+<p>For <strong>embedded</strong> triples, the XML or JSON <strong>document is loaded as normal</strong>, using any of the document loading interfaces.</p>
+<p>For loading <strong>independent</strong> triples (e.g. triples stored in the .rdf, .ttl, .n3, or .nt format), they can be loaded through any <strong>number of interfaces</strong>, including:</p>
+<ul>
+  <li>MLCP</li>
+  <li>REST API</li>
+  <li>Java API or Node.js API</li>
+  <li>XQuery or JavaScript functions</li>
+</ul>
+<p>The format that  independent triples come from, and the interface used for loading, <strong>do not affect</strong> how the independent triples are stored in MarkLogic. For more detail on loading independent triples, see the MarkLogic Semantics course, or the Semantics Developer's Guide at <strong>docs.marklogic.com/guide/semantics/loading#id_81259</strong>.</p>
+<p>Lastly, along with being able to load triples independently, or embedded in a document, a third way to have triples is by using the <strong>templates</strong> feature (Unit 5) to  <strong>populate the triple index with</strong> <strong>triples dynamically generated</strong> <strong>from data</strong> in existing documents. Detail on it is at docs.marklogic.com/guide/semantics/tde. </p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0402_x_insert_triples.htm" class="exercise-link">Exercise (Insert Triples)</a></p>
+<p>Back: <a href="0401_x_view_triples.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

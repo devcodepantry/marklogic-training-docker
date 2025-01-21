@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Insert Triples</strong></p>
+<p>In this walkthrough exercise, you see that the triple index is turned on,  insert independent triples into the customer360 database,  insert  triples embedded in XML and JSON documents, and then add triples to the envelope of existing XML and JSON documents. </p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>.</li>
+  <li class="exercise-step">On the Configure tab, scroll down to locate the <strong>triple index</strong> setting:<br>
+    <br>
+  <img src="../images/unit04/triple_index.png" width="572" height="58" class="image-border"></li>
+  <li class="exercise-step">See that it is set to <strong>true</strong>.</li>
+  <li class="exercise-step">On the desktop of your virtual machine, in the <strong>unit04</strong> folder, open the <strong>ex02a.txt</strong> file in a text editor:<br>
+    <br>
+    <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit04/<strong>triples.nt</strong> <strong>-input_file_type RDF</strong> -output_uri_prefix /triplestore/</span><br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>-input_file_type</strong> option.</li>
+  <li class="exercise-step">Copy all of the text.</li>
+  <li class="exercise-step">Open a new  <strong>command prompt </strong>window within the virtual machine, and right-click to select <strong>Paste</strong>.</li>
+  <li class="exercise-step">Press Enter.</li>
+  <li class="exercise-step">See that the command is successful:<br>
+    <br>
+    <img src="../images/unit04/mlcp_loaded_cs.png" width="664" height="272" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In Query Console, click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step"><strong>Scroll</strong> down to locate the <strong>/triplestore/</strong> document:<br>
+    <br>
+    <img src="../images/unit04/triplestore.png" width="381" height="32" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the document link to see the loaded triples:<br>
+    <br>
+  <img src="../images/unit04/triples.png" width="698" height="359" class="image-border"></li>
+  <li class="exercise-step">In Query Console, create a <strong>new tab</strong>, select <strong>JavaScript</strong> for the Query Type, and enter the following to load the <strong>citycruiser.json</strong> document in the customer360 database, including its embedded triples (<strong>ex02b.txt</strong>): <br>
+    <br>
+    <span class="code">'use strict';<br>
+    declareUpdate(); <br>
+    <br>
+    xdmp.documentLoad('/home/cent/Desktop/mls-data-integration/unit04/citycruiser.json', {'uri': '/factsheet/citycruiser.json', 'collections': ['raw']})</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button. </li>
+  <li class="exercise-step">Click the <strong>/factsheet/citycruiser.json</strong> link, to view the contents of the document:<br>
+    <br>
+  <img src="../images/unit04/embedded_json_loaded.png" width="552" height="279" class="image-border"></li>
+  <li class="exercise-step">See that the content is intact, including the embedded triples.</li>
+  <li class="exercise-step">Click the back triangle, to go back to the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/factsheet/outbackrides.json</strong> link, to view the contents: <br>
+    <br>
+    <img src="../images/unit04/factsheet_outbackrides.png" width="702" height="267" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Imagine adding triples to the document.</li>
+  <li class="exercise-step">Create a <strong>new tab</strong>, and enter the following (<strong>ex02c.txt</strong>): <br>
+    <br>
+    <span class="code">'use strict'; <br>
+    declareUpdate(); <br>
+    <br>
+    const uri = '/factsheet/outbackrides.json' <br>
+    const cols = xdmp.documentGetCollections(uri); <br>
+    const obj = cts.doc(uri).toObject(); <br>
+    <br>
+    obj.factsheet.triples = [{   <br>
+&nbsp;    triple: {     <br>
+&nbsp;&nbsp;&nbsp; subject: 'http://procycling.com/resource/Outback Rides',     <br>
+&nbsp;&nbsp;&nbsp; predicate: 'http://procycling.com/ontology/acquiredBy',     <br>
+&nbsp;&nbsp;&nbsp; object: 'http://procycling.com/resource/Sam_Stone'   <br>
+&nbsp;&nbsp;} <br>
+}, 
+{   <br>
+&nbsp; triple: {     <br>
+&nbsp;&nbsp;&nbsp; subject: 'http://procycling.com/resource/Outback Rides',     <br>
+&nbsp;&nbsp;&nbsp; predicate: 'http://procycling.com/ontology/acquiredIn',     <br>
+&nbsp;&nbsp;&nbsp; object: {       <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; datatype: 'http://www.w3.org/2001/XMLSchema#string',       <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value: 2016     <br>
+&nbsp;&nbsp;&nbsp; }   <br>
+&nbsp; } <br>
+}]; <br>
+<br>
+const result = xdmp.documentInsert(uri, obj, { collections: cols }); <br>
+result === null ? 'Inserted' : `Error: ${result}`; </span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Click the<strong>/factsheet/outbackrides.json </strong>link.</li>
+  <li class="exercise-step">See that the triples have been added to the document: <br>
+    <br>
+  <img src="../images/unit04/triples_added.png" width="645" height="607" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0403_querying_triples.htm" class="exercise-link">Topic (Querying Triples)</a></p>
+<p>Back: <a href="0402_storing_and_indexing_triples.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

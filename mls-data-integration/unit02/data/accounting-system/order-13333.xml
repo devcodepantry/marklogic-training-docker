@@ -1,0 +1,34 @@
+<order>
+  <order-num>13333</order-num>
+  <order-date>2017-02-15</order-date>  
+  <items>
+    <item>
+      <product>SpeedPro SF2</product>
+      <price>899</price>
+      <quantity>4</quantity>
+    </item>
+    <item>
+      <product>Mens Racer Helmet</product>
+      <price>95</price>
+      <quantity>2</quantity>
+    </item>
+  </items>
+  <ship-to>
+    <first-name>Chris</first-name>
+    <last-name>Clark</last-name>
+    <company>Campus Bikes</company>
+    <street>6000 Alcala Park Way</street>
+    <city>San Diego</city>
+    <state>California</state>
+    <zipcode>92110</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Chris</first-name>
+    <last-name>Clark</last-name>
+    <company>Campus Bikes</company>
+    <street>6000 Alcala Park Way</street>
+    <city>San Diego</city>
+    <state>California</state>
+    <zipcode>92110</zipcode>
+  </billing>
+</order>

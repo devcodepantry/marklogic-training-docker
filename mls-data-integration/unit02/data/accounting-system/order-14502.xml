@@ -1,0 +1,34 @@
+<order>
+  <order-num>14502</order-num>
+  <order-date>2017-02-15</order-date>  
+  <items>
+    <item>
+      <product>SpeedPro SF2</product>
+      <price>899</price>
+      <quantity>3</quantity>
+    </item>
+    <item>
+      <product>Mens Racer Helmet</product>
+      <price>95</price>
+      <quantity>3</quantity>
+    </item>   
+  </items>
+  <ship-to>
+    <first-name>Graham</first-name>
+    <last-name>Warman</last-name>
+    <company>Rolling Fast Deliveries</company>
+    <street>800 Market Street</street>
+    <city>San Francisco</city>
+    <state>California</state>
+    <zipcode>94111</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Graham</first-name>
+    <last-name>Warman</last-name>
+    <company>Rolling Fast Deliveries</company>
+    <street>800 Market Street</street>
+    <city>San Francisco</city>
+    <state>California</state>
+    <zipcode>94111</zipcode>
+  </billing>
+</order>

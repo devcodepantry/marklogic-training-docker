@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Generating a View </strong></p>
+<p>By inserting a template into a database, a view is generated.  To insert a template, the <strong>tde:template-insert() </strong>function can be used. By using the tde:template-insert() function to insert a template, only valid templates are inserted.</p>
+<p>XQuery:</p>
+<p><span class="code">import module &quot;http://marklogic.com/xdmp/tde&quot; at &quot;/MarkLogic/tde.xqy&quot;;</span></p>
+<p class="code">tde:template-insert(&quot;/templates/purchases-template.xml&quot;,  $purchases-template)<br>
+</p>
+<p>JavaScript:</p>
+<p class="code">const tde = require ('/MarkLogic/tde');</p>
+<p class="code">tde.templateInsert('/templates/purchasesTemplate.json', purchasesTemplate);</p>
+<p>In the example above, the template  in the $purchases-template variable is inserted with a URI of /templates/purchases-template.xml.</p>
+<p>Inserting the template creates a view, making  it so that MarkLogic populates the rows index with rows of content from any documents that match the template.</p>
+<p>Although you specfify your content database as the location for loading your template, what happens in the background is that the template actually gets loaded into the schema database that is associated with the content database, and into a collection named http://marklogic.com/xdmp/tde. </p>
+<p><span class="exercise-step"><img src="../images/unit05/customer360-schemas_selected.png" width="429" height="197" class="image-border"></span></p>
+<p>For organizational purposes, rather than use the default Schemas database, it is common to create a schemas database for exclusive use with your database (e.g. customer360-schemas).</p>
+<p class="topic-sub-heading">Viewing a View</p>
+<p>If curious to see a view, it can be retrieved by using the <strong>tde:get-view() </strong>function.</p>
+<p>XQuery:</p>
+<p class="code">tde:get-view(&quot;customer360&quot;, &quot;purchases&quot;) </p>
+<p>JavaScript:</p>
+<p class="code">tde.getView('customer360', 'purchases');</p>
+<p>In using the tde:get-view() function, the first parameter is the <strong>schema</strong>, and the second parameter is the <strong>view</strong>.</p>
+<p>Result:</p>
+<p><img src="../images/unit05/purchases_view.png" width="322" height="373" class="image-border"><br>
+</p>
+<p class="topic-sub-heading">Using a View</p>
+<p>Once a view has been generated, it can be addressed through SQL and Optic API queries. For example, a SQL query could be written to retrieve all of the product purchase rows.</p>
+<p class="code">SELECT * FROM purchases</p>
+<p>Result:</p>
+<p><img src="../images/unit05/sql_results.png" width="700" height="345" class="image-border"></p>
+<p class="topic-sub-heading">Using tde:node-data-extract()</p>
+<p>If  the tde:node-data-extract() function is used to view the result of a template being applied to a document, once a view has been created (i.e. the template has been inserted into the schema database), the function can then be used without specifying a template.</p>
+<p class="code">tde:node-data-extract(fn:doc(&quot;/accounting/order-14502.xml&quot;))</p>
+<p>By not specifying a template with the tde:node-data-extract() function, any templates in the schema database whose context matches the document will be applied, and the result returned.</p>
+<p>Result:</p>
+<p><img src="../images/unit05/result_14502.png" width="390" height="469" class="image-border"></p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0505_x_generate_a_view.htm" class="exercise-link">Exercise (Generate a View)</a></p>
+<p>Back: <a href="0504_x_define_variables.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

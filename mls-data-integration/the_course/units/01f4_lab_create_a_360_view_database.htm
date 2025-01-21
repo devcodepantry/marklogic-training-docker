@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Lab: <strong>Create a 360° View Database</strong></p>
+<p>In this lab exercise, you  first check that MarkLogic is installed and running in your <span class="exercise-step">course</span> virtual machine. Then, you define a database for creating a 360°  view application for ProCycling Inc., a top-tier bicycle manufacturer, to be able to see all of the data they have about each of their customers, even though the data sources are in silos, coming from various departments and systems throughout the company.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">Inside your Data Integration course virtual machine (user is<strong> cent</strong>, password is<span class="code"> centos</span>), open a command prompt window (<strong>Applications</strong> - <strong>System Tools</strong> - <strong>Mate Terminal</strong>).  </li>
+  <li class="exercise-step">In the command prompt window, enter<span class="code"> /etc/init.d/MarkLogic status </span>to see that MarkLogic is running:<br>
+    <br>
+    <img src="../images/unit01/marklogic_running_cs.png" width="665" height="77" class="image-border"><br>
+    <br>
+  <em>Note: If MarkLogic is not already running, then become the root user by entering</em><span class="code"> su</span>, <em> then  enter the root password of</em><span class="code"> centos</span><em>, then enter</em><span class="code"> /etc/init.d/MarkLogic start </span><em>to start MarkLogic running, and then enter</em><span class="code"> exit </span><em>to quit being  root. </em></li>
+  <li class="exercise-step">Enter<span class="code"> exit </span>to close the command prompt window.<br>
+  </li>
+  <li class="exercise-step">Inside your course virtual machine, open a browser window (<strong>Applications</strong> - <strong>Internet</strong> - <strong>Firefox Web Browser</strong>).</li>
+  <li class="exercise-step">In the browser window, enter<span class="code"> http://localhost:8001 </span>to access the MarkLogic Admin Interface.</li>
+  <li class="exercise-step">If prompted, log in to the  Admin Interface with the User Name of<span class="code"> admin </span>and Password of<span class="code"> admin</span>.<br>
+    <br>
+  <img src="../images/unit01/authentication_cs.png" width="700" height="199" class="image-border"></li>
+  <li class="exercise-step">See that you can access the Admin Interface:<br>
+    <br>
+  <img src="../images/unit01/admin_interface_cs.png" width="701" height="447" class="image-border"></li>
+</ol>
+<p>Create a database, and a port for communicating with the database:</p>
+<ol start="8" class="exercise-step">
+  <li class="exercise-step">On the desktop of your course virtual machine, in the mls-data-integration/<strong>unit01</strong> folder, open the <strong>customer360-config.json</strong> file in a text editor (right-click - <strong>Open With gedit</strong>), to view it:<br>
+    <br>
+    <span class="code">{ <br>
+    &nbsp;&nbsp;&quot;rest-api&quot;: {<br>
+    &nbsp;&nbsp;&quot;name&quot;: &quot;8055-customer360&quot;,<br>
+    &nbsp;&nbsp;&quot;database&quot;: &quot;customer360&quot;,<br>
+&nbsp;&nbsp;&quot;modules-database&quot;: &quot;customer360-modules&quot;,    <br>
+    &nbsp;&nbsp;&quot;port&quot;: &quot;8055&quot;,<br>
+    &nbsp;&nbsp;&quot;forests-per-host&quot;: 1<br>
+    &nbsp;&nbsp;} <br>
+      }</span><br>
+  </li>
+  <li class="exercise-step">Realize that this definition will be used to create a database named customer360, with a REST API  instance port of 8055.</li>
+  <li class="exercise-step">Close the file.</li>
+  <li class="exercise-step">In the unit01 folder, open the <strong>laba.txt</strong> file in a text editor (right-click - Open With gedit):<br>
+    <br>
+    <span class="code">curl --anyauth --user admin:admin -X POST -d@"Desktop/mls-data-integration/unit01/<strong>customer360-config.json</strong>" -i -H "Content-type: application/json" http://localhost:8002/v1/rest-apis </span></li>
+  <li class="exercise-step">Realize that this command will be used to send the definition file in the customer360-config.json file to MarkLogic.<br>
+    <br>
+    <em>Note: If you were running MarkLogic on Windows, you would first need to download cURL. Then, in a command prompt window, you would navigate to the directory that contains curl (e.g. </em><span class="code">cd c:\curl</span><em>). Then you would run the command above, but with an appropriate path to the customer360-config.json file (e.g. </em><span class="code">-d@&quot;../mls-data-integration/unit01/customer360-config.json&quot;</span><em>).</em></li>
+  <li class="exercise-step"><strong>Copy</strong> all of the text.</li>
+  <li class="exercise-step">Within the virtual machine, open a command prompt window (<strong>Applications</strong> - <strong>System Tools</strong> - <strong>Mate Terminal</strong>).</li>
+  <li class="exercise-step"><strong>Right-click</strong> to select <strong>Paste</strong>, and then press Enter, to run the command.</li>
+  <li class="exercise-step">Wait for the command to finish  (about 10 seconds):<br>
+    <br>
+    <img src="../images/unit01/lab_curl_rest_api_instance_cs.png" width="666" height="311" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Back in the Admin Interface (http://localhost:8001), <strong>refresh</strong> the browser page to see that the customer360 database, and app server at port 8055, now exist:<br>
+    <br>
+  <img src="../images/unit01/lab_admin_interface_with_customer360_cs.png" width="701" height="432" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Unit 1 End: <a href="../index.htm">Course Home</a></p>
+<p>Back: <a href="01f3_quiz_answers.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

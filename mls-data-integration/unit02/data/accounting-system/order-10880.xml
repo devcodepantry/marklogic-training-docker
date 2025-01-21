@@ -1,0 +1,39 @@
+<order>
+  <order-num>10880</order-num>
+    <order-date>2017-01-31</order-date>
+  <items>
+    <item>
+      <product>SpeedPro Ultimate</product>
+      <price>999</price>
+      <quantity>5</quantity>
+    </item>
+    <item>
+      <product>Ladies Racer Helmet</product>
+      <price>115</price>
+      <quantity>2</quantity>
+    </item>
+    <item>
+      <product>Mens Racer Helmet</product>
+      <price>95</price>
+      <quantity>3</quantity>
+    </item>     
+  </items>
+  <ship-to>
+    <first-name>Bridget</first-name>
+    <last-name>Keenan</last-name>
+    <company>Napa Biking Tours</company>
+    <street>545 Highway 29</street>
+    <city>Yountville</city>
+    <state>California</state>
+    <zipcode>94574</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Art</first-name>
+    <last-name>Coombs</last-name>
+    <company>Napa Biking Tours</company>
+    <street>P.O. Box 1200</street>
+    <city>Yountville</city>
+    <state>California</state>
+    <zipcode>94574</zipcode>
+  </billing>
+</order>

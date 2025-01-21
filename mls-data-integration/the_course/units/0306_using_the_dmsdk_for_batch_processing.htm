@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using the Data Movement SDK for Batch Processing </strong></p>
+<p>As part of the Java API in MarkLogic 9, the Data Movement SDK (DMSDK) is for loading and transforming large numbers of documents. (Think MLCP + CoRB.) </p>
+<p>The DMSDK is  asynchronous, and efficiently distributes a job across a MarkLogic cluster. </p>
+<p><img src="../images/unit03/job_life_cycle.png" width="580" height="367"></p>
+<p>&nbsp;</p>
+<p>Along with DMSDK's ability to read,  transform, write, and delete documents, it supports any input source supported by Java, including streaming or file, as well as XQuery or JavaScript for transformations.</p>
+<p>Source document:</p>
+<p><img src="../images/unit03/contact_26.png" width="400" height="186" class="image-border"></p>
+<p>DMSDK in Java:</p>
+<p class="code"><img src="../images/unit03/dmsdk_java.png" width="696" height="624" class="image-border"></p>
+<p>Transformation module:</p>
+<p class="code"><img src="../images/unit03/dmsdk_transformation_module.png" width="695" height="521" class="image-border"></p>
+<p>Result:</p>
+<p><img src="../images/unit03/contact_26_dmsdk_transformed.png" width="396" height="455" class="image-border"></p>
+<p>Detail on using the DMSDK is in the Java Application Developer's Guide at docs.marklogic.com/guide/java/data-movement.</p>
+<p><img src="../images/unit03/dmsdk_documentation.png" width="701" height="496" class="image-border"></p>
+<p class="topic-sub-heading">MLCP vs. the Data Movement SDK</p>
+<p>While  MLCP and the DMSDK are both Java-based tools that can read documents and do transformations, MLCP is a relatively simple command-line tool, designed for bulk loading, whereas the DMSDK is a development kit  for Java developers wanting the capability to create highly customized load and transformation jobs, such as for handling Java message queues, or a real-time Twitter pipeline, or a workflow where documents are periodically dropped into a directory to then be processed.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0306_x_use_the_dmsdk_for_a_batch_process.htm" class="exercise-link">Exercise (Use the Data Movement SDK for a Batch Process)</a></p>
+<p>Back: <a href="0305_x_use_corb_for_a_batch_process.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

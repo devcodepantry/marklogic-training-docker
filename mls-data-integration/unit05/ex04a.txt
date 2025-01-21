@@ -1,0 +1,14 @@
+  <vars>
+    <var>
+      <name>order_date</name>
+      <val>../../order-date</val>
+    </var>
+    <var>
+      <name>order_id</name>
+      <val>../../order-num</val>
+    </var>
+    <var>
+      <name>company</name>
+      <val>../../billing/company</val>
+    </var>
+  </vars> 

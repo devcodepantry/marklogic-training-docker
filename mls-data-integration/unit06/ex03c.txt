@@ -1,0 +1,5 @@
+SELECT factsheets.company_name, factsheets.employees, factsheets.yearly_revenue, factsheets.market, factsheets.notes, 
+purchases.order_date, purchases.product, purchases.price, purchases.quantity 
+FROM purchases, factsheets 
+WHERE purchases.company = factsheets.company_name 
+ORDER BY factsheets.company_name 

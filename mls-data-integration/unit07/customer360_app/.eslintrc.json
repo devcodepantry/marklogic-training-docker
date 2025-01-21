@@ -1,0 +1,18 @@
+{
+    "extends": ["airbnb-base"],
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+      "max-len": [1, 120],
+      "comma-dangle": ["error", "never"],
+      "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+      "no-param-reassign": ["error", { "props": false }],
+      "no-multi-spaces": ["error", {
+          "exceptions": {
+              "VariableDeclarator": true
+          }
+      }],
+      "no-use-before-define": ["error", { "functions": false }]
+    }
+}

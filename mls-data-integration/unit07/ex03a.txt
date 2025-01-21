@@ -1,0 +1,6 @@
+const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'calls')
+  .where(cts.wordQuery('tour'))
+  .limit(10) 
+  .result()

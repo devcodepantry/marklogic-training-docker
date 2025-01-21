@@ -1,0 +1,6 @@
+!public/app/components/lodlive/profile.js
+bower_components/
+npm-debug.log
+node_modules/
+.DS_Store
+public/

@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using the Optic API with the REST API</strong></p>
+<p>Optic API queries can be sent through the REST API to a MarkLogic database. </p>
+<p>For example, imagine wanting to display  the names and totals for the top customers in an application that you have written in your favorite programming language.</p>
+<p>To send an Optic API query through the REST API, the query needs to be serialized as <strong>JSON</strong>, and  then posted to the <strong>/v1/rows</strong> endpoint. </p>
+<p class="code">curl --anyauth -u admin:admin -X POST -H &quot;content-type: application/json&quot; -H &quot;accept: <strong>application/json</strong>&quot; -d@/home/cent/Desktop/mls-data-integration/unit07/optic_api_query.json &quot;http://localhost:8000/v1/rows?database=customer360&quot;</p>
+<p>In the example above, a file named optic_api_query.json, containing an Optic API query serialized as JSON, is sent to the customer360 database through the /v1/rows endpoint.</p>
+<p><img src="../images/unit07/rest_json_source.png" width="564" height="653" class="image-border"></p>
+<p>Result:</p>
+<p><img src="../images/unit07/rest_api_results_json_cs.png" width="666" height="276" class="image-border"></p>
+<p class="topic-sub-heading">Serializing an Optic API  Query to JSON</p>
+<p>An Optic API query can be serialized to JSON programmatically. </p>
+<p><img src="../images/unit07/serializing_query_to_json.png" width="541" height="674" class="image-border"></p>
+<p class="topic-sub-heading">Output Types</p>
+<p>While the input type for an Optic API query sent through the REST API is always JSON, there are a variety of choices for the output type, specified through the accept value (e.g.<strong> accept: text/csv</strong>):</p>
+<ul>
+  <li>application/json (default)</li>
+  <li>application/json-seq</li>
+  <li>application/xml</li>
+  <li>multipart/mixed</li>
+  <li>text/csv</li>
+</ul>
+<p>Detail on the output types, and using the Optic API with the REST API in general, is available at <strong>docs.marklogic.com/guide/app-dev/OpticAPI#id_11208</strong>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0708_x_use_the_optic_api_with_the_rest_api.htm" class="exercise-link">Exercise (Use the Optic API with the REST API)</a></p>
+<p>Back: <a href="0707_x_use_the_optic_api_in_xquery.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

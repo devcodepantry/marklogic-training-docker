@@ -1,0 +1,8 @@
+id,date_and_time,caller,called_from,customer,reason,resolved,call_taken_by
+call-002344,2017-01-23T10:44:00,Sam Stone,530-404-7796,Outback Rides,Chain came off a bike. Walked him through putting it back on.,yes,Charlie
+call-002345,2017-01-23T11:02:00,Jan Daniels,305-616-6031,Jan Daniels,Seat got punctured during shipping.  Have ordered her a replacement seat.,yes,Archie
+call-002346,2017-01-23T11:13:00,Graham Warman,415-787-1212,Rolling Fast Deliveries,Wants a bigger discount for any future orders. Is asking for 30% off. ,no,Charlie
+call-002347,2017-01-23T12:08:00,Lee Chambers,636-244-5346,,15-year old SpeedStar is rusting. Wants a free replacement bike.,no,Susan
+call-002348,2017-01-23T16:10:00,Sam Stone,530-404-7796,Outback Rides,Having issues shifting gears. Gave him the URL for the training video.,yes,Susan
+call-002349,2017-01-23T16:37:00,Dee Monolakis,707-991-1007,,Tour company in Napa. Asking lots of questions about our different bike models and what the maintenance is like. Seemed especially interested in the SpeedPro Ultimate. Didn't want to say which company she works for. (I think it's Napa Biking Tours.) Think she's in the market for purchasing a few bicycles.,yes,Archie
+call-002350,2017-01-23T16:52:00,D Monolockess,707-991-1000,,Wants to know how our warranty policy works. Have now explained it to her. She's  satisfied.,yes,Susan

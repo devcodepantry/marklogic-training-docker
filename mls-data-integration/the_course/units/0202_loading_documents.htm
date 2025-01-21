@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Loading Documents</strong></p>
+<p>Documents can be loaded into a MarkLogic database through a variety of ways, including:</p>
+<ul>
+  <li>MarkLogic Content Pump</li>
+  <li>Data Movement SDK</li>
+  <li>Java API or Node.js API</li>
+  <li>REST API</li>
+  <li>XQuery or JavaScript functions</li>
+</ul>
+<p class="topic-sub-heading">MarkLogic Content Pump </p>
+<p>To load documents through MarkLogic Content Pump, which is an open source, Java-based command line tool, JRE 1.8 or later needs to be installed, the MLCP files that correspond to the version of MarkLogic that you are using need to be downloaded from <strong>developer.marklogic.com/products/mlcp</strong>, and a port needs to exist for communicating with the database that you want to load documents into. </p>
+<p>Linux example (using <strong>mlcp.sh</strong>):</p>
+<p class="code">~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/accounting-system -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/data/accounting-system/,'/accounting/'"</p>
+<p><em>Windows example (using <strong>mlcp.bat</strong>):</em></p>
+<p class="code"><em>c:\mlcp\bin\mlcp.bat import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path C:\\mls-data-integration\\unit02\\data\\accounting-system -output_uri_replace &quot;C:/mls-data-integration/unit02/data/accounting-system,'/accounting/'&quot;</em></p>
+<p class="topic-sub-heading">Reading a Document</p>
+<p>To read a document, the URI of the document is used. </p>
+<p><strong>XQuery</strong> example:<span class="code"> <br>
+  <br>
+fn:doc(&quot;/accounting/order-10072.json&quot;) </span></p>
+<p><strong>JavaScript</strong> example: <span class="code"> <br>
+  <br>
+fn.doc(&quot;/accounting/order-10072.json&quot;) </span></p>
+<p><strong>REST API </strong>instance example:</p>
+<p class="code">curl --anyauth --user admin:admin -X GET &quot;http://localhost:8055/v1/documents?uri=/accounting/order-10072.json&quot;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0202_x_load_documents.htm">Exercise (Load Documents)</a></p>
+<p>Back: <a href="0201_x_view_data_to_load.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

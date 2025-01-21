@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Store a Model</strong></p>
+<p>In this walkthrough exercise, you load your model descriptor file into your customer360 database, assigning it to the http://marklogic.com/entity-services/models collection to generate the model.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a <strong>new workspace</strong> named<span class="code"> Entity Services</span>.</li>
+  <li class="exercise-step">Select the <strong>customer360 </strong>database,  and <strong>JavaScript</strong>.</li>
+  <li class="exercise-step">Replace the placeholder text with the following (unit08/<strong>ex04a.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict';<br>
+      declareUpdate();<br>
+      <br>
+      const es = require('/MarkLogic/entity-services/entity-services.xqy');<br>
+      <br>
+      const ES_DIR = '/home/cent/Desktop/mls-data-integration/es/'; <br>
+  <br>
+      const desc = fn.head(<br>
+      xdmp.documentGet(ES_DIR + 'procycling-model-descriptor.json'));<br>
+      <br>
+      xdmp.documentInsert(<br>
+      '/es/models/procycling-0.0.1.json', es.modelValidate(desc),<br>
+      {collections: ['http://marklogic.com/entity-services/models']}<br>
+    );</span></li>
+  <li class="exercise-step">Click  <strong>Run</strong>.<br>
+  </li>
+  <li class="exercise-step"><strong>Know</strong> that, because the model descriptor has been loaded in the http://marklogic.com/entity-services/models collection, the model has been persisted as triples stored in the database's triple index.<br>
+  </li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Scroll down to see the loaded descriptor document:<br>
+    <br>
+  <img src="../images/unit08/loaded_descriptor.png" width="684" height="36" class="image-border"></li>
+</ol>
+<p>(Optional) If desired, see  the model persisted as triples in the triple index:</p>
+<ol start="8" class="exercise-step">
+  <li class="exercise-step">Create a <strong>new tab</strong>, select <strong>SPARQL Query</strong> for the Query Type, and enter the following (<strong>ex04b.txt</strong>):<br>
+    <br>
+    <span class="code">PREFIX t: &lt;http://procycling.com/entity-types#&gt;  <br>
+    <br>
+    SELECT ?p ?o <br>
+    WHERE {t:procycling-0.0.1 ?p ?o}</span><br>
+  </li>
+  <li class="exercise-step">Select <strong>SPARQL Query</strong> for the Query Type, and click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that the model is persisted as triples:<br>
+    <br>
+  <img src="../images/unit08/model_as_triples.png" width="700" height="147" class="image-border"></li>
+  <li class="exercise-step"><strong>Modify</strong> the query, to be able to see the triples that define the Product entity type:<br>
+    <br>
+    <span class="code">PREFIX t: &lt;http://procycling.com/entity-types#&gt; <br>
+    <br>
+    <strong>DESCRIBE ?o</strong><br>
+WHERE {t:procycling-0.0.1 ?p ?o}</span>  </li>
+  <li class="exercise-step">Click Run, to see the triples that define the Product entity type, expressed in Turtle:<br>
+    <br>
+    <img src="../images/unit08/turtle results.png" width="767" height="337" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0805_generating_model-driven_components.htm" class="exercise-link">Topic (Generating Model-Driven Components)</a></p>
+<p>Back: <a href="0804_storing_a_model.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Create an Envelope</strong></p>
+<p>In this walkthrough exercise, you envelope  a couple of the marketing contact documents.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit03</strong> - <strong>Create an Envelope.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>View Document</strong>.</li>
+  <li class="exercise-step">Notice the  command:<br>
+    <br>
+  <span class="code">fn:doc(&quot;/marketing/contact-cs003.xml&quot;) </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the contents of the document:<br>
+    <br>
+  <img src="../images/unit03/before_envelope.png" width="396" height="246" class="image-border"></li>
+  <li class="exercise-step">Select the second tab, <strong>Create Envelope</strong>.</li>
+  <li class="exercise-step"><strong></strong>Notice the command, to envelope the document's content:<br>
+    <br>
+  <span class="code">declare variable $uri := &quot;/marketing/contact-cs003.xml&quot;; <br>
+  <br>
+  let $doc := fn:doc($uri) <br>
+  let $envelope := &lt;envelope&gt;&lt;source&gt;{$doc}&lt;/source&gt;&lt;/envelope&gt; <br>
+  where fn:count($doc/envelope) = 0 <br>
+  return xdmp:document-insert($uri, $envelope, (), &quot;envelope&quot;)</span><br>
+  <br>
+  <em>Note: The where clause is to ensure you only envelope the document once, even if you were to click on Run multiple times</em></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Return to the <strong>previous tab</strong> and <strong>rerun</strong> it, to see that the source content has been enveloped:<br>
+    <br>
+  <img src="../images/unit03/enveloped.png" width="405" height="303" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button, and scroll down, to see that the document is  now in a collection named envelope:<br>
+    <br>
+    <img src="../images/unit03/envelope_collection.png" width="533" height="36" class="image-border"><br>
+    <br>
+    <em>Note: 
+  Know that there is nothing inherently special about the document being in a collection named envelope.</em> <em>This happened through the fourth argument  in the xdmp:document-insert() function.</em></li>
+</ol>
+<p>On your own:</p>
+<ol start="13" class="exercise-step">
+  <li class="exercise-step">Create an envelope for the <strong>/marketing/contact-1223.xml</strong> document.</li>
+  <li class="exercise-step">Check your work:<br>
+    <br>
+    <img src="../images/unit03/enveloped_1223.png" width="410" height="641" class="image-border"></li>
+  <li class="exercise-step">Create an envelope for the <strong>/marketing/contact-1828.xml</strong> document.</li>
+  <li class="exercise-step">Check your work:<br>
+    <br>
+  <img src="../images/unit03/enveloped_1828.png" width="410" height="641" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0303_adding_data_to_an_envelope.htm" class="exercise-link">Topic (Adding Data to an Envelope)</a></p>
+<p>Back: <a href="0302_using_an_envelope_pattern_to_harmonize_data.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use the Optic API in an Application</strong></p>
+<p>In this walkthrough exercise, you stand up the ProCycling Customer 360 application, created using the Optic API and Node.js.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In a command prompt window within the virtual machine, enter the following to navigate to the application directory:<br>
+    <br>
+  <span class="code">cd ~/Desktop/mls-data-integration/unit07/customer360_app </span></li>
+  <li class="exercise-step">Enter<span class="code"> ls</span>, to see the application files listed:<br>
+    <br>
+    <img src="../images/unit07/app_files_csv.png" width="665" height="108" class="image-border"><br>
+  </li>
+  <li class="exercise-step">  Enter<span class="code"> vim settings/settings.js</span>, to view the settings file:<br>
+    <br>
+  <img src="../images/unit07/app_port_csv.png" width="334" height="173" class="image-border"></li>
+  <li class="exercise-step"><strong>See</strong> that the port is set to 8055.</li>
+  <li class="exercise-step">Press the <strong>Esc</strong> key, and then enter<span class="code"> :q</span>, to exit.</li>
+  <li class="exercise-step">Back at the command prompt, enter<span class="code"> npm i</span>, to install the dependencies listed in the package.json file.</li>
+  <li class="exercise-step">Wait for the dependencies to download (WARN messages are ok):<br>
+    <br>
+  <img src="../images/unit07/app_dependencies_download_cs.png" width="672" height="292" class="image-border"><br>
+  <em>Note: 
+  If you get red ERROR messages about Bower, do the following steps to install Bower and to download  Bower files to the project:<br>
+  <br>
+a. Enter</em><span class="code"> su </span><em>to become root. <br>
+b. Enter the root password of</em><span class="code"> centos</span><em>.<br>
+c. Enter</em><span class="code"> npm install bower -g</span><em>.<br>
+d. Wait for Bower to install. <br>
+e. To check that Bower is installed, enter</em><span class="code"> bower -v</span><em>.<br>
+f. To stop being root, enter</em><span class="code"> exit</span><em>.<br>
+g. Back as the cent user, in the ~/Desktop/mls-data-integration/unit07/customer360_app directory, to install the  dependency files, enter</em><span class="code"> bower install</span><em>.<br>
+h. Wait for the Bower dependency files to download.<br>
+i. 
+  Enter</em><span class="code"> npm i</span><em>, to see that the command now runs without the Bower errors (WARN messages are ok).</em>  </li>
+  <li class="exercise-step">Enter<span class="code"> npm run setup</span>, to apply index settings and supporting files to the customer360 database, needed by this  application:<br>
+    <br>
+    <img src="../images/unit07/indexes_applied_cs.png" width="665" height="198" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Enter<span class="code"> npm start</span>, to start the application running.</li>
+  <li class="exercise-step">Wait for the Magic happens on port 3000 message to appear:<br>
+    <br>
+    <img src="../images/unit07/magic_window_cs.png" width="619" height="66" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Leave the window open, to keep the application  running.</li>
+  <li class="exercise-step">Open a <strong>browser</strong> window inside the virtual machine, and navigate to<span class="code"> localhost:3000</span>.</li>
+  <li class="exercise-step">See that the application is running:<br>
+    <br>
+  <img src="../images/unit07/app_is_up.png" width="700" height="277" class="image-border"></li>
+  <li class="exercise-step">In the Customer drop-down list, select <strong>Rolling Fast Deliveries</strong>:<br>
+    <br>
+  <img src="../images/unit07/rolling_fast_deliveries.png" width="698" height="533" class="image-border"></li>
+  <li class="exercise-step">Scroll down to see the support calls and marketing contacts for Rolling Fast Deliveries:<br>
+    <br>
+    <img src="../images/unit07/support_calls_and_marketing.png" width="704" height="439" class="image-border"></li>
+  <li class="exercise-step">Scroll down to see  relationships for Rolling Fast Deliveries:<br>
+    <br>
+  <img src="../images/unit07/relationships.png" width="684" height="615" class="image-border"></li>
+  <li class="exercise-step">Click the green dot.</li>
+  <li class="exercise-step">See more dots displayed:<br>
+    <br>
+    <img src="../images/unit07/green_dot.png" width="223" height="174" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click one of the new  green dots.</li>
+  <li class="exercise-step">See a triple displayed (e.g. Rolling Fast Deliveries - boardMember - Michael Ross):<br>
+    <br>
+    <img src="../images/unit07/triple_displayed.png" width="404" height="271" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click another dot, to further expand the graph.</li>
+  <li class="exercise-step">Continue expanding the graph, as desired.
+    <br>
+  </li>
+  <li class="exercise-step">Note that you can drag the circles, to arrange them as you wish:<br>
+    <br>
+<img src="../images/unit07/insight.png" width="569" height="446" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Scroll back up, to the <strong>Recent purchases</strong> section.</li>
+  <li class="exercise-step">Notice the purchases and dates:<br>
+    <br>
+    <img src="../images/unit07/purchases_all.png" width="698" height="241" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Notice the search field:<br>
+    <br>
+    <img src="../images/unit07/from_to_search.png" width="598" height="52" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Enter<span class="code"> 2017-02-15 </span>in the <strong>from</strong> field.</li>
+  <li class="exercise-step">Enter<span class="code"> 2017-02-22 </span>in the <strong>to</strong> field.</li>
+  <li class="exercise-step">Click the <strong>search</strong> button.</li>
+  <li class="exercise-step">See the results displayed:<br>
+    <br>
+    <img src="../images/unit07/date_range.png" width="701" height="245" class="image-border"><br>
+  </li>
+  <li class="exercise-step">At the  top of the page, select the customer <strong>Outback Rides</strong>.</li>
+  <li class="exercise-step">See the data for Outback Rides displayed:<br>
+    <br>
+    <img src="../images/unit07/outback_rides.png" width="701" height="606" class="image-border"><br>
+  </li>
+  <li class="exercise-step">For the recent purchase, click the <strong>source</strong> button.</li>
+  <li class="exercise-step"><strong>See</strong> the source document, that the row data came from:<br>
+    <br>
+  <img src="../images/unit07/source_document.png" width="691" height="737" class="image-border"></li>
+  <li class="exercise-step">Imagine giving the customer a call, to see how the special event went.</li>
+  <li class="exercise-step">In the <strong>Support calls</strong> section, notice the search for field:<br>
+    <br>
+    <img src="../images/unit07/search_field.png" width="670" height="62" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Enter<span class="code"> chain </span>and click the <strong>search</strong> button.</li>
+  <li class="exercise-step">See that only the Outback Rides support calls that contain the word chain anywhere in them are returned:<br>
+    <br>
+    <img src="../images/unit07/chain.png" width="705" height="235" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>All customers </strong>button and click the search button.</li>
+  <li class="exercise-step">See the result in the pop-up window:<br>
+    <br>
+    <img src="../images/unit07/search_all_companies.png" width="703" height="316" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the Close button.</li>
+  <li class="exercise-step"><strong>Replace</strong> chain with<span class="code"> puncture</span>, have the <strong>All customers</strong> radio button selected, and click the <strong>search</strong> button.</li>
+  <li class="exercise-step">See that any calls, from any customers, that have the word puncture  in them are returned:<br>
+    <br>
+    <img src="../images/unit07/app_puncture.png" width="702" height="353" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Continue exploring, as desired.</li>
+  <li class="exercise-step">When done, close the browser window.</li>
+  <li class="exercise-step">In the command prompt window, press <strong>Ctrl-C</strong> to stop the application running.</li>
+  <li class="exercise-step">If desired, explore the application code to see how the application was built.<br>
+  </li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0707_writing_an_optic_api_query_in_xquery.htm" class="exercise-link">Topic (Writing an Optic API Query in XQuery)</a></p>
+<p>Back: <a href="0706_using_the_optic_api_in_an_application.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

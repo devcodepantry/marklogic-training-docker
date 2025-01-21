@@ -1,0 +1,16 @@
+      "properties": {
+        "id": {"datatype": "string"},
+        "name": {"datatype": "string"},
+        "price": {"datatype": "double"},
+        "weightKg": {"datatype": "double"},
+        "weightLb": {"datatype": "double"},
+        "material": {"datatype": "string"},
+        "gender": {"datatype": "string"},
+        "color": {"datatype": "string"},
+        "description": {"datatype": "string"},
+        "speeds": {"datatype": "decimal"},
+        "recommend": {
+          "datatype": "array",
+          "items": {"$ref": "#/definitions/Product"}
+        }
+      }

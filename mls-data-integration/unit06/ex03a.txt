@@ -1,0 +1,58 @@
+import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $support-calls-template := 
+<template xmlns="http://marklogic.com/xdmp/tde">
+  <context>/id</context>
+  <rows> 
+    <row> 
+      <schema-name>customer360</schema-name> 
+      <view-name>calls</view-name> 
+      <columns> 
+        <column>
+          <name>date_time</name> 
+          <scalar-type>dateTime</scalar-type> 
+          <val>../date_and_time</val> 
+          <nullable>true</nullable> 
+        </column> 
+        <column>
+          <name>customer</name> 
+          <scalar-type>string</scalar-type> 
+          <val>../customer</val> 
+          <nullable>true</nullable> 
+        </column>         
+        <column>
+          <name>caller</name> 
+          <scalar-type>string</scalar-type> 
+          <val>../caller</val> 
+          <nullable>true</nullable> 
+        </column>
+        <column>
+          <name>phone</name> 
+          <scalar-type>string</scalar-type> 
+          <val>../called_from</val> 
+          <nullable>true</nullable> 
+        </column>                
+        <column>
+          <name>reason</name> 
+          <scalar-type>string</scalar-type> 
+          <val>../reason</val> 
+          <nullable>true</nullable>  
+        </column>
+        <column>
+          <name>resolved</name> 
+          <scalar-type>string</scalar-type> 
+          <val>../resolved</val> 
+          <nullable>true</nullable> 
+        </column>
+        <column>
+          <name>uri</name>
+          <scalar-type>string</scalar-type>
+          <val>xdmp:node-uri(.)</val>
+          <nullable>true</nullable>
+        </column>        
+      </columns>
+    </row>
+  </rows>
+</template>
+
+return tde:template-insert("/templates/support-calls-template.xml", $support-calls-template)

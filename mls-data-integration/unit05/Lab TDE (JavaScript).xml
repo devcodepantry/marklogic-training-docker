@@ -1,0 +1,218 @@
+<export><workspace name="Lab TDE (JavaScript)"><query name="laba.txt" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const factsheetsTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/factsheet',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'factsheets',
+       'columns':[
+         {
+           'name':'company_name',
+           'scalarType':'string',
+           'val':'companyName', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'headquarters',
+           'scalarType':'string',
+           'val':'headquarters', 
+           'nullable':true
+         },
+         {
+           'name':'phone',
+           'scalarType':'string',
+           'val':'phone', 
+           'nullable':true
+         },
+         {
+           'name':'website',
+           'scalarType':'string',
+           'val':'website', 
+           'nullable':true
+         },
+         {
+           'name':'founded',
+           'scalarType':'string',
+           'val':'founded', 
+           'nullable':true
+         },
+         {
+           'name':'employees',
+           'scalarType':'integer',
+           'val':'employees', 
+           'nullable':true
+         },
+         {
+           'name':'yearly_revenue',
+           'scalarType':'integer',
+           'val':'yearlyRevenue', 
+           'nullable':true
+         },
+         {
+           'name':'market',
+           'scalarType':'string',
+           'val':'market', 
+           'nullable':true
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'notes', 
+           'nullable':true
+         }
+       ]
+     }
+   ]
+ }
+}
+);</query><query name="labb.txt" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const factsheetsTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/factsheet',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'factsheets',
+       'columns':[
+         {
+           'name':'company_name',
+           'scalarType':'string',
+           'val':'companyName', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'headquarters',
+           'scalarType':'string',
+           'val':'headquarters', 
+           'nullable':true
+         },
+         {
+           'name':'phone',
+           'scalarType':'string',
+           'val':'phone', 
+           'nullable':true
+         },
+         {
+           'name':'website',
+           'scalarType':'string',
+           'val':'website', 
+           'nullable':true
+         },
+         {
+           'name':'founded',
+           'scalarType':'string',
+           'val':'founded', 
+           'nullable':true
+         },
+         {
+           'name':'employees',
+           'scalarType':'integer',
+           'val':'employees', 
+           'nullable':true
+         },
+         {
+           'name':'yearly_revenue',
+           'scalarType':'integer',
+           'val':'yearlyRevenue', 
+           'nullable':true
+         },
+         {
+           'name':'market',
+           'scalarType':'string',
+           'val':'market', 
+           'nullable':true
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'notes', 
+           'nullable':true
+         }
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.validate([factsheetsTemplate]);</query><query name="labc.txt" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const factsheetsTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/factsheet',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'factsheets',
+       'columns':[
+         {
+           'name':'company_name',
+           'scalarType':'string',
+           'val':'companyName', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'headquarters',
+           'scalarType':'string',
+           'val':'headquarters', 
+           'nullable':true
+         },
+         {
+           'name':'phone',
+           'scalarType':'string',
+           'val':'phone', 
+           'nullable':true
+         },
+         {
+           'name':'website',
+           'scalarType':'string',
+           'val':'website', 
+           'nullable':true
+         },
+         {
+           'name':'founded',
+           'scalarType':'string',
+           'val':'founded', 
+           'nullable':true
+         },
+         {
+           'name':'employees',
+           'scalarType':'integer',
+           'val':'employees', 
+           'nullable':true
+         },
+         {
+           'name':'yearly_revenue',
+           'scalarType':'integer',
+           'val':'yearlyRevenue', 
+           'nullable':true
+         },
+         {
+           'name':'market',
+           'scalarType':'string',
+           'val':'market', 
+           'nullable':true
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'notes', 
+           'nullable':true
+         }
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.templateInsert('/templates/factsheetsTemplate.json', factsheetsTemplate);</query><query name="labd.txt" focus="false" listorder="4" taborder="4" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+
+tde.getView('customer360', 'factsheets');</query><query name="labe.txt" focus="false" listorder="5" taborder="5" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="sql">SELECT * FROM factsheets
+
+</query></workspace></export>

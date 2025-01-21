@@ -1,0 +1,1 @@
+tde:node-data-extract(fn:doc("/accounting/order-14502.xml"))

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use CoRB for a Batch Process</strong></p>
+<p>In this walkthrough exercise, you use CoRB to add canonical data to the rest of the contact documents.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In a browser window, navigate to <a href="https://developer.marklogic.com/code/corb" target="_blank">developer.marklogic.com/code/corb</a>:<br>
+    <br>
+  <img src="../images/unit03/corb_page.png" width="702" height="461" class="image-border"></li>
+  <li class="exercise-step">Skim the first paragraph.</li>
+  <li class="exercise-step"><strong>Know</strong> that CoRB has already been downloaded onto your virtual machine, in the mls-data-integration/<strong>unit03</strong>/<strong>corb</strong> folder.</li>
+  <li class="exercise-step">If desired, on the desktop of your virtual machine, view the contents of the mls-data-integration/unit03/corb folder:<br>
+    <br>
+    <img src="../images/unit03/corb_folder.png" width="560" height="155" class="image-border"><br>
+    <em>Note: If running MarkLogic on Windows, would use corb.bat</em> <em>instead</em><br>
+  </li>
+  <li class="exercise-step">In Query Console, click the <strong>Explore</strong> button, to see the list of documents in the customer360 database.</li>
+  <li class="exercise-step">See that the remaining marketing contact documents are in the collection named 'raw':<br>
+    <br>
+    <img src="../images/unit03/raw_collection.png" width="616" height="334" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click  the link for any of the remaining  contact documents (e.g. <strong>/marketing/contact-1455.xml</strong>), to see that they have not yet been enveloped, nor been set up with a canonical section:<br>
+    <br>
+  <img src="../images/unit03/raw_1455.png" width="361" height="418" class="image-border"></li>
+  <li class="exercise-step">Create a new tab and enter the following, to return the count and list of URIs for documents that are in both the directory of '/marketing/' and the collection of 'raw' (unit03/<strong>ex05_uris.xqy</strong>):<br>
+    <br>
+    <span class="code">xquery version &quot;1.0-ml&quot;; <br>
+    <br>
+    let $uris := cts:uris(&quot;&quot;, (), cts:and-query((cts:directory-query(&quot;/marketing/&quot;), cts:collection-query(&quot;raw&quot;)))) <br>
+    <br>
+    let $count := fn:count($uris) <br>
+    <br>
+    return ($count, $uris) </span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the query returns the URIs of the 7 documents that are in both the '/marketing/' directory and the 'raw' collection:  <br>
+    <br>
+  <img src="../images/unit03/results_7_uris.png" width="324" height="270" class="image-border"></li>
+  <li class="exercise-step">In the <strong>unit03</strong> folder, open the <strong>ex05_transformation.xqy</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/ex05_transformation.png" width="699" height="379" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Know  that this code is for creating an envelope, and canonical section, in the documents.</li>
+  <li class="exercise-step">In the <strong>unit03</strong> folder, open the <strong>ex05.properties</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/corb_properties.png" width="564" height="205" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> the properties for XCC-PORT, URIS-MODULE, and PROCESS-MODULE. </li>
+  <li class="exercise-step">Close the file.</li>
+</ol>
+<p>Run CoRB:</p>
+<ol start="16" class="exercise-step">
+  <li class="exercise-step">In a new <strong>command prompt</strong> window,  enter the following, to navigate to the mls-data-integration/unit03 folder:<br>
+    <br>
+  <span class="code">cd ~/Desktop/mls-data-integration/unit03</span></li>
+  <li class="exercise-step">Enter the following, to  give execute permissions to the corb.sh file:<br>
+    <br>
+    <span class="code">chmod +x corb/corb.sh</span><br>
+  </li>
+  <li class="exercise-step">Enter the following, to call on CoRB, passing it the ex05.properties file:<br>
+    <br>
+    <span class="code">corb/corb.sh ex05.properties</span></li>
+  <li class="exercise-step">Press Enter, to run the command. </li>
+  <li class="exercise-step">See that CoRB is done:<br>
+    <br>
+  <img src="../images/unit03/corb_done_cs.png" width="663" height="77" class="image-border"></li>
+  <li class="exercise-step">In <strong>Query Console</strong>, click the <strong>Explore</strong> button. </li>
+  <li class="exercise-step">Scroll down to see that the  marketing contact documents are now in the <strong>canonical</strong> collection:<br>
+    <br>
+  <img src="../images/unit03/canonical_collection_rest.png" width="637" height="336" class="image-border"></li>
+  <li class="exercise-step">Click the link for one of the documents (e.g.<strong>/marketing/contact-1455.xml</strong>), to see the contents:<br>
+    <br>
+    <img src="../images/unit03/corb_canonical_results.png" width="397" height="592" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that an envelope now exists, with a canonical section.</li>
+  <li class="exercise-step">If desired, for more info on CoRB, watch a video tutorial at <a href="http://mlu.marklogic.com/ondemand/65ca4c93" target="_blank">mlu.marklogic.com/ondemand/65ca4c93</a>.</li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0306_using_the_dmsdk_for_batch_processing.htm" class="exercise-link">Topic (Using the Data Movement SDK for Batch Processing)</a></p>
+<p>Back: <a href="0305_using_corb_for_batch_processing.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

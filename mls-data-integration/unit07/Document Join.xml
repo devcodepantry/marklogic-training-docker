@@ -1,0 +1,200 @@
+<export><workspace name="Document Join"><query name="Basic Query" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases')
+  .where(cts.wordQuery('special'))
+  .select(['order_date', 'order_id', 'company', 'product', 'quantity'])
+  .result()</query><query name="Disable purchases-second-template" focus="false" listorder="3" taborder="2" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $purchases-second-template := 
+&lt;template xmlns="http://marklogic.com/xdmp/tde"&gt;
+  &lt;enabled&gt;false&lt;/enabled&gt;
+  &lt;context&gt;/booking&lt;/context&gt;
+&lt;/template&gt;
+
+return tde:template-insert("/templates/purchases-second-template.xml", $purchases-second-template)</query><query name="Update purchases-template" focus="false" listorder="4" taborder="3" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $purchases-template := 
+&lt;template xmlns="http://marklogic.com/xdmp/tde"&gt;
+  &lt;context&gt;/order&lt;/context&gt;
+  &lt;vars&gt;
+    &lt;var&gt;
+      &lt;name&gt;order_date&lt;/name&gt;
+      &lt;val&gt;order-date&lt;/val&gt;
+    &lt;/var&gt;
+    &lt;var&gt;
+      &lt;name&gt;order_id&lt;/name&gt;
+      &lt;val&gt;order-num&lt;/val&gt;
+    &lt;/var&gt;
+    &lt;var&gt;
+      &lt;name&gt;company&lt;/name&gt;
+      &lt;val&gt;billing/company&lt;/val&gt;
+    &lt;/var&gt;
+  &lt;/vars&gt;
+  &lt;templates&gt;
+    &lt;template&gt;
+      &lt;context&gt;items/item&lt;/context&gt;
+      &lt;rows&gt;
+        &lt;row&gt;
+          &lt;schema-name&gt;customer360&lt;/schema-name&gt;
+          &lt;view-name&gt;purchases&lt;/view-name&gt;
+          &lt;columns&gt;
+            &lt;column&gt;
+              &lt;name&gt;order_date&lt;/name&gt;
+              &lt;scalar-type&gt;date&lt;/scalar-type&gt;
+              &lt;val&gt;$order_date&lt;/val&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;order_id&lt;/name&gt;
+              &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+              &lt;val&gt;$order_id&lt;/val&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;company&lt;/name&gt;
+              &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+              &lt;val&gt;$company&lt;/val&gt;
+              &lt;nullable&gt;true&lt;/nullable&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;product&lt;/name&gt;
+              &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+              &lt;val&gt;product&lt;/val&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;price&lt;/name&gt;
+              &lt;scalar-type&gt;decimal&lt;/scalar-type&gt;
+              &lt;val&gt;price&lt;/val&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;quantity&lt;/name&gt;
+              &lt;scalar-type&gt;integer&lt;/scalar-type&gt;
+              &lt;val&gt;quantity&lt;/val&gt;
+            &lt;/column&gt;
+            &lt;column&gt; 
+              &lt;name&gt;row_total&lt;/name&gt;
+              &lt;scalar-type&gt;decimal&lt;/scalar-type&gt; 
+              &lt;val&gt;price * quantity&lt;/val&gt;
+              &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+            &lt;/column&gt;
+            &lt;column&gt;
+              &lt;name&gt;notes&lt;/name&gt;
+              &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+              &lt;val&gt;../../notes&lt;/val&gt;
+              &lt;nullable&gt;true&lt;/nullable&gt;
+            &lt;/column&gt; 
+            &lt;column&gt;
+              &lt;name&gt;uri&lt;/name&gt;
+              &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+              &lt;val&gt;xdmp:node-uri(.)&lt;/val&gt;
+              &lt;nullable&gt;true&lt;/nullable&gt;
+            &lt;/column&gt;
+          &lt;/columns&gt;
+        &lt;/row&gt;
+      &lt;/rows&gt;
+    &lt;/template&gt;
+  &lt;/templates&gt;
+&lt;/template&gt;
+
+return tde:template-insert("/templates/purchases-template.xml", $purchases-template)</query><query name="Update purchases-second-template" focus="false" listorder="5" taborder="4" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $purchases-second-template := 
+  &lt;template xmlns="http://marklogic.com/xdmp/tde"&gt;
+    &lt;context&gt;/booking&lt;/context&gt;
+    &lt;vars&gt;
+      &lt;var&gt;
+        &lt;name&gt;order_date&lt;/name&gt;
+        &lt;val&gt;date&lt;/val&gt;
+      &lt;/var&gt;
+      &lt;var&gt;
+        &lt;name&gt;order_id&lt;/name&gt;
+        &lt;val&gt;@id&lt;/val&gt;
+      &lt;/var&gt;
+      &lt;var&gt;
+        &lt;name&gt;company&lt;/name&gt;
+        &lt;val&gt;customer/company&lt;/val&gt;
+      &lt;/var&gt;
+    &lt;/vars&gt;
+    &lt;templates&gt;
+      &lt;template&gt;
+        &lt;context&gt;line-items/item&lt;/context&gt;
+        &lt;rows&gt;
+          &lt;row&gt;
+            &lt;schema-name&gt;customer360&lt;/schema-name&gt;
+            &lt;view-name&gt;purchases&lt;/view-name&gt;
+            &lt;columns&gt;
+              &lt;column&gt;
+                &lt;name&gt;order_date&lt;/name&gt;
+                &lt;scalar-type&gt;date&lt;/scalar-type&gt;
+                &lt;val&gt;$order_date&lt;/val&gt;
+                &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;order_id&lt;/name&gt;
+                &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+                &lt;val&gt;$order_id&lt;/val&gt;
+                &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;company&lt;/name&gt;
+                &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+                &lt;val&gt;$company&lt;/val&gt;
+                &lt;nullable&gt;true&lt;/nullable&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;product&lt;/name&gt;
+                &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+                &lt;val&gt;product&lt;/val&gt;
+                &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;price&lt;/name&gt;
+                &lt;scalar-type&gt;decimal&lt;/scalar-type&gt;
+                &lt;val&gt;price&lt;/val&gt;
+                &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;quantity&lt;/name&gt;
+                &lt;scalar-type&gt;integer&lt;/scalar-type&gt;
+                &lt;val&gt;quantity&lt;/val&gt;
+              &lt;/column&gt;
+              &lt;column&gt; 
+                &lt;name&gt;row_total&lt;/name&gt;
+                &lt;scalar-type&gt;decimal&lt;/scalar-type&gt; 
+                &lt;val&gt;price * quantity&lt;/val&gt;
+                &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;notes&lt;/name&gt;
+                &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+                &lt;val&gt;notes&lt;/val&gt;
+                &lt;nullable&gt;true&lt;/nullable&gt;
+              &lt;/column&gt;
+              &lt;column&gt;
+                &lt;name&gt;uri&lt;/name&gt;
+                &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+                &lt;val&gt;xdmp:node-uri(.)&lt;/val&gt;
+                &lt;nullable&gt;true&lt;/nullable&gt;
+              &lt;/column&gt;
+            &lt;/columns&gt;
+          &lt;/row&gt;
+        &lt;/rows&gt;
+      &lt;/template&gt;
+    &lt;/templates&gt;
+  &lt;/template&gt;
+
+return tde:template-insert("/templates/purchases-second-template.xml", $purchases-second-template)</query><query name="Basic Query" focus="false" listorder="6" taborder="5" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases')
+  .where(cts.wordQuery('special'))
+  .select(['order_date', 'order_id', 'company', 'product', 'quantity'])
+  .result()</query><query name="Document Join URIs" focus="false" listorder="7" taborder="6" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases')
+  .where(cts.wordQuery('special'))
+  .select(['order_date', 'order_id', 'company', 'product', 'quantity', 'uri'])
+  .result()</query><query name="Document Join Content" focus="false" listorder="8" taborder="7" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases')
+  .where(cts.wordQuery('special'))
+  .joinDoc('doc', op.col('uri'))
+  .select(['order_date', 'order_id', 'company', 'product', 'quantity', 'uri', 'doc'])
+  .result()</query></workspace></export>

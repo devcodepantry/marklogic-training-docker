@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Install the ODBC Driver</strong></p>
+<p>In this walkthrough exercise, you install the MarkLogic ODBC driver on your   CentOS Linux virtual machine (providing a way for any ODBC-based applications installed on the virtual machine, including  Tableau or Cognos, to talk to the  customer360 database. Then you use isql to test the connection.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In a browser window, navigate to <a href="https://docs.marklogic.com/guide/sql/odbc-driver" target="_blank">docs.marklogic.com/guide/sql/odbc-driver</a>.</li>
+  <li class="exercise-step"><strong>Notice</strong> the links for installing the driver on Windows and Linux:<br>
+    <br>
+  <img src="../images/unit06/docs.png" width="697" height="326" class="image-border"></li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>http://developer.marklogic.com/products/odbc</strong> link, for downloading the driver.</li>
+  <li class="exercise-step"><strong>Click</strong> the <a href="http://developer.marklogic.com/products/odbc" target="_blank">http://developer.marklogic.com/products/odbc</a> link.</li>
+  <li class="exercise-step">See that the driver is available for Linux and Windows.</li>
+  <li class="exercise-step"><strong>Know</strong> that the MarkLogic 9, Linux 64-bit ODBC Driver  .rpm file has already been downloaded to your virtual machine for you. <br>
+    <br>
+    <em>Note: If desired, can open a command prompt window in your virtual machine and enter</em><span class="code"> ls /home/cent/Downloads </span><em>to see the mlsqlodbc-1.3-4.x86_64.rpm file listed.</em><br>
+  </li>
+  <li class="exercise-step">Click the browser's <strong>back</strong> button, to go back to the Installing and Configuring the MarkLogic Server ODBC Driver  docs page.</li>
+  <li class="exercise-step">Select the <strong>Configuring the ODBC Driver on Linux</strong> link.</li>
+  <li class="exercise-step">Skim through the steps.</li>
+  <li class="exercise-step">At the top of the steps, see that <strong>unixODBC </strong>2.3.4 or later is required.</li>
+  <li class="exercise-step">In a command prompt window within your virtual machine, enter<span class="code"> which odbcinst </span>to see that unixODBC is installed:<br>
+    <br>
+    <img src="../images/unit06/which_odbcinst.png" width="359" height="56" class="image-border">
+    <em><br>
+    Note: To see how unixODBC was installed, view </em> <a href="xb02_x_see_the_steps_that_were_done.htm#unixodbc" target="_blank">See the Steps That Were Done</a><em>, steps 273-287.</em> <br>
+  </li>
+  <li class="exercise-step">To see the version of unixODBC,  enter<span class="code"> /usr/local/bin/isql --version</span> (unit06/<strong>ex05a.txt</strong>):<br>
+    <br>
+    <img src="../images/unit06/version_unixodbc_cs.png" width="464" height="47" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that it is 2.3.4 or later.</li>
+  <li class="exercise-step">Enter<span class="code"> su </span>to become root.</li>
+  <li class="exercise-step">Enter the password of<span class="code"> centos </span>if prompted.</li>
+  <li class="exercise-step">Enter<span class="code"> cd /home/cent/Downloads</span>.</li>
+  <li class="exercise-step">Enter<span class="code"> ls </span>to see the previously downloaded <strong>mlsqlodbc-1.3-1.x86_64.rpm</strong> file:<br>
+    <br>
+    <img src="../images/unit06/mlsqlodbc_cs.png" width="232" height="19" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Enter the following to install the MarkLogic ODBC driver (<strong>ex05b.txt</strong>):<br>
+    <br>
+    <span class="code">rpm -i mlsqlodbc-1.3-4.x86_64.rpm</span><br>
+  </li>
+  <li class="exercise-step">See that the driver installed:<br>
+    <br>
+    <img src="../images/unit06/odbc_driver_installed_cs.png" width="537" height="48" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Enter the following to edit the mlsql.template file, to put in the port for communicating with the customer360 database (<strong>ex05c.txt</strong>):<br>
+    <br>
+    <span class="code">    vim /opt/MarkLogic/templates/mlsql.template</span><br>
+  </li>
+  <li class="exercise-step">See the default settings:<br>
+    <br>
+    <img src="../images/unit06/default_settings_cs.png" width="486" height="418" class="image-border"><br>
+  </li>
+  <li class="exercise-step">  Press<span class="code"> i </span>to edit the file.</li>
+  <li class="exercise-step">Using your <strong>down arrow</strong> key, navigate down to the <strong>Port</strong> value.</li>
+  <li class="exercise-step">Using your <strong>right arrow</strong> key, navigate to the placeholder port number (i.e. 5432).</li>
+  <li class="exercise-step">Type<span class="code"> 3366</span>.</li>
+  <li class="exercise-step">Press your <strong>Delete</strong> key four times, to remove the placeholder port number:<br>
+    <br>
+  <img src="../images/unit06/sql_template_cs.png" width="462" height="355" class="image-border"></li>
+  <li class="exercise-step">To save the file, press your <strong>Esc</strong> key, then type<span class="code"> :wq</span>, and then press <strong>Enter</strong>.<br>
+  </li>
+  <li class="exercise-step">Back on the command line, enter<span class="code"> exit</span>, to exit being root.</li>
+  <li class="exercise-step">Back as the cent user, enter the following to apply the settings in the mlsql.template file (<strong>ex05d.txt</strong>):<br>
+    <br>
+    <span class="code">odbcinst -i -s -f /opt/MarkLogic/templates/mlsql.template</span>    <br>
+  </li>
+  <li class="exercise-step">Enter the following to test that the  connection to the customer360 database is valid (<strong>ex05e.txt</strong>):<br>
+    <br>
+    <span class="code">isql -v MarkLogicSQL admin admin</span><br>
+  </li>
+  <li class="exercise-step">See that the ODBC connection to the database works:<br>
+    <br>
+    <img src="../images/unit06/isql.png" width="608" height="182" class="image-border"><br>
+  </li>
+  <li class="exercise-step">If desired, enter a SQL query:<br>
+    <br>
+    <span class="code">SELECT * FROM calls</span><br>
+  </li>
+  <li class="exercise-step">See results returned (can scroll  up to see):<br>
+    <br>
+  <img src="../images/unit06/isql_calls.png" width="701" height="543" class="image-border"></li>
+  <li class="exercise-step">Enter<span class="code"> quit</span>, to exit isql.<br>
+  </li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0606_using_mlsql.htm" class="exercise-link">Topic (Using mlsql)</a></p>
+<p>Back: <a href="0605_installing_the_odbc_driver.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

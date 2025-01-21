@@ -1,0 +1,1 @@
+isql -v MarkLogicSQL admin admin

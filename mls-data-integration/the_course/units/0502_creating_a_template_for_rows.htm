@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Creating a Template for Rows</strong></p>
+<p>By creating a template,   data can be extracted from documents as rows, putting the data into a structure easily consumed by SQL or the  Optic API.</p>
+<p>Templates can be defined using  <strong>XML</strong> or <strong>JSON</strong>. In XML, to create a template for extracting data as rows, a <strong>template</strong> element is used, followed by a <strong>context</strong> element, and then a <strong>rows</strong> element. Within the rows element, a row element specifies a schema name and view name that the generated row data is to be a part of. Within the <strong>columns</strong> element, columns are defined for the view.</p>
+<p>Example of defining a template in JSON:</p>
+<p class="code">'use strict';<br>
+  const purchasesTemplate = xdmp.toJSON(<br>
+  {<br>
+&nbsp;&nbsp;'template':{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'context':'/order/items/item',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'rows':[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'schemaName':'customer360',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'viewName':'purchases',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'columns':[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'name':'product',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'scalarType':'string',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'val':'product', <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'invalidValues':'ignore'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'name':'price',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'scalarType':'decimal',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'val':'price', <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'invalidValues':'ignore'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'name':'quantity',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'scalarType':'integer',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'val':'quantity', <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'invalidValues':'ignore'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}]<br>
+&nbsp;&nbsp;}<br>
+}<br>
+);</p>
+<p>Example of defining a template in XML:</p>
+<p class="code">let $purchases-template :=<br>
+&lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  &nbsp;&nbsp;<br>
+&nbsp;&nbsp;&lt;context&gt;/order/items/item&lt;/context&gt;    <br>
+&nbsp;&nbsp;&lt;rows&gt;      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt;        <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt;        <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;product&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;product&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;price&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;decimal&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;price&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;quantity&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;integer&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;quantity&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+&nbsp;&nbsp;&lt;/rows&gt;<br>
+&lt;/template&gt;
+<br>
+</p>
+<p><em>Note: column names can contain underscores, but not  hyphens.</em></p>
+<p>In the template above, <strong>context</strong> (/order/items/item) specifies a starting-point XPath expression (i.e. any documents with order as the root element, items as a child element, and then item as a child element), which then sets the context for any following element references (e.g. product in &lt;val&gt; is relative to /order/items/item). </p>
+<p>A template will only apply to documents that match the context. Making the context as specific as possible (order/items/item vs. order/items/*) will help reduce the impact of the template on your system, speeding the ingestion of documents and updates. Using the template elements &lt;collections&gt; and &lt;directories&gt; can also help toward this end (with a preference for &lt;collections&gt;). </p>
+<p>The  <strong>schema-name</strong> element is to specify  the name of the schema that the view belongs to, <strong> view-name</strong> is the target view for the template (multiple templates can contribute to a view), name is the label for the  row column, <strong>scalar-type</strong> is the data type of the value (list of types is at docs.marklogic.com/guide/app-dev/TDE#id_51421), <strong>val</strong> is name of the element or property that contains the value, and <strong>invalid-values</strong> is saying to ignore any row that has an invalid value for val. </p>
+<p>Source (accounting/order-10072.xml):</p>
+<p class="code">&lt;order&gt;<br>
+&nbsp;&nbsp;&lt;order-num&gt;10072&lt;/order-num&gt;<br>
+&nbsp;&nbsp;&lt;order-date&gt;2017-01-14&lt;/order-date&gt;<br>
+&nbsp;&nbsp;&lt;items&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro Ultimate&lt;/product&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&lt;price&gt;999&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&lt;product&gt;Mens Racer Helmet&lt;/product&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&lt;price&gt;95&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+&nbsp;&nbsp;&lt;/items&gt;<br>
+...
+<br>
+&lt;/order&gt;
+</p>
+<p>Rows generated by using the above template:</p>
+<p class="code"><img src="../images/unit05/results_for_10072.png" width="386" height="489" class="image-border"></p>
+<p>To do a join across two different entity types,  two templates are  used, to create two different views - one for each entity type (Unit 6, Topic 3). <br>
+</p>
+<p class="topic-sub-heading">Validating a Template</p>
+<p>A template can be validated by passing it into the <strong>tde:validate()</strong> function. If the template is valid, the response will be true. If the template is invalid, the response will be false. </p>
+<p class="code">return   tde:validate($purchases-template)</p>
+<p>Response:</p>
+<p><span class="exercise-step"><img src="../images/unit05/validated.png" width="453" height="132" class="image-border"></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0502_x_create_a_template_and_validate_it.htm" class="exercise-link">Exercise (Create a Template and Validate It)</a></p>
+<p>Back: <a href="0501_x_learn_about_template_driven_extraction.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

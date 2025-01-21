@@ -1,0 +1,48 @@
+<div class="card" *ngIf="marketingContacts && marketingContacts?.length !== 0">
+  <div class="card-block">
+    <h4 class="card-title">Marketing contacts</h4>
+    <table class="table table-striped">
+      <thead class="table-info">
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>City</th>
+          <th>Phone work</th>
+          <th>Phone mobile</th>
+          <th>Phone home</th>
+          <th>Email</th>
+          <th>Mail OK</th>
+          <th>Email OK</th>
+          <th>Frequency</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let marketingContact of marketingContacts">
+          <td>{{ marketingContact['customer360.marketing_contacts.first_name'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.last_name'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.city'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.phone_work'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.phone_mobile'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.phone_home'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.email'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.mail_ok'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.email_ok'] }}</td>
+          <td>{{ marketingContact['customer360.marketing_contacts.frequency'] }}</td>
+          <td>
+            <popover-content #myPopover title="Original Document" [closeOnClickOutside]="true" placement="left">
+              <pre><code>{{ marketingContact.doc }}</code></pre>
+            </popover-content>
+            <button type="button" class="btn btn-secondary btn-sm" [popover]="myPopover">source</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card" *ngIf="marketingContacts && marketingContacts?.length === 0">
+  <div class="card-block">
+    <h4 class="card-title">Marketing Contacts</h4>
+    <p>No marketing contacts for this customer</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<order>
+  <order-num>10991</order-num>
+  <order-date>2017-02-14</order-date>
+  <items>
+    <item>
+      <product>SpeedPro Ultimate</product>
+      <price>999</price>
+      <quantity>1</quantity>
+    </item>
+  </items>
+  <ship-to>
+    <first-name>Laurie</first-name>
+    <last-name>Lapadula</last-name>
+    <street>1 Pinecrest Way</street>
+    <city>Bass Lake</city>
+    <state>California</state>
+    <zipcode>93604</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Laurie</first-name>
+    <last-name>Lapadula</last-name>
+    <street>1 Pinecrest Way</street>
+    <city>Bass Lake</city>
+    <state>California</state>
+    <zipcode>93604</zipcode>
+  </billing>
+  <notes>Be sure to include the special edition water bottle with the shipment. This order was placed at the 2017 Outdoor Expo, where we promised to include our anniversary stainless steel water bottle with any bike purchase.</notes>
+</order>

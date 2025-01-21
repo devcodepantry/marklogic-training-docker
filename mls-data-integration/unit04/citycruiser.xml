@@ -1,0 +1,38 @@
+<factsheet>
+  <sem:triples xmlns:sem="http://marklogic.com/semantics"> 
+    <sem:triple>
+      <sem:subject>http://procycling.com/resource/City_Cruiser</sem:subject>
+      <sem:predicate>http://procycling.com/ontology/investor</sem:predicate>
+      <sem:object>http://procycling.com/resource/Jessica_Pearson</sem:object>
+    </sem:triple>
+    <sem:triple>
+      <sem:subject>http://procycling.com/resource/City_Cruiser</sem:subject>
+      <sem:predicate>http://procycling.com/ontology/owner</sem:predicate>
+      <sem:object>http://procycling.com/resource/Chris_Cliff</sem:object>
+    </sem:triple>
+    <sem:triple>
+      <sem:subject>http://procycling.com/resource/Chris_Cliff</sem:subject>
+      <sem:predicate>http://mlu.marklogic.com/knows</sem:predicate>
+      <sem:object>http://procycling.com/resource/Graham_Warman</sem:object>
+    </sem:triple>
+    <sem:triple>
+      <sem:subject>http://procycling.com/resource/City_Cruiser</sem:subject>
+      <sem:predicate>http://xmlns.com/foaf/0.1/name</sem:predicate>
+      <sem:object datatype="http://www.w3.org/2001/XMLSchema#string">City Cruiser</sem:object>
+    </sem:triple>
+    <sem:triple>
+      <sem:subject>http://procycling.com/resource/Chris_Cliff</sem:subject>
+      <sem:predicate>http://xmlns.com/foaf/0.1/name</sem:predicate>
+      <sem:object datatype="http://www.w3.org/2001/XMLSchema#string">Chris Cliff</sem:object>
+    </sem:triple>
+  </sem:triples>
+  <companyName>City Cruiser</companyName>
+  <headquarters>420 8th Ave, New York, NY 10001</headquarters>
+  <phone>212-594-3003</phone>
+  <website>www.nycitybikes.com</website>
+  <founded>1999</founded>
+  <employees>20</employees>
+  <yearlyRevenue>5000000</yearlyRevenue>
+  <market>Manhattan bike rentals for tourists and locals alike.</market>
+  <notes>Positioned next to Penn Station, this is the go-to bike company in Manhattan. Along with daily rentals for tourists, they also do long-term rentals, which are quite popular with locals, as they include free bike storage at the station.</notes>
+</factsheet>

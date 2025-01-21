@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using Document Criteria</strong></p>
+<p>To narrow the pool of documents that a row query is run against, .where() can be used with a cts query within it.</p>
+<p class="code">const op = require('/MarkLogic/optic');</p>
+<p class="code">op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(<strong>cts.wordQuery('gears')</strong>)<br>
+  &nbsp;&nbsp;.result()</p>
+<p>In the example above, the resulting rows will only be retrieved from support call documents that have the word 'gears' anywhere in them (or 'gear' if stemming is turned on for the database).</p>
+<p>Result:</p>
+<p><img src="../images/unit07/gears_result.png" width="599" height="177" class="image-border"></p>
+<p>Or, for another example, imagine wanting to return all of the rows for a company, based on the company name being mentioned anywhere in the document, not being limited to it having to be in the customer name column.</p>
+<p class="code">const op = require('/MarkLogic/optic'); </p>
+<p class="code">op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(<strong>cts.wordQuery('napa biking tours')</strong>) <br>
+  &nbsp;&nbsp;.result()</p>
+<p>Result:</p>
+<p><img src="../images/unit07/document_company_name.png" width="700" height="209" class="image-border"></p>
+<p>Or, for one more example, doing an 'and' query, to specify more than one requirement.</p>
+<p class="code">const op = require('/MarkLogic/optic');  <br>
+  <br>
+op.fromView(&quot;customer360&quot;, &quot;calls&quot;)<br>
+&nbsp;&nbsp;.where(<strong>cts.andQuery((cts.wordQuery(&quot;order&quot;), cts.wordQuery(&quot;puncture&quot;)))</strong>) <br>
+&nbsp;&nbsp;.result()</p>
+<p>Result (with stemmed searches turned on for the database):</p>
+<p><img src="../images/unit07/ctsandquery.png" width="696" height="172" class="image-border"></p>
+<p class="topic-sub-heading">Stemming</p>
+<p>Stemming is a feature available in MarkLogic, to enabled searches to return results where any version of the stemmed word are found. For example, to include documents that have the word 'punctured' in a search for 'puncture', stemming can be used.</p>
+<p>Stemming can be turned on via the <strong>stemmed searches</strong> setting for a database.</p>
+<p><img src="../images/unit07/stemmed_searches.png" width="566" height="69" class="image-border"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0703_x_use_document_criteria.htm" class="exercise-link">Exercise (Use Document Criteria)</a></p>
+<p>Back: <a href="0702_x_write_an_optic_api_query_in_javascript.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

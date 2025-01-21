@@ -1,0 +1,29 @@
+<export><workspace name="JSON and XML (XQuery)"><query name="Insert XML Document" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xdmp:document-insert("doc-01.xml", &lt;foo&gt;&lt;bar&gt;bar text&lt;/bar&gt;&lt;qux&gt;qux text&lt;/qux&gt;&lt;/foo&gt;) </query><query name="Transform XML to JSON" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace json = "http://marklogic.com/xdmp/json" at "/MarkLogic/json/json.xqy"; 
+
+json:transform-to-json(fn:doc("doc-01.xml"), json:config("custom"))</query><query name="Insert as JSON Document" focus="false" listorder="3" taborder="3" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace json = "http://marklogic.com/xdmp/json" at "/MarkLogic/json/json.xqy"; 
+
+let $doc := json:transform-to-json(fn:doc("doc-01.xml"), json:config("custom"))
+return xdmp:document-insert("doc-01.json", $doc) </query><query name="Transform JSON to XML" focus="false" listorder="4" taborder="4" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace json = "http://marklogic.com/xdmp/json" at "/MarkLogic/json/json.xqy"; 
+
+json:transform-from-json(fn:doc("doc-01.json"), json:config("custom"))</query><query name="To JSON with Whitespace" focus="false" listorder="5" taborder="5" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace json = "http://marklogic.com/xdmp/json" at "/MarkLogic/json/json.xqy"; 
+
+json:transform-to-json(fn:doc("/accounting/order-10991.xml"), json:config("custom"))</query><query name="Ignore Whitespace" focus="false" listorder="6" taborder="6" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">xquery version "1.0-ml";
+
+import module namespace json = "http://marklogic.com/xdmp/json" at "/MarkLogic/json/json.xqy";
+
+let $xml := fn:doc("/accounting/order-10991.xml")
+
+let $custom :=
+let $config := json:config("custom")
+let $_ := map:put($config, "whitespace", "ignore")
+return $config
+
+return json:transform-to-json($xml, $custom)</query></workspace></export>

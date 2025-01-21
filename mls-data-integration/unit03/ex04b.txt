@@ -1,0 +1,8 @@
+'use strict';
+const names = [];
+for (const doc of fn.collection('canonical')) {
+  if ((doc.xpath('/envelope/canonical/company/text()').toString()) === 'Campus Bikes') {
+    names.push(`${doc.xpath('/envelope/canonical/firstName/text()')} ${doc.xpath('/envelope/canonical/lastName/text()')}`);
+  }
+}
+names;

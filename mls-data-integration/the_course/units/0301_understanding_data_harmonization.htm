@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Understanding  Data Harmonization</strong></p>
+<p>Harmonization is all about aligning data that has come in from different sources. For example, imagine having purchases data that has come in from two different systems, where the output from one system has the data  based on its schema, and the output from the second system has the data based on  its schema. </p>
+<p>Example of a purchase  document from one system:</p>
+<p class="code">&lt;order&gt;<br>
+  &nbsp;&nbsp;&lt;order-num&gt;14502&lt;/order-num&gt;<br>
+  &nbsp;&nbsp;&lt;order-date&gt;2017-02-15&lt;/order-date&gt;<br>
+  &nbsp;&nbsp;&lt;items&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro SF2&lt;/product&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;899&lt;/price&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;3&lt;/quantity&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;... </p>
+<p>Example of a purchase document from a second system: </p>
+<p><span class="code">&lt;booking id=&quot;113&quot;&gt;<br>
+  &nbsp;&nbsp;&lt;date&gt;2016-12-28&lt;/date&gt;<br>
+  &nbsp;&nbsp;&lt;line-items&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro Ultimate&lt;/product&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;999&lt;/price&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</span></p>
+<p>  In bringing  somewhat similar data into your database, such as purchases from two  different systems, you can harmonize the structure and element names (in the case of XML documents, or property names in case of JSON documents) in the documents, so that you can  run streamlined queries that includes data from both types of documents (e.g. retrieve a sales total that includes all of the purchases).</p>
+<p class="topic-sub-heading"><strong>Approaches to Harmonization</strong></p>
+<p>Harmonization can be done in a variety of ways, such as by modifying documents as they are being loaded, by modifying documents that have already been loaded, or by not modifying documents but  by using MarkLogic features such as triples,  templates,   entity services, or  the Data Hub Framework. Yet another way to do harmonization is at query time, through the use of creative queries.</p>
+<p>To modify data <strong>while it is being loaded</strong>, an MLCP transformation can be applied, or the Data Movement SDK can be used, or the Content Processing Framework (CPF) can be used, or custom code written in   XQuery, JavaScript, Node.js,  or Java can be used, or any programming language communicating with MarkLogic through the REST API can be used. </p>
+<p>To modify data that has <strong>already been loaded</strong>, the Data Movement SDK, CoRB,   XQuery, JavaScript, Node.js, Java, or any language using the REST API can be used.</p>
+<p>To harmonize data by <strong>adding triples</strong>, triples can be inserted via any of the loading interfaces, as well as created dynamically through any of the programming interfaces. </p>
+<p>Using MarkLogic 9 or later, <strong>templates</strong> can be used to harmonize data without modifying the source documents.</p>
+<p>Using MarkLogic 9 or later, <strong>entity services</strong> can be used to model and harmonize data.</p>
+<p>The <strong>Data Hub Framework</strong> is an open source project that provides a graphical user interface for importing and harmonizing data in MarkLogic.</p>
+<p>For harmonizing data at <strong>query time</strong>, 'or' expressions, fields, and/or creative queries can be used.</p>
+<p class="topic-sub-heading">Harmonization Activities</p>
+<p>Examples of  harmonization types of activity include:</p>
+<ul>
+  <li>Creating canonical XML elements (or JSON properties) in the source documents</li>
+  <li>Normalizing dates</li>
+  <li>Performing entity resolution between differing name values from multiple systems</li>
+  <li>Standardizing values (e.g. standardizing on &quot;CA&quot; versus having &quot;California&quot; for some values,  &quot;Calif&quot; for some, and &quot;CA&quot; for others)</li>
+  <li>Extracting  data from content and writing to new elements for indexing </li>
+  <li>Consolidating overlapping data from multiple data sources into one document</li>
+  <li> Enriching data with additional data/markup</li>
+  <li> Creating semantic triples for relationship queries</li>
+</ul>
+<p>Along with making it much simpler to write  queries, harmonization can also help with query performance. In addition, harmonization can  allow range indexes to be created on the data, which are useful in a variety of ways, including for   features such as facets and co-occurrence.</p>
+<p><strong> </strong></p>
+<p>&nbsp;</p>
+<p><br>
+</p>
+<p>Next: <a href="0301_x_view_data_to_be_harmonized.htm" class="exercise-link">Exercise (View Data to be Harmonized)</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

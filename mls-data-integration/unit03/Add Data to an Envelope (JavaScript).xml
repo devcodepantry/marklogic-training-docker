@@ -1,0 +1,50 @@
+<export><workspace name="Add Data to an Envelope (JavaScript)"><query name="View Document" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+fn.doc('/marketing/contact-cs003.xml');</query><query name="Add Canonical Section" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+
+xdmp.nodeInsertBefore(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/source'),
+    fn.head(xdmp.unquote('&lt;canonical&gt;&lt;/canonical&gt;')).root);</query><query name="Add Canonical Content" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+
+const doc = cts.doc('/marketing/contact-cs003.xml');
+const company = doc.xpath('/envelope/source/contact/company/text()');
+const firstName = doc.xpath('/envelope/source/contact/first-name/text()');
+const lastName = doc.xpath('/envelope/source/contact/last-name/text()');
+
+xdmp.nodeInsertChild(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/canonical'),
+    fn.head(xdmp.unquote('&lt;company&gt;' + company + '&lt;/company&gt;')).root);
+xdmp.nodeInsertChild(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/canonical'),
+    fn.head(xdmp.unquote('&lt;firstName&gt;' + firstName + '&lt;/firstName&gt;')).root);
+xdmp.nodeInsertChild(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/canonical'),
+    fn.head(xdmp.unquote('&lt;lastName&gt;' + lastName + '&lt;/lastName&gt;')).root);</query><query name="Assign Collection" focus="false" listorder="4" taborder="4" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+
+xdmp.documentSetCollections('/marketing/contact-cs003.xml', ['canonical']);</query><query name="Add Canonical 1223 and 1828" focus="false" listorder="5" taborder="5" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+
+const docs = cts.search(cts.andQuery(
+            [cts.collectionQuery('envelope'),cts.elementValueQuery('co', 'Campus Bikes')]));
+
+for (const doc of docs) {   
+    const co = doc.xpath('envelope/source/contact/co/text()');
+    const first = doc.xpath('envelope/source/contact/name/first/text()');
+    const last = doc.xpath('envelope/source/contact/name/last/text()');
+
+    xdmp.nodeInsertBefore(doc.xpath('envelope/source'),
+    fn.head(xdmp.unquote(
+        `&lt;canonical&gt; 
+           &lt;company&gt;${co}&lt;/company&gt;
+           &lt;firstName&gt;${first}&lt;/firstName&gt;
+           &lt;lastName&gt;${last}&lt;/lastName&gt;
+        &lt;/canonical&gt;`
+        )
+    ).root);
+
+    xdmp.documentSetCollections(fn.baseUri(doc), 'canonical')
+};</query><query name="OYO Answer" focus="false" listorder="6" taborder="6" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+
+xdmp.nodeInsertBefore(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/source'),
+    fn.head(xdmp.unquote('&lt;metadata&gt;&lt;leadSource&gt;2017 Los Angeles Cycle Show&lt;/leadSource&gt;&lt;leadDate&gt;2017-04-15&lt;/leadDate&gt;&lt;collectedBy&gt;Raffle bowl&lt;/collectedBy&gt;&lt;/metadata&gt;')).root);
+</query></workspace></export>

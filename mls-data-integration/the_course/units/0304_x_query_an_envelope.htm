@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Query an Envelope </strong></p>
+<p>In this walkthrough exercise, you use  canonical data to easily query  documents that have different source structures.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a new tab, select <strong>XQuery</strong> for Query Type, and enter the following (unit03/<strong>ex04a.txt</strong>):<br>
+    <br>
+    <span class="code">for $c in /envelope/canonical[company = &quot;Campus Bikes&quot;]  <br>
+    return concat($c/firstName/text(), &quot; &quot;, $c/lastName/text())</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the names of all three Campus Bikes contacts  are returned, even though one of the documents came from a different source system, with a  different schema, than the other two documents:<br>
+    <br>
+  <img src="../images/unit03/all_three.png" width="269" height="101" class="image-border"></li>
+  <li class="exercise-step">Run  the equivalent in JavaScript by creating a new tab, selecting <strong>JavaScript</strong> for the Query Type, and entering the following (<strong>ex04b.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict'; <br>
+const names = []; <br>
+<br>
+for (const doc of fn.collection('canonical')) { <br>
+&nbsp; if ((doc.xpath('/envelope/canonical/company/text()').toString()) === 'Campus Bikes') { <br>
+&nbsp; &nbsp;&nbsp;names.push(`${doc.xpath('/envelope/canonical/firstName/text()')} ${doc.xpath('/envelope/canonical/lastName/text()')}`); <br>
+&nbsp; } <br>
+} <br>
+names;</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step"><strong>See</strong> that all three contacts for Campus Cycles are returned:<br>
+    <br>
+  <img src="../images/unit03/javascript_results.png" width="278" height="106" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0305_using_corb_for_batch_processing.htm" class="exercise-link">Topic (Using CoRB for Batch Processing)</a></p>
+<p>Back: <a href="0304_querying_an_envelope.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Create Entity Instances</strong></p>
+<p>In this walkthrough exercise, you modify the conversion functions, then put the module into the customer360-modules database, and then use it to convert the product documents into becoming instances of the Product entity type.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">Still in the <strong>procycling-0.0.1-conv.xqy</strong> file, scroll to the procycling:extract-instance-Product() function (line 58) to locate  the mappings (<strong>lines 40-76</strong>):<br>
+    <br>
+    <img src="../images/unit08/extract_function_cs.png" width="703" height="626" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Realize that the mappings are to map the property names coming from the source documents (right column) to the property names in the model (left column).</li>
+  <li class="exercise-step">In Query Console, select the <strong>customer360</strong> database,  click <strong>Explore</strong>, and click the link of one of the product documents (e.g. <strong>/product/product_a129.json</strong>), to see the document structure:<br>
+    <br>
+    <img src="../images/unit08/product_source_doc_structure.png" width="385" height="228" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Back in the <strong>procycling-0.0.1-conv.xqy</strong> file, in the mappings on lines 45-54, modify the values in the second column to match the source documents:<br>
+    <br>
+    <img src="../images/unit08/mappings_cropped_cs.png" width="700" height="173" class="image-border"><br>
+    <em>Note: The ones to put in are <strong>prodId</strong> and <strong>madeOf</strong></em><br>
+  </li>
+  <li class="exercise-step"><strong>Save</strong> the file.</li>
+  <li class="exercise-step">In Query Console, create a new tab, select the <strong>customer360-modules</strong> database, and enter the following to import the procycling-0.0.1-conv.xqy module into the customer360-modules database (unit08/<strong>ex06a.txt</strong>):<br>
+    <br>
+  <span class="code">'use strict'; <br>
+  declareUpdate(); <br>
+  <br>
+  const ES_DIR = '/home/cent/Desktop/mls-data-integration/es/';<br>
+  <br>
+  xdmp.documentLoad( <br>
+&nbsp;  ES_DIR + 'procycling-0.0.1-conv.xqy', <br>
+&nbsp; {uri: '/es/procycling-0.0.1-conv.xqy'} <br>
+  ); </span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">If desired, click the Explore button, to see the <strong>/es/procycling-0.0.1-conv.xqy</strong> module listed:<br>
+    <br>
+    <img src="../images/unit08/customer360-modules.png" width="392" height="35" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Create a new tab, select the <strong>customer360</strong> database.</li>
+  <li class="exercise-step">For  Server, select  <strong>8055-customer360</strong>:<br>
+    <br>
+    <img src="../images/unit08/server.png" width="254" height="79" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Replace the placeholder text with  the following, to convert the product documents into enveloped Product instances (<strong>ex06b.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict';<br>
+    declareUpdate();<br>
+    <br>
+const es = require('/MarkLogic/entity-services/entity-services.xqy');<br>
+const procycling = require('/es/procycling-0.0.1-conv.xqy');<br>
+<br>
+for (const source of xdmp.directory('/product/')) {<br>
+&nbsp;&nbsp;let instance = procycling.extractInstanceProduct(source);<br>
+&nbsp;&nbsp;let uri = '/es/product/' + instance.id + '.xml';<br>
+&nbsp;&nbsp;xdmp.documentInsert(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uri, procycling.instanceToEnvelope(instance),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{collections: ['es-product']}<br>
+&nbsp;&nbsp;);<br>
+}</span><br>
+  </li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button, to see the generated files:<br>
+    <br>
+  <img src="../images/unit08/generated_instances.png" width="602" height="172" class="image-border"></li>
+  <li class="exercise-step">Click the link for one of the them (e.g. /es/product/a129.xml), to see the contents:<br>
+    <br>
+  <img src="../images/unit08/instance.png" width="696" height="369" class="image-border"></li>
+  <li class="exercise-step">See that the generated instance  adheres to the model.</li>
+  <li class="exercise-step">Notice that the source content is in the es:attachments element, and the canonical elements within the Product element within the es:instance element.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0807_using_instances.htm" class="exercise-link">Topic (Using Instances)</a></p>
+<p>Back: <a href="0806_creating_entity_instances.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

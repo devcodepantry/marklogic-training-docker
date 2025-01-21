@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Write a Model Descriptor</strong></p>
+<p>In this walkthrough exercise, you create a model descriptor for ProCycling's schema.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">On the <strong>desktop</strong> of your virtual machine, inside the <strong>mls-data-integration</strong> folder, create a <strong>new folder</strong> named<span class="code"> es </span>(right-click - Create Folder):<br>
+    <br>
+    <img src="../images/unit08/es_folder_cs.png" width="469" height="194" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Open</strong> the es folder.</li>
+  <li class="exercise-step">Create a<strong> new file</strong> inside the es folder (right-click - Create Document - Empty File), named<span class="code"> procycling-model-descriptor.json</span>.<br>
+  </li>
+  <li class="exercise-step"><strong>Open</strong> the <strong>procycling-model-descriptor.json</strong> file in a text editor.</li>
+  <li class="exercise-step">Enter the following, to define the descriptor (unit08/<strong>ex02a.txt</strong>):<br>
+    <br>
+    <span class="code">{    <br>
+    &nbsp;    &quot;info&quot;: {      <br>
+    &nbsp;&nbsp;&nbsp;    &quot;title&quot;: &quot;procycling&quot;,      <br>
+    &nbsp;&nbsp;&nbsp;    &quot;version&quot;: &quot;0.0.1&quot;,      <br>
+    &nbsp;    &nbsp;    &quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;,      <br>
+    &nbsp;    &nbsp;    &quot;description&quot;: &quot;ProCycling schema to define entity types, such as for products, orders, and customers.&quot;<br>
+&nbsp;    },    <br>
+&nbsp;&nbsp;&quot;definitions&quot;: {   <br>
+<br>
+&nbsp; } <br>
+}</span><br>
+  </li>
+  <li class="exercise-step">  Save the file.</li></ol>
+<p>&nbsp;</p>
+<p>Next: <a href="0803_defining_an_entity_type.htm" class="exercise-link">Topic (Defining an Entity)</a></p>
+<p>Back: <a href="0802_writing_a_model_descriptor.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Learn about SQL in MarkLogic</strong></p>
+<p>In this walkthrough exercise, you first access the MarkLogic SQL Data Modeling Guide, to learn about SQL in MarkLogic. Then you check that you have a template view defined, to use for SQL queries.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In a browser, navigate to <a href="http://docs.marklogic.com/guide/sql" target="_blank">docs.marklogic.com/guide/sql</a>. </li>
+  <li class="exercise-step">Notice the table of contents:<br>
+    <br>
+    <img src="../images/unit06/sql_guide_toc.png" width="430" height="212" class="image-border"><br>
+  </li>
+  <li class="exercise-step">  Select the <strong>SQL on MarkLogic Server</strong> link.</li>
+  <li class="exercise-step"><strong>Notice </strong> template view mentions:<br>
+    <br>
+    <img src="../images/unit06/docs_template_view_mentions.png" width="594" height="591" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the browser's <strong>Back</strong> button, to return to the table of contents.</li>
+  <li class="exercise-step">Notice the <strong>Creating Template Views</strong> link, and select it.</li>
+  <li class="exercise-step">Skim the first paragraph:<br>
+    <br>
+    <img src="../images/unit06/docs_creating_template_views.png" width="591" height="493" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the browser's <strong>Back</strong> button, to return to the table of contents.</li>
+  <li class="exercise-step">Continue perusing, as desired.</li>
+  <li class="exercise-step">In <strong>Query Console</strong>, create a <strong>new workspace</strong> and name it<span class="code"> SQL</span>. </li>
+  <li class="exercise-step">For Database, select <strong>customer360</strong>.</li>
+  <li class="exercise-step">For Query Type, select <strong>XQuery</strong>. </li>
+  <li class="exercise-step">Enter the following, to see the view that you will be running SQL queries against, that you defined in the last unit:<br>
+    <span class="code"><br>
+  tde:get-view(&quot;customer360&quot;, &quot;purchases&quot;) </span></li>
+  <li class="exercise-step">Press <strong>Run</strong>.</li>
+  <li class="exercise-step"><strong>Review</strong>  the names of the columns defined  in the purchases view (e.g. order_date, order_id, company, product, price, quantity, row_total, notes):<br>
+    <br>
+    <img src="../images/unit06/purchases_view.png" width="351" height="625" class="image-border"><br></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0602_running_a_sql_query.htm" class="exercise-link">Topic (Running a SQL Query)</a></p>
+<p>Back: <a href="0601_understanding_sql_in_marklogic.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

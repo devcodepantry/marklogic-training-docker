@@ -1,0 +1,30 @@
+<export><workspace name="Using Triples (XQuery)"><query name="Napa Biking Tours" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?p ?o 
+WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o}</query><query name="More" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?p ?o ?p2 ?o2
+WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o . OPTIONAL {?o ?p2 ?o2}}</query><query name="Board Members" focus="false" listorder="3" taborder="3" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?s ?o 
+WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt; ?o}</query><query name="Board Members and Investors" focus="false" listorder="4" taborder="4" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?s ?o 
+WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt; | &lt;http://procycling.com/ontology/investor&gt; ?o}</query><query name="Show Relationship" focus="false" listorder="5" taborder="5" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?s ?p ?o 
+WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt; | &lt;http://procycling.com/ontology/investor&gt; ?o . ?s ?p ?o}</query><query name="Retrieve Contacts" focus="false" listorder="6" taborder="6" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">for $doc in /envelope/canonical[company = "Napa Biking Tours"] 
+
+return &lt;div&gt;{$doc/company/text()}: {$doc/firstName/text()}&amp;nbsp;{$doc/lastName/text()}, {$doc/email/text()}&lt;/div&gt;</query><query name="Napa BIking Tours" focus="false" listorder="7" taborder="7" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT * 
+WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o}</query><query name="Biking Winery Tours" focus="false" listorder="8" taborder="8" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT * 
+WHERE {&lt;http://procycling.com/resource/Biking_Winery_Tours&gt; ?p ?o}</query><query name="Insert sameAs" focus="false" listorder="9" taborder="9" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql-update">INSERT DATA 
+{ 
+  &lt;http://procycling.com/resource/Biking_Winery_Tours&gt; 
+  &lt;http://www.w3.org/2002/07/owl#sameAs&gt; 
+  &lt;http://procycling.com/resource/Napa_Biking_Tours&gt; 
+}</query><query name="Path Inferencing" focus="false" listorder="10" taborder="10" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">
+SELECT ?s ?p ?o 
+WHERE {?s ?p ?o .
+?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;} </query><query name="IRIs" focus="false" listorder="11" taborder="11" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?s ?p ?o 
+WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;} </query><query name="Friendly Names" focus="false" listorder="12" taborder="12" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="sparql">SELECT ?name
+WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt; . ?s &lt;http://xmlns.com/foaf/0.1/name&gt; ?name}</query><query name="App Code" focus="false" listorder="13" taborder="13" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">import module namespace sem = "http://marklogic.com/semantics" at "/MarkLogic/semantics.xqy"; 
+
+declare namespace s = "http://www.w3.org/2005/sparql-results#"; 
+
+for $company in sem:query-results-serialize(sem:sparql( 
+"SELECT ?name 
+WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt; . ?s &lt;http://xmlns.com/foaf/0.1/name&gt; ?name}"))//s:literal/text() 
+
+for $doc in /envelope/canonical[company = $company] 
+
+return &lt;div&gt;{$doc/company/text()}: {$doc/firstName/text()}&amp;nbsp;{$doc/lastName/text()}, {$doc/email/text()}&lt;/div&gt; </query></workspace></export>

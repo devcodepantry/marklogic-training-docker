@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Adding Data to an Envelope</strong></p>
+<p>Data can be added to an envelope  by using any of the methods that are already available for modifying a document, including XQuery, JavaScript,  Node.js, Java, REST, Data Movement SDK, CPF, or CoRB. </p>
+<p><strong>XQuery</strong> example: </p>
+<p><span class="code">xdmp:node-insert-before(fn:doc(&quot;/marketing/contact-cs003.xml&quot;)/envelope/source, &lt;canonical&gt;&lt;/canonical&gt;)</span></p>
+<p><strong>JavaScript</strong> example:</p>
+<p class="code">'use strict';<br>
+declareUpdate();</p>
+<p class="code">xdmp.nodeInsertBefore(cts.doc('/marketing/contact-cs003.xml').xpath('/envelope/source'),<br>
+  fn.head(xdmp.unquote('&lt;canonical&gt;&lt;/canonical&gt;')).root);<br>
+</p>
+<p><br>
+To use the <strong>REST API</strong> to modify documents, the PATCH method is used on the /v1/documents endpoint, as described at <strong>docs.marklogic.com/REST/PATCH/v1/documents</strong>.</p>
+<p>Similarly, to use the <strong>Java API</strong> to modify documents, the .patch() method of the DocumentManager interface is used, as described at <strong>developer.marklogic.com/learn/java/crud</strong>.</p>
+<p class="topic-sub-heading"> Canonical Data</p>
+<p>Canonical data (i.e. data stored in a standard vocabulary) is commonly added to an envelope in order to harmonize data coming from different sources. </p>
+<p>For example, with sales leads collected from more than one source,  data to be read from all of the source documents might be the person's name, company, address, phone number, and email. </p>
+<p>Example of a document with canonical data added for company, first name, and last name:</p>
+<p class="code">&lt;envelope&gt; <br>
+  &nbsp;&nbsp;<strong>&lt;canonical&gt;</strong><br>
+  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;company&gt;Campus Bikes&lt;/company&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;firstName&gt;Chris&lt;/firstName&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;lastName&gt;Clark&lt;/lastName&gt;<br>
+  &nbsp;&nbsp;&lt;/canonical&gt;</strong><br>
+  &nbsp;&nbsp;&lt;source&gt;<br>
+  &nbsp;&nbsp;&nbsp;  &lt;contact&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id&gt;1223&lt;/id&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;first&gt;Chris&lt;/first&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;last&gt;Clark&lt;/last&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;co&gt;Campus Bikes&lt;/co&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;addr&gt;6000 Alcala Park Way&lt;/addr&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;city&gt;San Diego&lt;/city&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;state&gt;California&lt;/state&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;zip&gt;92110&lt;/zip&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;phone&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;work&gt;619-849-4554&lt;/work&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/phone&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;cclark@campusbikes.com&lt;/email&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;communications&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;mailok&gt;yes&lt;/mailok&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;emailok&gt;yes&lt;/emailok&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;frequency&gt;daily&lt;/frequency&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/communications&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contact&gt; <br>
+&nbsp;&nbsp;&lt;/source&gt;<br>
+&lt;/envelope&gt;</p>
+Example of a document from another source, with canonical data added for company, first name, and last name<strong></strong>:
+<p class="code">&lt;envelope&gt; <br>
+&nbsp;&nbsp;<strong>&lt;canonical&gt;</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;company&gt;Campus Bikes&lt;/company&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;firstName&gt;Karline&lt;/firstName&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;lastName&gt;Kosdrosky&lt;/lastName&gt;<br>
+&nbsp;&nbsp;&lt;/canonical&gt;</strong><br>
+  &nbsp;  &lt;source&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;contact&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id&gt;cs003&lt;/id&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;first-name&gt;Karline&lt;/first-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;last-name&gt;Kosdrosky&lt;/last-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;company&gt;Campus Bikes&lt;/company&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;6000 Alcala Park Way&lt;/address&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;city&gt;San Diego&lt;/city&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;state&gt;California&lt;/state&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;zip&gt;92110&lt;/zip&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;kkosdrosky@campusbikes.com&lt;/email&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/contact&gt; <br>
+&nbsp;  &lt;/source&gt; <br>&lt;/envelope&gt;</p>
+<p>By creating a common vocabulary across similar documents, queries can be greatly simplified. In addition,  the canonicalized data can  be used with features that require data to be indexed, such as <span class="exercise-step">facets and co-occurrence</span>. Also, the original content  is retained,  useful for provenance purposes. </p>
+<p class="topic-sub-heading"> Metadata </p>
+<p><span class="exercise-step">Using an envelope  to store metadata (i.e. data about  data)  is another common use of the envelope pattern. </span></p>
+<p>For example, in the case of a marketing lead, imagine wanting to store data about where the lead was collected, the date it was collected,  and who collected it. </p>
+<p><span class="code">&lt;envelope&gt; <br>
+  &nbsp;&nbsp;&lt;canonical&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;company&gt;Campus Bikes&lt;/company&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;firstName&gt;Karline&lt;/firstName&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;lastName&gt;Kosdrosky&lt;/lastName&gt;<br>
+&nbsp;&nbsp;&lt;/canonical&gt;<br>
+ <strong>&nbsp;&nbsp;&lt;metadata&gt;<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&lt;leadSource&gt;2017 Los Angeles Cycle Show&lt;/leadSource&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;leadDate&gt;2017-04-15&lt;/leadDate&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;collectedBy&gt;</strong></span><strong><span class="code">Raffle bowl&lt;/collectedBy&gt;<br>
+  &nbsp;&nbsp;&lt;/metadata&gt;</span></strong><span class="code"><br>
+  &nbsp;  &lt;source&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;contact&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id&gt;cs003&lt;/id&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;first-name&gt;Karline&lt;/first-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;last-name&gt;Kosdrosky&lt;/last-name&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;company&gt;Campus Bikes&lt;/company&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;6000 Alcala Park Way&lt;/address&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;city&gt;San Diego&lt;/city&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;state&gt;California&lt;/state&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;zip&gt;92110&lt;/zip&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;kkosdrosky@campusbikes.com&lt;/email&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/contact&gt; <br>
+  &nbsp;  &lt;/source&gt; <br>
+&lt;/envelope&gt;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0303_x_add_data_to_an_envelope.htm">Exercise (Add Data to an Envelope)</a></p>
+<p>Back: <a href="0302_x_create_an_envelope.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

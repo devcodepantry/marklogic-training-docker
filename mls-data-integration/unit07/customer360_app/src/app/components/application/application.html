@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>ProCycling Customer 360 Dashboard</h1>
+  <div class="row">
+    <div class="col">
+      <!--Customer: <dm-customer-list [(ngModel)]="selectedCustomer" ngDefaultControl></dm-customer-list>-->
+      Customer: <dm-customer-list (ngModel)="selectedCustomer" (change)="changeValue($event.target.value)"></dm-customer-list>
+    </div>
+  </div>
+  <div *ngIf="selectedCustomer">
+    <div class="row">
+      <div class="col">
+        <dm-customer-info [customer]="selectedCustomer"></dm-customer-info>
+      </div>
+    </div>
+    <div class="row" id="purchase">
+      <div class="col">
+        <dm-recent-purchases [customer]="selectedCustomer"></dm-recent-purchases>
+      </div>
+    </div>
+    <div class="row" id="support">
+      <div class="col">
+        <dm-support-calls [customer]="selectedCustomer"></dm-support-calls>
+      </div>
+    </div>
+    <div class="row" id="contact">
+      <div class="col">
+        <dm-marketing-contacts [customer]="selectedCustomer"></dm-marketing-contacts>
+      </div>
+    </div>
+    <div class="row" id="graph">
+      <div class="col">
+        <dm-lodlive [customer]="selectedCustomer"></dm-lodlive>
+      </div>
+    </div>
+  </div>
+</div>

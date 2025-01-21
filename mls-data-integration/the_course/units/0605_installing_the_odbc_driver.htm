@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Installing the ODBC Driver</strong></p>
+<p>By installing the MarkLogic ODBC driver on a computer, any  ODBC-based applications installed on the computer (e.g. Tableau or Cognos) then have the capability to talk to MarkLogic databases through ODBC (e.g. to send SQL queries and receive results). </p>
+<p>Available for Linux and Windows, the MarkLogic ODBC driver can be downloaded from <strong>developer.marklogic.com/products/odbc</strong>.</p>
+<p><img src="../images/unit06/odbc_driver.png" width="728" height="276" class="image-border"></p>
+<p>The steps for installing the driver depend on the operating system of the computer that the driver is being installed on (i.e. Linux or Windows).</p>
+<p class="topic-sub-heading">Linux</p>
+<p>To install the MarkLogic 9 ODBC driver on a Linux computer, <strong>unixODBC </strong>(<strong>2.3.4</strong> or later) is required, which can be downloaded from www.unixodbc.org.</p>
+<p>To install the the MarkLogic ODBC driver package on Red Hat Linux, <strong>rpm</strong> can be used.</p>
+<p class="code">rpm -i mlsqlodbc-1.1-20140528.x86_64.rpm</p>
+<p>To define a DSN (name representing the configuration for connecting  to a specific MarkLogic database) in the current user's .odbc.ini file, the <strong>odbcinst</strong> command can be used.</p>
+<p class="code">odbcinst -i -s -f /opt/MarkLogic/templates/mlsql.template</p>
+<p>Detail on the steps for installing the MarkLogic ODBC driver on a Linux computer are at docs.marklogic.com/guide/sql/odbc-driver#id_67222.</p>
+<p class="topic-sub-heading">isql</p>
+<p>In installing unixODBC, a tool called isql is also installed. </p>
+<p> isql  is handy for checking that an ODBC driver has been set up, and for testing the  connection to a  database. </p>
+<p><span class="code">isql -v MarkLogicSQL admin admin</span></p>
+<p>In the example above, MarkLogicSQL represents the name of the ODBC data source, once it has been created. </p>
+<p class="topic-sub-heading">Windows</p>
+<p>The steps for installing the MarkLogic ODBC driver on a Windows computer are at docs.marklogic.com/guide/sql/odbc-driver#id_55653. </p>
+<p>For Windows, there is a 32-bit and a 64-bit MarkLogic OBDC driver available. If needed, both can be installed (like if the 32-bit driver is needed by some applications, such as Excel, and the 64-bt driver is needed for others).</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0605_x_install_the_odbc_driver.htm" class="exercise-link">Exercise (Install the ODBC Driver)</a></p>
+<p>Back: <a href="0604_x_create_an_odbc_app_server.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

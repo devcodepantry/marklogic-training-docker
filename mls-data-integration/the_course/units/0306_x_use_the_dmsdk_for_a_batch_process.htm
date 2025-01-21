@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use the Data Movement SDK for a Batch Process</strong> (optional)</p>
+<p>In this walkthrough exercise, you use the Data Movement SDK to load additional marketing contact documents, transforming the documents to add canonical data to each.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">If possible (depends on the amount of memory you have on your computer), increase the amount of memory allotted to the virtual machine to at least 4096 MB. (To do so, close all windows inside the virtual machine, then click the triangle in the upper-right corner, to then select the <strong>Shut Down</strong> icon, to then click the Power Off button. Then, with the virtual machine selected in VirtualBox Manager, click the <strong>System</strong> heading, change the Base Memory to <strong>4096</strong>, and click OK. Then click the <strong>Start</strong> button, and log in with<strong> cent</strong>/<span class="code">centos</span>.)</li>
+  <li class="exercise-step">In a browser, navigate to <a href="http://docs.marklogic.com/guide/java/data-movement" target="_blank">docs.marklogic.com/guide/java/data-movement</a>.</li>
+  <li class="exercise-step">Skim through the description and topics:<br>
+    <br>
+  <img src="../images/unit03/dmsdk_doc.png" width="626" height="495" class="image-border"></li>
+  <li class="exercise-step">If desired, select a topic of interest.</li>
+  <li class="exercise-step">On the desktop of your virtual machine, in the mls-data-integration/<strong>unit03</strong>/<strong>ex06_input</strong> folder, see that there are additional  contact documents:<br>
+    <br>
+  <img src="../images/unit03/contact_docs_cs.png" width="655" height="133" class="image-border"></li>
+  <li class="exercise-step">Right-click on one of the documents (e.g. <strong>/marketing/contact-25.xml</strong>), to select Open With - gedit, to see the contents:<br>
+    <br>
+  <img src="../images/unit03/contact_25.png" width="585" height="277" class="image-border"></li>
+  <li class="exercise-step"><strong>Notice </strong>that the structure of these documents is different than the contact documents  previously loaded in the database.</li>
+  <li class="exercise-step">Close the file. </li>
+  <li class="exercise-step">In the unit03/<strong>ex06_transform</strong>/<strong>xquery</strong> folder, open the <strong>envelope.xqy</strong> file in a text editor.</li>
+  <li class="exercise-step">See that the transformation code creates an envelope and canonical data:<br>
+    <br>
+    <img src="../images/unit03/dmsdk_envelope.png" width="697" height="564" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Close the file. </li>
+  <li class="exercise-step">Open a <strong>new</strong> command prompt window (<strong>Applications</strong> - <strong>System Tools</strong> - <strong>Mate Terminal</strong>), to be in the default directory for cent, and then enter the following, to use the REST API transforms endpoint to load the transformation module into the customer360-modules database (unit03/<strong>ex06a_curl_to_load_module.txt</strong>):<br>
+    <br>
+    <span class="code">curl --anyauth --user admin:admin -X PUT -d@&quot;Desktop/mls-data-integration/unit03/ex06_transform/xquery/envelope.xqy&quot; -i -H &quot;Content-type: application/xquery&quot; http://localhost:8055/v1/config/transforms/envelope</span> <br>
+  </li>
+  <li class="exercise-step">Press Enter, to run the command:<br>
+    <br>
+    <img src="../images/unit03/load_module_cs.png" width="665" height="303" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In Query Console, select the <strong>customer360-modules</strong> database, and click the Explore button.</li>
+  <li class="exercise-step">See that the following documents now exist:<br>
+    <br>
+  <img src="../images/unit03/modules_docs.png" width="675" height="68" class="image-border" border="0"></li>
+  <li class="exercise-step">On the desktop of your virtual machine, double-click the <strong>eclipse</strong> icon, to launch Eclipse. </li>
+  <li class="exercise-step"><strong>Wait</strong> for Eclipse to launch.</li>
+  <li class="exercise-step">When prompted, leave the default workspace setting (/home/cent/workspace) and click the <strong>OK</strong> button.</li>
+  <li class="exercise-step">Wait for Eclipse to continue launching.</li>
+  <li class="exercise-step">Inside Eclipse, close the Welcome tab.</li>
+  <li class="exercise-step">Select <strong>File</strong> - <strong>New</strong> -  <strong>Project...</strong>.</li>
+  <li class="exercise-step">In the New Project dialog box, select <strong>Java Project</strong>.</li>
+  <li class="exercise-step">Click the Next button.</li>
+  <li class="exercise-step">For Project name, enter<span class="code"> load-and-transform</span>.</li>
+  <li class="exercise-step">In the JRE section, ensure Java 1.8 or higher is selected:<br>
+    <br>
+    <img src="../images/unit03/jre.png" width="614" height="753" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the <strong>Finish</strong> button.</li>
+  <li class="exercise-step">If prompted to open the associated perspective, click Yes.</li>
+  <li class="exercise-step">Wait for the perspective to open.</li>
+  <li class="exercise-step">In the left navigation, right-click the load-and-transform folder, to select <strong>Configure</strong> - <strong>Convert to Maven</strong> <strong>Project</strong>.<br>
+    <br>
+  <em>Note: You may need to scroll down to locate Configure in the  list</em></li>
+  <li class="exercise-step">In the Create new POM dialog box, leave the default settings, and click <strong>Finish</strong>.</li>
+  <li class="exercise-step">Wait for the pom.xml file to be generated, noting the status in the lower-right corner:<br>
+    <br>
+  <img src="../images/unit03/maven_status.png" width="285" height="27" class="image-border"></li>
+  <li class="exercise-step">Wait until the status message is gone.</li>
+  <li class="exercise-step">In the pom.xml file, select the <strong>Dependencies</strong> tab:<br>
+    <br>
+  <img src="../images/unit03/maven_dep_tab.png" width="176" height="33" class="image-border"></li>
+  <li class="exercise-step">In the <strong>left</strong> column, click the <strong>Add...</strong> button.</li>
+  <li class="exercise-step">For Group Id, enter<span class="code"> com.marklogic</span>.</li>
+  <li class="exercise-step">For Artifact Id, enter<span class="code"> marklogic-client-api</span>.</li>
+  <li class="exercise-step">For Version, enter<span class="code"> 4.0.3</span>:<br>
+    <br>
+  <img src="../images/unit03/maven_dependency_cs_mavenfix.png" width="482" height="604" class="image-border"></li>
+  <li class="exercise-step">Click OK.  </li>
+  <li class="exercise-step"><strong>Save</strong> the pom.xml file.</li>
+  <li class="exercise-step">Wait until any status messages are finished and gone:<br>
+    <br>
+  <img src="../images/unit03/status_message.png" width="285" height="28" class="image-border"></li>
+  <li class="exercise-step"><strong>Close</strong> the pom.xml file.</li>
+  <li class="exercise-step">In the left navigation, click the <strong>triangle</strong> to expand the load-and-transform folder.</li>
+  <li class="exercise-step">Right-click on the <strong>src</strong> folder, to select <strong>New</strong> - <strong>Package</strong>.</li>
+  <li class="exercise-step">For name, enter<span class="code"> com.ml.mlu</span>.</li>
+  <li class="exercise-step">Click the Finish button.</li>
+  <li class="exercise-step">Right-click on the com.ml.mlu package, to select <strong>New</strong> - <strong>Class</strong>.</li>
+  <li class="exercise-step">For name, enter<span class="code"> Utils</span>.</li>
+  <li class="exercise-step">Click the Finish button.</li>
+  <li class="exercise-step">In the Utils.java file, replace the contents with  the contents of unit03/<strong>ex06d_class_utils.txt</strong>:<br>
+    <br>
+    <img src="../images/unit03/utils.png" width="658" height="392" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Save</strong> and <strong>close</strong> the file.</li>
+  <li class="exercise-step">Right-click on the com.ml.mlu package, to select <strong>New</strong> - <strong>Class</strong>.</li>
+  <li class="exercise-step">For name, enter<span class="code"> LoadAndTransform</span>.</li>
+  <li class="exercise-step">Click the Finish button.</li>
+  <li class="exercise-step">In the LoadAndTransform.java file, replace the contents with  the contents of unit03/<strong>ex06e_class_loadandtransform.txt</strong>:<br>
+    <br>
+    <img src="../images/unit03/loadandtransform.png" width="660" height="500" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Save</strong> and <strong>close</strong> the file.</li>
+  <li class="exercise-step">Right-click on the <strong>src</strong> folder, to select <strong>New</strong> - <strong>File</strong>.</li>
+  <li class="exercise-step">For File name, enter<span class="code"> Example.properties</span>.</li>
+  <li class="exercise-step">Click the Finish button.</li>
+  <li class="exercise-step">In the Example.properties file, replace the contents with  the contents of unit03/<strong>ex06f_properties.txt</strong>:<br>
+    <br>
+    <img src="../images/unit03/example_properties.png" width="660" height="216" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Save</strong> and <strong>close</strong> the file.</li>
+  <li class="exercise-step">In the left navigation, right-click on  <strong>LoadAndTransform.java</strong> to select <strong>Run As</strong> - <strong>Java Application</strong>.</li>
+  <li class="exercise-step">See the message that  the three files loaded:<br>
+    <br>
+    <img src="../images/unit03/dmsdk_docs_loaded.png" width="691" height="195" class="image-border"><br>
+  <em>Note: It may take a few seconds for the message to display </em></li>
+  <li class="exercise-step">In Query Console, select the <strong>customer360</strong> database, and click the Explore button.</li>
+  <li class="exercise-step">Notice  the three new documents: <br>
+    <br>
+  <img src="../images/unit03/dmsdk_docs_uris.png" width="675" height="102" class="image-border"></li>
+  <li class="exercise-step">Click the link for one of the documents (e.g. <strong>/marketing/contact-25.xml</strong>), to see the contents:<br>
+    <br>
+    <img src="../images/unit03/dmsdk_transformed.png" width="432" height="496" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that the content was enveloped, and that canonical data was added.</li>
+</ol>
+<p><span class="exercise-step">If desired, modify the transformation file, to canonicalize the company name if it exists:</span></p>
+<ol class="exercise-step" start="67">
+  <li class="exercise-step">On the desktop of the virtual machine, in the mls-data-integration/unit03/<strong>ex06_transform</strong>/<strong>xquery </strong>folder, open the<strong> envelope.xqy</strong> file in a text editor.</li>
+  <li class="exercise-step">After  lastName, add a line for company (unit03/<strong>ex06g.txt</strong>):<br>
+    <br>
+    <span class="code">if ($content/contact/organization/data()) then element company {$content/contact/organization/data()} else (),</span><br>
+  </li>
+  <li class="exercise-step">Save the file.</li>
+  <li class="exercise-step">In a command prompt window, reload the module to the customer360-modules database (unit03/<strong>ex06a_curl_to_load_module.txt</strong>):<br>
+    <br>
+  <span class="code">curl --anyauth --user admin:admin -X PUT -d@&quot;Desktop/mls-data-integration/unit03/ex06_transform/xquery/envelope.xqy&quot; -i -H &quot;Content-type: application/xquery&quot; http://localhost:8055/v1/config/transforms/envelope</span></li>
+  <li class="exercise-step">In Eclipse, right-click on <strong>LoadAndTransform.java</strong> to select <strong>Run As</strong> - <strong>Java Application</strong>.</li>
+  <li class="exercise-step">See the message that  the three files loaded.</li>
+  <li class="exercise-step">In Query Console, click the Explore button.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-25.xml</strong> link, to see the  contents of the document:<br>
+    <br>
+    <img src="../images/unit03/dmsdk_company.png" width="408" height="514" class="image-border"><br>
+    <br>
+  </li>
+  <li class="exercise-step">See that the company element now exists.</li>
+  <li class="exercise-step"><strong>Close</strong> Eclipse.</li>
+  <li class="exercise-step">If desired, navigate to <a href="http://docs.marklogic.com/guide/java/data-movement" target="_blank">docs.marklogic.com/guide/java/data-movement</a>, to access the Java Application Developer's Guide, to learn more about the Data Movement SDK.</li>
+  <li class="exercise-step">If desired, navigate to the self-paced MarkLogic 9 New Features course at <a href="http://www.marklogic.com/training-courses/whats-new-marklogic-9" target="_blank">www.marklogic.com/training-courses/whats-new-marklogic-9</a>, to watch a video tutorial on the Data Movement SDK.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0307_resolving_entities.htm" class="exercise-link">Topic (Resolving Entities)</a></p>
+<p>Back: <a href="0306_using_the_dmsdk_for_batch_processing.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

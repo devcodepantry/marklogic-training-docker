@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using Templates for Harmonization</strong></p>
+<p>By defining more than one template for the same view, templates can  be used to harmonize data from documents that have different structures, to include them all in a single view. </p>
+<p>For example, imagine that, in addition to the orders from your main system, there are some additional order documents that came from a secondary system that your company has. </p>
+<p>Example of an order document from one system:</p>
+<p class="code">&lt;order&gt;<br>
+&nbsp;&nbsp;&lt;order-num&gt;14502&lt;/order-num&gt;<br>
+&nbsp;&nbsp;&lt;order-date&gt;2017-02-15&lt;/order-date&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;items&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro SF2&lt;/product&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;899&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;3&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... </p>
+<p>Example of an order document from a second system: </p>
+<p><span class="code">&lt;booking id=&quot;113&quot;&gt;<br>
+&nbsp;&nbsp;&lt;date&gt;2016-12-28&lt;/date&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;line-items&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro Ultimate&lt;/product&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;999&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</span></p>
+<p>In both cases, there is data for the order id, order date, product, price, and quantity.</p>
+<p class="topic-sub-heading">Creating a Second Template</p>
+<p>By having two templates for the same view, one template for each document structure, the order id, order date, product, price, and quantity values can be populated into the row index and available for any  queries  against the view. </p>
+<p>Second template:</p>
+<p class="code">import module &quot;http://marklogic.com/xdmp/tde&quot; at &quot;/MarkLogic/tde.xqy&quot;;</p>
+<p class="code">let <strong>$purchases-second-template</strong> := <br>
+  &lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;<br>
+  &nbsp;&nbsp;&lt;context&gt;<strong>/booking</strong>&lt;/context&gt;<br>
+  &nbsp;&nbsp;&lt;vars&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_date&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>date</strong>&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_id&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>@id</strong>&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+  &nbsp;&nbsp;&lt;/vars&gt;<br>
+  &nbsp;&nbsp;&lt;templates&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;context&gt;<strong>line-items</strong>/item&lt;/context&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;rows&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_date&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;date&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$order_date&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... </p>
+<p><br>
+If inserting a second template into an existing view, the <strong>column names and scalar types</strong> of the incoming template <strong>must</strong> <strong>match</strong> the column names and scalar types of the existing template, unless the &lt;view-layout&gt;sparse&lt;/view-layout&gt; option is used.</p>
+<p class="topic-sub-heading">Using a View</p>
+<p>Although there may be different paths to the data in different documents, by defining more than one template in the same view, the data can all be accessed from a single view, using SQL or the Optic API.</p>
+<p>Example SQL query that uses the purchases view:</p>
+<p class="code">SELECT * FROM purchases</p>
+<p>Result:</p>
+<p><span class="exercise-step"><img src="../images/unit05/results_all.png" width="699" height="356" class="image-border"><br>
+</span><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0507_x_use_templates_for_harmonization.htm" class="exercise-link">Exercise (Use Templates for Harmonization)</a></p>
+<p>Back: <a href="0506_x_disable_and_delete_a_template.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

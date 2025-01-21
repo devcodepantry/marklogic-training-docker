@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Transforming Data While Loading</strong></p>
+<p>Content can be modified during the loading process, or afterwards, in the database. </p>
+<p>Ways  to modify content during the loading process include by using the transform option in MLCP, or the Data Movement SDK,  or the Content Processing Framework (CPF), or custom code written in XQuery, JavaScript, Node.js, Java, or via the REST API. </p>
+<p>Ways to modify content once it is already in the database include by using the Data Movement SDK, CoRB, XQuery, JavaScript, Node.js, Java, or via the REST API.</p>
+<p class="topic-sub-heading">Using MLCP for Transformation </p>
+<p>MLCP provides a way to transform the contents of a document while it is being loaded. For example,  a date could be transformed to the standard international  date format of <strong>yyyy-mm-dd</strong>.</p>
+<p>Example <strong>XML</strong> source document:</p>
+<p class="code">&lt;foo&gt;<br>
+&nbsp;&nbsp;&lt;bar&gt;<strong>1/31/2017 9:00:00 AM</strong>&lt;/bar&gt;<br>
+&nbsp;&nbsp;&lt;baz&gt;some text&lt;/baz&gt;<br>
+&lt;/foo&gt;</p>
+<p>Example <strong>XQuery</strong> transformation module:</p>
+<p class="code">xquery version &quot;1.0-ml&quot;; </p>
+<p class="code">module namespace td = &quot;http://marklogic.com/mlu/transform-date&quot;; </p>
+<p class="code">import module namespace mem = &quot;http://xqdev.com/in-mem-update&quot; at &quot;/MarkLogic/appservices/utils/in-mem-update.xqy&quot;; </p>
+<p class="code">declare function td:transform(<strong>$content</strong> as map:map, <strong>$context</strong> as map:map) as map:map* <br>
+  { <br>
+  &nbsp; let $doc := map:get($content, &quot;value&quot;) <br>
+  &nbsp; let $old-date-format := &quot;[M]/[D]/[Y0001] [h01]:[m01]:[s01] [P]&quot; <br>
+  &nbsp; let $new-date-format := &quot;[Y0001]-[M01]-[D01]&quot; <br>
+  &nbsp; let $old-date-value := $doc/foo/bar/data() <br>
+  &nbsp; let $new-date-value := fn:format-date(xs:date(xdmp:parse-dateTime($old-date-format, $old-date-value)), $new-date-format) <br>
+  &nbsp; let $new-doc := mem:node-replace($doc/foo/bar, &lt;bar&gt;{$new-date-value}&lt;/bar&gt;) <br>
+  &nbsp; let $_ := map:put($content, &quot;value&quot;, $new-doc)   return $content <br>
+  }; </p>
+<p>An <strong>MLCP</strong> command can then be run that references  the XQuery module (or a JavaScript module), for transforming  the content in documents, while the documents are being loaded:</p>
+<p class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input/ex06_doc.xml <strong>-transform_module /mlcp-transform-date.xqy -transform_namespace &quot;http://marklogic.com/mlu/transform-date&quot; -transform_param &quot;value&quot; </strong>-output_uri_replace &quot;home/cent/Desktop/mls-data-integration/unit02/ex06_input,'transformed'&quot;<br>
+</p>
+<p>The <strong>-transform_module</strong> option is for specifying the name of the transformation module that contains the function that will be used to modify content in the -input_file_path documents. </p>
+<p>The <strong>-transform_namespace</strong> option is for referencing the namespace of the  module. </p>
+<p>The<strong> -transform_param</strong> option is for passing any additional context information about the insertion, such as transformation-specific parameter values.</p>
+<p>In the XQuery module above, the uri and the content of the document to be transformed are passed into the  function as <strong>$content</strong>, and the -transform_param of &quot;value&quot; is passed into the function as <strong>$context</strong>.</p>
+<p>Result:</p>
+<p><img src="../images/unit02/transformed_xml.png" width="252" height="90" class="image-border"></p>
+<p>&nbsp;</p>
+<p>Example <strong>JSON</strong> source document:</p>
+<p class="code">{<br>
+  &nbsp;&nbsp;&quot;date_and_time&quot;: &quot;1/28/2017 11:03:00 AM&quot;, <br>
+  &nbsp;&nbsp;&quot;caller&quot;: &quot;John Smith&quot;, <br>
+  &nbsp;&nbsp;&quot;reason&quot;: &quot;Wanted to know how our mountain bikes are made.&quot;<br>
+}</p>
+<p>Example <strong>JavaScript</strong> transformation module:</p>
+<p class="code">function formatDate(date) {<br>
+&nbsp;&nbsp;var d = new Date(date),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;month = '' + (d.getMonth() + 1),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day = '' + d.getDate(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year = d.getFullYear();</p>
+<p class="code"> &nbsp;&nbsp;if (month.length &lt; 2) month = '0' + month;<br>
+  &nbsp;&nbsp;if (day.length &lt; 2) day = '0' + day;</p>
+<p class="code"> &nbsp;&nbsp;return [year, month, day].join('-');<br>
+  };</p>
+<p class="code">function transformDate(content, context)<br>
+  {<br>
+  &nbsp;&nbsp;var docType = xdmp.nodeKind(content.value);</p>
+<p class="code"> &nbsp;&nbsp;if (docType == 'document' &amp;&amp;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content.value.documentFormat == 'JSON') <br>
+  &nbsp;&nbsp;{ <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;// Convert input to mutable object and add new property<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;var newDoc = content.value.toObject();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;var newDate = formatDate(newDoc.date_and_time);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;newDoc['date_and_time'] = newDate;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;// Convert result back into a document<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;content.value = xdmp.unquote(xdmp.quote(newDoc));<br>
+  &nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;return content;<br>
+  };</p>
+<p class="code">exports.transformDate = transformDate;</p>
+<p>Example <strong>MLCP</strong> call:<br>
+  <br>
+  <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input_json/ex06_doc.json -transform_module /ex06_transformation_module.sjs -transform_function transformDate -document_type json -output_uri_replace &quot;/home/cent/Desktop/mls-data-integration/unit02/ex06_input_json/,''&quot;</span> <br>
+</p>
+<p> More detail on using MLCP with a transformation module is in the MLCP User Guide at <strong>docs.marklogic.com/guide/mlcp/import#id_82518</strong>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0206_x_transform_data_while_loading.htm">Exercise (Transform Data While Loading)</a></p>
+<p>Back: <a href="0205_x_load_records_from_a_csv_file.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

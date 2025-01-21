@@ -1,0 +1,5 @@
+<export><workspace name="spell.doubleMetaphone (XQuery)"><query name="spell:double-metaphone" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">spell:double-metaphone("Outback Rides") </query><query name="Check for Equality" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">if (fn:deep-equal(spell:double-metaphone("Outback Rides"), spell:double-metaphone("At Back Rides")))
+then "match" 
+else "no match"</query><query name="Calls from Dee Monolakis" focus="false" listorder="3" taborder="3" active="true" database="4996640647998045689" server="8806633089193775549" database-name="customer360" server-name="8055-customer360" mode="xquery">let $dm := spell:double-metaphone("Dee Monolakis") 
+for $caller in /caller[fn:deep-equal(spell:double-metaphone(.), $dm)] 
+return fn:doc(fn:base-uri($caller))</query></workspace></export>

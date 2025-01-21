@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using Triples to Harmonize Data</strong></p>
+<p>Triples can be used to harmonize data coming in from different systems.</p>
+<p>For example, for a company name that is different in two different systems (perhaps the company trades under more than one name), a triple could be written to say that they are actually the same company. </p>
+<p class="code">&lt;http://procycling.com/resource/Biking_Winery_Tours&gt; <br>
+&lt;http://www.w3.org/2002/07/owl#sameAs&gt; <br>
+&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; </p>
+<p>Or, for an intelligence organization, triples could be used for different names that people have used (i.e. aliases), or even just variations of their name. </p>
+<p class="code">&lt;http://organization.com/resource/Lord_Voldemort&gt; <br>
+&lt;http://www.w3.org/2002/07/owl#sameAs&gt; <br>
+&lt;http://organization.com/resource/Tom_Riddle&gt;</p>
+<p class="topic-sub-heading">Relationships and Facts</p>
+<p>Triples are excellent for  describing   relationships between entities, and can also be used  for facts about entities. </p>
+<p>For example, a triple could say that Outback Rides was acquired by Sam Stone.</p>
+<p class="code">&lt;http://procycling.com/resource/Outback Rides&gt; <br>
+&lt;http://procycling.com/ontology/acquiredBy&gt; <br>
+&lt;http://procycling.com/resource/Sam_Stone&gt;</p>
+<p>With a few triples similar to the one above, a query could then be written to see if there are other companies that have been acquired by Sam Stone.</p>
+<p>Or, a triple could be written to say that a person is on the board of directors for an organization.</p>
+<p class="code">&lt;http://procycling.com/resource/Rolling_Fast_Deliveries&gt; <br>  &lt;http://procycling.com/ontology/boardMember&gt; <br>  &lt;http://procycling.com/resource/Michael_Ross&gt;</p>
+<p>With a few triples similar to the one above, a query could then be written to see what other companies have Michael Ross as a board member. </p>
+<p>Or, a triple can be used to simply specify a fact about an entity.</p>
+<p class="code">&lt;http://procycling.com/resource/Outback Rides&gt; <br>
+&lt;http://procycling.com/ontology/acquiredIn&gt; <br>
+&quot;2016&quot;</p>
+<p><em>Note: For  background information on  triples and the world of semantics, see the 2-day <strong>MarkLogic Semantics</strong> course available in an instructor-led format or a self-paced format, at www.marklogic.com/training-courses/using-marklogic-semantics.</em></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0401_x_view_triples.htm" class="exercise-link">Exercise (View Triples)</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

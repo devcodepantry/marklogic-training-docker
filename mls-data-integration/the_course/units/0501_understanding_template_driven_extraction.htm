@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Understanding Template Driven Extraction</strong></p>
+<p>Template Driven Extraction (TDE) provides a way to <strong>dynamically generate rows or triples</strong> from documents, <strong>without modifying the  documents</strong>.</p>
+<p><img src="../images/unit05/tde_doc.png" width="629" height="133" class="image-border"></p>
+<p class="topic-sub-heading">TDE for Rows</p>
+<p>Both <strong>SQL</strong> (Unit 6) and the <strong>Optic API</strong> (Unit 7)   utilize templates for queries. </p>
+<p>SQL, one of the many APIs supported by MarkLogic, provides an easy way for SQL-based reporting and visualization tools to access real-time row data from a MarkLogic database. </p>
+<p>The Optic API, a fluent MarkLogic query API, provides a fluent way to make  row, triple, and/or document  queries from Java, JavaScript, XQuery, or REST.</p>
+<p>Example  of rows resulting from a SQL query:</p>
+<p><img src="../images/unit05/sql_result_example.png" width="703" height="107" class="image-border"><br>
+</p>
+<p>TDE is done by creating a <strong>template</strong>, validating the template, testing the template against sample documents, and then inserting the template into a schemas database. Once the template is inserted into a schemas database,  a <strong>view</strong> is created, from which rows are dynamically generated and then  populated into the rows index for the database. Queries can then be run against the view, to provide real-time row results, even when the  view includes joins or aggregates.</p>
+<p>Documentation for  TDE is  in the Template Driven Extraction chapter of the Application Developer's Guide, at docs.marklogic.com/guide/app-dev/TDE. <br>
+</p>
+<p></p>
+<p class="topic-sub-heading">TDE for Triples</p>
+<p>As the rows index is based on the triple index, TDE can also be used to dynamically <strong>generate triples </strong>from data in documents, populated into the <strong>triples index</strong>, for semantic queries. </p>
+<p>TDE for triples  is useful when your documents contain some data that is naturally represented and queried as triples, such as for semantic queries. For example, to be able to run semantic queries related to products that a customer has purchased, triples could be used.</p>
+<p><img src="../images/unit05/triples_graph.png" width="565" height="196"></p>
+<p>Documentation on   TDE for triples is available in the Using a Template to Identify Triples in a Document chapter of the Semantics Developer’s Guide, at docs.marklogic.com/guide/semantics/tde. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0501_x_learn_about_template_driven_extraction.htm" class="exercise-link">Exercise (Learn About Template Driven Extraction)</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

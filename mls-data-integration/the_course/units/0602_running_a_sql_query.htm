@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Running a SQL Query</strong></p>
+<p>Query Console is handy for testing SQL queries against a  view.</p>
+<p>SQL queries can be run in Query Console by selecting the Query Type of <strong>SQL</strong>.</p>
+<p><img src="../images/unit06/query_type.png" width="231" height="128" class="image-border"></p>
+<p>With SQL selected, queries can then be written against a  view (e.g. purchases).</p>
+<p><img src="../images/unit06/select.png" width="310" height="100" class="image-border"></p>
+<p>Result:</p>
+<p><span class="exercise-step"><img src="../images/unit05/results_all.png" width="699" height="356" class="image-border"></span><br>
+</p>
+<p class="topic-sub-heading">Aggregating</p>
+<p>Along with support for common SQL clauses like SELECT, FROM, ORDER BY, and WHERE, aggregate functions like SUM(), MAX(), and COUNT() can also be used. </p>
+<p>For example, to return the price of the most expensive product ordered, MAX() could be used.</p>
+<p class="code">SELECT MAX(purchases.price)  <br>
+FROM purchases</p>
+<p>Result:</p>
+<p><img src="../images/unit06/max.png" width="544" height="48" class="image-border"></p>
+<p>Or, to count the number of items ordered by product, SUM() and GROUP BY could be used.</p>
+<p class="code">SELECT <strong>purchases.product, </strong>SUM(purchases.quantity)  <br>
+  FROM purchases <br>
+GROUP BY purchases.product</p>
+<p>Result:</p>
+<p><img src="../images/unit06/product_names.png" width="586" height="174" class="image-border"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0602_x_run_a_sql_query.htm" class="exercise-link">Exercise (Run a SQL Query)</a></p>
+<p>Back: <a href="0601_x_learn_about_sql_in_marklogic.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

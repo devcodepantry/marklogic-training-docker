@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use the Optic API with the REST API</strong>  (optional)</p>
+<p>In this walkthrough exercise, you send an Optic API query to the customer360 database via the MarkLogic REST API.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a new tab, select <strong>JavaScript</strong>, and enter the following (copy from unit07/<strong>ex09a.txt</strong>): <br>
+    <br>
+  <span class="code">'use strict' <br>
+  const op = require('/MarkLogic/optic.sjs');   <br>
+  <br>
+  const exported = <br>
+  op.fromView('customer360', 'purchases')  <br>
+&nbsp;  .select(['company','price','quantity', op.as('item_total', op.multiply(op.col('price'), op.col('quantity')))]) <br>
+&nbsp; .groupBy('company', op.sum('company_total', 'item_total')) <br>
+&nbsp; .orderBy(op.desc('company_total'))  <br>
+&nbsp; .limit(10) <br>
+&nbsp; .export();  <br>
+<br>
+const action = <br>
+// 'show export result only';    <br>
+&nbsp;&nbsp; 'show imported result'; <br>
+<br>
+switch(action) {   <br>
+&nbsp;&nbsp; case 'show export result only':     <br>
+&nbsp;&nbsp;&nbsp;&nbsp; exported;     <br>
+&nbsp;&nbsp;&nbsp;&nbsp; break;   <br>
+&nbsp;&nbsp; case 'show imported result':     <br>
+&nbsp;&nbsp;&nbsp;&nbsp; op.import(exported).result();     <br>
+&nbsp;&nbsp;&nbsp;&nbsp; break; <br>
+}</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the result of the query:<br>
+    <br>
+    <img src="../images/unit07/import_result.png" width="336" height="253" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Move</strong> the comment ('<strong>//</strong>') to be in front of 'show imported result':<br>
+    <br>
+    <span class="code">const action = <br>
+    'show export result only'; <br>
+    <strong>// </strong>'show imported result'; </span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the result:<br>
+    <br>
+    <img src="../images/unit07/exported.png" width="307" height="485" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Realize that it is the Optic API query expressed in JSON. </li>
+  <li class="exercise-step">On the desktop of your virtual machine, in the mls-data-integration/<strong>unit07</strong> folder, open the <strong>optic_api_query.json</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit07/optic_api_query.png" width="589" height="527" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that it contains the query.</li>
+  <li class="exercise-step">In a <strong>command prompt </strong>window, enter the following, to send the query to the customer360 database via the /v1/rows REST API endpoint (<strong>ex09b.txt</strong>):<br>
+    <br>
+    <span class="code">curl --anyauth -u admin:admin -X POST -H &quot;content-type: application/json&quot; -H &quot;accept: text/csv&quot; -d@/home/cent/Desktop/mls-data-integration/unit07/optic_api_query.json &quot;http://localhost:8055/v1/rows&quot;</span><br>
+  </li>
+  <li class="exercise-step">Press Enter, to run the command.</li>
+  <li class="exercise-step">See that the results are returned:<br>
+    <br>
+  <img src="../images/unit07/rest_results_cs.png" width="665" height="157" class="image-border"></li>
+  <li class="exercise-step">Press your <strong>up arrow</strong> key to bring up the last command.</li>
+  <li class="exercise-step">Use your <strong>left arrow</strong> key to navigate to text/csv.</li>
+  <li class="exercise-step">Type<span class="code"> application/json</span>.</li>
+  <li class="exercise-step">Use the arrow keys and your <strong>backspace</strong> or <strong>delete</strong> key to delete the old value of text/csv (or copy the new command from <strong>ex09c.txt</strong>):<br>
+    <br>
+    <span class="code">curl --anyauth -u admin:admin -X POST -H &quot;content-type: application/json&quot; -H &quot;accept: <strong>application/json</strong>&quot; -d@/home/cent/Desktop/mls-data-integration/unit07/optic_api_query.json &quot;http://localhost:8055/v1/rows&quot;</span></li>
+  <li class="exercise-step">Press Enter, to run the command.</li>
+  <li class="exercise-step">See that the results are now returned as JSON:<br>
+    <br>
+  <img src="../images/unit07/rest_api_results_json_cs.png" width="666" height="276" class="image-border"></li>
+  <li class="exercise-step">If desired, edit the accept value to be<span class="code"> application/xml</span>, to see the results returned as XML.</li>
+  <li class="exercise-step">Imagine sending Optic API queries serialized as JSON from  application code that you have written in your favorite programming language, to  then use the results in your application.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="07f1_summary.htm" class="exercise-link">Summary (Unit 7)</a></p>
+<p>Back: <a href="0708_using_the_optic_api_with_the_rest_api.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

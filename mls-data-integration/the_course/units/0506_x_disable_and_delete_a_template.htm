@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Disable and Delete a Template</strong></p>
+<p>In this walkthrough exercise, you disable and then delete a template.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In <strong>Query Console</strong>, select the  <strong>customer360-schemas</strong> database and click <strong>Explore</strong>.</li>
+  <li class="exercise-step">Click the <strong>/templates/purchases-template.xml</strong> link, to see that  there is presently not an enabled element in the template:<br>
+    <br>
+    <img src="../images/unit05/no_enabled.png" width="431" height="131" class="image-border"><br>
+  </li>
+<li class="exercise-step">In a previous tab, where you inserted the template, add<span class="code"> &lt;enabled&gt;false&lt;/enabled&gt; </span>to the template definition:<br>
+  <br>
+  <span class="code">let $purchases-template := <br>  &lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  <br>
+  &nbsp;<strong>  &lt;enabled&gt;false&lt;/enabled&gt; </strong><br>
+  &nbsp;  &lt;context&gt;/order&lt;/context&gt;<br>
+&nbsp;&nbsp;... </span></li>
+<li class="exercise-step">With the <strong>customer360</strong> database selected, click <strong>Run</strong>, to replace the template.</li>
+<li class="exercise-step">Select the <strong>customer360-schemas</strong> database and click the <strong>Explore</strong> button.</li>
+<li class="exercise-step">Click the <strong>/templates/purchases-template.xml</strong> link, to see that the &lt;enabled&gt; element, with a value of false, now exists:<br>
+  <br>
+  <img src="../images/unit05/enabled_exists.png" width="419" height="125" class="image-border"></li></ol>
+<p>Check that the database is done reindexing:</p>
+<ol class="exercise-step" start="7">
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>. </li>
+  <li class="exercise-step">Select the <strong>Status</strong> tab. </li>
+  <li class="exercise-step">See that the database is no longer reindexing:<br>
+    <br>
+  <img src="../images/unit05/reindexing_done.png" width="404" height="24" class="image-border"></li>
+  <li class="exercise-step">In <strong>Query Console</strong>, go back to the tab with the following query, select the <strong>customer360</strong> database, and click Run:<br>
+    <br>
+  <span class="code">tde:node-data-extract(fn:doc(&quot;/accounting/order-14502.xml&quot;)) </span></li>
+  <li class="exercise-step">See that the result is empty, because the template is disabled:<br>
+    <br>
+  <img src="../images/unit05/disabled_result.png" width="366" height="92" class="image-border"></li>
+</ol>
+<p>Delete the template:</p>
+<ol class="exercise-step" start="12">
+  <li class="exercise-step">In <strong>Query Console</strong>, select the <strong>customer360-schemas</strong> database, and click <strong>Explore</strong> to see the template listed:<br>
+    <br>
+    <img src="../images/unit05/template_listed.png" width="464" height="66" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Create a new tab, and enter the following (unit05/<strong>ex06.txt</strong>):<br>
+    <br>
+  <span class="code">xdmp:document-delete(&quot;/templates/purchases-template.xml&quot;)</span></li>
+  <li class="exercise-step">With the <strong>customer360-schemas</strong> database selected, click the <strong>Run</strong> button.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">See that the template has been deleted:<br>
+    <br>
+  <img src="../images/unit05/template_gone.png" width="346" height="89" class="image-border"></li>
+</ol>
+<p>Put the template back:</p>
+<ol class="exercise-step" start="17">
+  <li class="exercise-step">In a previous tab, where you defined the template and inserted it, change the value of the enabled element to<span class="code"> true </span>(or remove the element):<br>
+    <br>
+    <img src="../images/unit05/enabled_true.png" width="594" height="114" class="image-border"></li>
+  <li class="exercise-step">Select the  <strong>customer360</strong> database, and click <strong>Run</strong>, to insert the template.<br>
+  </li>
+  <li class="exercise-step">Go back to the tab with the following query:<br>
+    <br>
+  <span class="code">tde:node-data-extract(fn:doc(&quot;/accounting/order-14502.xml&quot;)) </span></li>
+  <li class="exercise-step">Select the <strong>customer360</strong> database, and click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that the template results are displayed:<br>
+    <br>
+    <img src="../images/unit05/applied_by_default.png" width="414" height="513" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0507_using_templates_for_harmonization.htm" class="exercise-link">Topic (Using Templates for Harmonization)</a></p>
+<p>Back: <a href="0506_disabling_and_deleting_a_template.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

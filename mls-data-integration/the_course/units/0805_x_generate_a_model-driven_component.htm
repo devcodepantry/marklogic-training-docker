@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Generate a Model-Driven Component</strong></p>
+<p>In this walkthrough exercise, you generate a model-driven  component for converting source documents into becoming entity instances.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a <strong>new tab</strong>, select <strong>JavaScript</strong> for the Query Type, and enter the following (unit08/<strong>ex05.txt</strong>), to generate a conversion component:<br>
+    <br>
+    <span class="code">'use strict';  <br>
+    const es = require('/MarkLogic/entity-services/entity-services.xqy'); <br>
+    <br>
+    const ES_DIR = '/home/cent/Desktop/mls-data-integration/es/'; <br>
+    const desc = cts.doc('/es/models/procycling-0.0.1.json');  <br>
+    <br>
+    xdmp.save(ES_DIR + 'procycling-0.0.1-conv.xqy', es.instanceConverterGenerate(desc)); </span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">On the <strong>desktop</strong> of your virtual machine, in the mls-data-integration/<strong>es</strong> folder, <strong>see</strong> that the procycling-0.0.1-conv.xqy file now exists:<br>
+    <br>
+    <img src="../images/unit08/conv_file_cs.png" width="442" height="157" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Open the <strong>procycling-0.0.1-conv.xqy</strong> file in a text editor:<br>
+    <br>
+  <img src="../images/unit08/conv_contents.png" width="701" height="576" class="image-border"></li>
+  <li class="exercise-step">Know that this file contains editable functions, for transforming source documents into entity instances.</li>
+  <li class="exercise-step">Scroll down to locate the <strong>procycling:extract-instance-Product()</strong> function (line 40):<br>
+    <br>
+    <img src="../images/unit08/extract-instance-Product_cs.png" width="695" height="274" class="image-border"><br>
+  <em>Note: To display line numbers in gedit,  go to  Preferences, select the View tab, and select the Display line numbers checkbox. </em></li>
+  <li class="exercise-step">Know that this function is for mapping source data to entity type properties.</li>
+  <li class="exercise-step">Scroll down to locate the <strong>procycling:instance-to-canonical-xml()</strong> function (line 93):<br>
+    <br>
+  <img src="../images/unit08/instance-to-canonical_cs.png" width="703" height="244" class="image-border"></li>
+  <li class="exercise-step">Know that this function is for turning an entity instance into an XML structure.</li>
+  <li class="exercise-step">Scroll down to locate the <strong>procycling:instance-to-envelope()</strong> function (line 170):<br>
+    <br>
+  <img src="../images/unit08/instance-to-envelope_cs.png" width="701" height="246" class="image-border"></li>
+  <li class="exercise-step">Know that this function is for wrapping the generated canonical data and source data inside an envelope document.</li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0806_creating_entity_instances.htm" class="exercise-link">Topic (Creating Entity Instances)</a></p>
+<p>Back: <a href="0805_generating_model-driven_components.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

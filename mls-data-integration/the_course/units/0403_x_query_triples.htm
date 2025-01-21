@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Query Triples </strong></p>
+<p>In this walkthrough exercise, you write SPARQL expressions to query the triples you loaded: first for data insight, and then for data integration.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit04</strong> - <strong>Using Triples.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>Napa Biking Tours</strong>.</li>
+  <li class="exercise-step">Notice the  SPARQL query, to retrieve data about customer Napa Biking Tours:<br>
+    <br>
+    <span class="code">SELECT ?p ?o <br>
+    WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o}</span><br>
+<br>
+<em>Note: To learn how to write SPARQL queries, see the MarkLogic Semantics course. </em></li>
+  <li class="exercise-step">For Query Type, select <strong>SPARQL Query</strong>.</li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the results:<br>
+    <br>
+    <img src="../images/unit04/sparql_result.png" width="662" height="222" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Add to the query, to include any triples where the returned object is in the subject position of additional triples (<strong>More </strong>tab):<br>
+    <br>
+    <span class="code">SELECT ?p ?o <strong>?p2 ?o2</strong><br>
+    WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o <strong>. OPTIONAL {?o ?p2 ?o2}</strong>}</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the results, providing additional information about Napa Biking Tours' board members, founders, and investors:<br>
+    <br>
+    <img src="../images/unit04/results_expanded.png" width="699" height="450" class="image-border"><br>
+  <em><br>
+  Note: If there is the possibility of a large resultset, 
+        it would be prudent to limit the number of results that are returned from a  query, for performance:<br>
+        <br>
+        <span class="code">SELECT ?p ?o ?p2 ?o2 <br>
+WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o . OPTIONAL {?o ?p2 ?o2}}</span><br>
+<span class="code"><strong>LIMIT 100</strong></span></em><span class="code"><strong></strong></span>  <br>
+<br>
+<em>Note: Know that third party tools such as vis.js, LodLive, KeyLines, or D3 can be used to visualize 
+  the triple relationships. </em>  </li>
+  <li class="exercise-step">In seeing that Bridget Keenan and Dee Monolakis know Davis Bikes, imagine reaching out to Davis Bikes about sales.<em> <br>
+  </em></li>
+  <li class="exercise-step">Select the next tab, <strong>Board Members</strong>,  to see   all triples for  any board members: <br>
+    <br>
+    <span class="code">SELECT ?s ?o  <br>
+  WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt;<strong> </strong>?o}</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+    <img src="../images/unit04/board_results.png" width="658" height="174" class="image-border"><br>
+  </li>
+  <li class="exercise-step">  Imagine using this knowledge to reach out to Michael Ross for sales.</li>
+  <li class="exercise-step">Add to the query, to also include any investors (<strong>Board Members and Investors </strong>tab):<br>
+    <br>
+    <span class="code">SELECT ?s ?o  <br>
+    WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt; <strong>| &lt;http://procycling.com/ontology/investor&gt;</strong> ?o}</span>    <br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+    <img src="../images/unit04/board_and_investors.png" width="694" height="248" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to see the type of relationship between the company and the person  (<strong>Show Relationship </strong>tab):<br>
+    <br>
+    <span class="code">SELECT ?s <strong>?p </strong>?o <br>
+WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt; | &lt;http://procycling.com/ontology/investor&gt; ?o <strong>. ?s ?p ?o</strong>}</span>    <br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+    <img src="../images/unit04/board_or_investor_with_predicate.png" width="697" height="260" class="image-border"></li>
+  <li class="exercise-step">Noticing Jessica Pearson's connection to City Cruiser, imagine reaching out  for sales.</li>
+</ol>
+<p>Use triples for data integration:</p>
+<ol start="24" class="exercise-step">
+  <li class="exercise-step">  Click the <strong>Explore</strong> button, to display the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-1805.xml</strong> link, to view the contents:<br>
+    <br>
+    <img src="../images/unit04/biking_winery_tours.png" width="417" height="435" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that the company name is <strong>Biking Winery Tours</strong>.</li>
+  <li class="exercise-step">Know that Biking Winery Tours is one of the trade names of  Napa Biking Tours.</li>
+  <li class="exercise-step">Click the <strong>back triangle</strong>, to go back to the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-1777.xml</strong> link, to view the contents:<br>
+    <br>
+    <img src="../images/unit04/bridget_company.png" width="451" height="435" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that the company name listed is <strong>Napa Biking Tours</strong>.</li>
+  <li class="exercise-step">Select the <strong>Retrieve Contacts </strong>tab, to return  contact names and email addresses for Napa Biking Tours:<br>
+    <br>
+  <span class="code">for $doc in /envelope/canonical[company = &quot;Napa Biking Tours&quot;]  <br>
+  <br>
+  return &lt;div&gt;{$doc/company/text()}: {$doc/firstName/text()}&amp;nbsp;{$doc/lastName/text()}, {$doc/email/text()}&lt;/div&gt;</span></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+  <img src="../images/unit04/contacts_nbt.png" width="695" height="70" class="image-border"></li>
+  <li class="exercise-step"><strong>Notice</strong> that contacts for Biking Winery Tours were <strong>not</strong> included. </li>
+  <li class="exercise-step">Select the <strong>Napa Biking Tours </strong>tab, to return  all triples for Napa Biking Tours:<br>
+    <br>
+  <span class="code">SELECT *  <br>
+  WHERE {&lt;http://procycling.com/resource/Napa_Biking_Tours&gt; ?p ?o}</span></li>
+  <li class="exercise-step">See that only triples for Napa Biking Tours are returned:<br>
+    <br>
+    <img src="../images/unit04/nbt_results.png" width="638" height="221" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>Biking Winery Tours </strong>tab, to return  all triples for Biking Winery Tours:<br>
+    <br>
+    <span class="code">SELECT * <br>
+  WHERE {&lt;http://procycling.com/resource/Biking_Winery_Tours&gt; ?p ?o}</span></li>
+  <li class="exercise-step">See that only triples for Biking Winery Tours are returned:<br>
+    <br>
+    <img src="../images/unit04/bwt_results_only.png" width="639" height="172" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>Insert sameAs</strong> tab, to insert an ontology triple that states that Biking Winery Tours is the same  entity as Napa Biking Tours:<br>
+    <span class="code"><br>
+    INSERT DATA <br>
+    {     <br>
+    &nbsp;    &lt;http://procycling.com/resource/Biking_Winery_Tours&gt; <br>
+    &nbsp;&nbsp;&lt;http://www.w3.org/2002/07/owl#sameAs&gt; <br>
+    &nbsp;    &lt;http://procycling.com/resource/Napa_Biking_Tours&gt; <br>
+    }</span><br>
+  </li>
+  <li class="exercise-step">For Query Type, ensure <strong>SPARQL Update</strong> is selected.</li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step"><strong>Scroll</strong> down to locate the <strong>/triplestore/</strong> documents.</li>
+  <li class="exercise-step"><strong>See</strong> that there is a new /triplestore/ document, which contains the ontology triple:<br>
+    <br>
+    <img src="../images/unit04/ontology_triple.png" width="667" height="142" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>.</li>
+  <li class="exercise-step">In the left navigation,  under  customer360, select <strong>Default Rulesets</strong> (near the bottom of the list):<br>
+    <br>
+  <img src="../images/unit04/default_rulesets.png" width="151" height="28" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Add</strong> tab.</li>
+  <li class="exercise-step">For location, type<span class="code"> sameAs.rules</span>:<br>
+    <br>
+  <img src="../images/unit04/sameas.png" width="619" height="293" class="image-border"></li>
+  <li class="exercise-step">Click the <strong>ok</strong> button.</li>
+  <li class="exercise-step">In <strong>Query Console</strong>, back on the <strong>Napa Biking Tours</strong> tab, run the query to see that triples  for  Napa Biking Tours and Biking Winery Tours are now both included in the result:<br>
+    <br>
+    <img src="../images/unit04/results_for_both.png" width="648" height="603" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Know that inferencing through paths is more performant than through rules.</li>
+  <li class="exercise-step">In the<strong> Admin Interface</strong>, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>.</li>
+  <li class="exercise-step">On the left, under the customer360 database, select <strong>Default Rulesets</strong>.</li>
+  <li class="exercise-step">For  sameAs.rules, click the <strong>delete</strong> button.</li>
+  <li class="exercise-step">Click the <strong>ok</strong> button:<br>
+    <br>
+  <img src="../images/unit04/delete_dialog.png" width="599" height="116" class="image-border"></li>
+  <li class="exercise-step">In <strong>Query Console</strong>, rerun the query to see that only triples for Napa Biking Tours are returned:<br>
+    <br>
+  <img src="../images/unit04/nbt_results.png" width="638" height="221" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Path Inferencing </strong>tab, to  use a path to do inferencing:<br>
+    <br>
+  <span class="code">SELECT ?s ?p ?o <br>
+  WHERE {?s ?p ?o .<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;} </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that all of the triples for Napa_Biking_Tours or  Biking Winery Tours are returned:<br>
+    <br>
+    <img src="../images/unit04/all_triples_through_path.png" width="701" height="450" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>IRIs</strong> tab, to simply return the IRIs for Biking Winery Tours and Napa Biking Tours<strong>:</strong><br>
+    <br>
+    <span class="code">SELECT ?s  <br>
+  WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;}  </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+  <img src="../images/unit04/path_results.png" width="401" height="50" class="image-border"></li>
+  <li class="exercise-step"><strong>Add </strong>to and modify  the query, to return the name associated with each IRI (<strong>Friendly Names</strong> tab):<br>
+    <br>
+    <span class="code">SELECT <strong> ?name</strong><br>
+    WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;*            &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;            <strong>. ?s &lt;http://xmlns.com/foaf/0.1/name&gt; ?name</strong>}</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+    <img src="../images/unit04/distinct_results.png" width="209" height="50" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>App Code </strong>tab, to use the sameAs triple to fetch the  contact names for Napa Biking Tours as well as for any other  company names that the company uses:<br>
+    <br>
+    <span class="code">import module namespace sem = &quot;http://marklogic.com/semantics&quot; at &quot;/MarkLogic/semantics.xqy&quot;;  <br>
+    <br>
+    declare namespace s = &quot;http://www.w3.org/2005/sparql-results#&quot;;  <br>
+    <br>
+    for $company in sem:query-results-serialize(sem:sparql( <br>
+&nbsp;    &quot;SELECT  ?name  <br>
+&nbsp;&nbsp; WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;  . ?s &lt;http://xmlns.com/foaf/0.1/name&gt; ?name}&quot;))//s:literal/text()  <br>
+<br>
+for $doc in /envelope/canonical[company = $company]  <br>
+<br>
+return &lt;div&gt;{$doc/company/text()}: {$doc/firstName/text()}&amp;nbsp;{$doc/lastName/text()}, {$doc/email/text()}&lt;/div&gt; </span><br>
+  <br>
+  <em>Note: To learn how to write queries similar to the one above (a combination of XQuery and SPARQL), see the MarkLogic Semantics course.</em><br>
+  </li>
+  <li class="exercise-step">For Query Type, ensure <strong>XQuery</strong> is selected.</li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+  <img src="../images/unit04/xquery_sparql_results.png" width="694" height="104" class="image-border"></li>
+  <li class="exercise-step">See that   all of the contacts are returned for all of the companies that Napa Biking Tours trades as.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="04f1_summary.htm" class="exercise-link">Summary (Unit 4)</a></p>
+<p>Back: <a href="0403_querying_triples.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use spell.doubleMetaphone() </strong></p>
+<p>In this walkthrough exercise, you  use spell.doubleMetaphone to be able to match values that sound almost the same.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit03</strong> - <strong>spell.doubleMetaphone.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>spell:double-metaphone</strong>:<br>
+    <br>
+    <span class="code">spell:double-metaphone(&quot;Outback Rides&quot;) </span> <br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the result:<br>
+    <br>
+    <img src="../images/unit03/metaphone_result.png" width="137" height="34" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the second tab, <strong>Check for Equality</strong>:<br>
+    <br>
+    <span class="code">if (fn:deep-equal(spell:double-metaphone(&quot;Outback Rides&quot;), spell:double-metaphone(&quot;At Back Rides&quot;)))<br>
+    then &quot;match&quot; <br>
+    else &quot;no match&quot;</span><br>
+  </li>
+  <li class="exercise-step">Notice the code to compare the double metaphone values of 'Outback Rides' and 'At Back Rides'.</li>
+  <li class="exercise-step">Click Run, to see the result:<br>
+    <br>
+    <img src="../images/unit03/match.png" width="141" height="33" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the third tab, <strong>Calls from Dee Monolakis</strong>:<br>
+    <br>
+    <span class="code">let $dm := spell:double-metaphone(&quot;Dee Monolakis&quot;)   <br>
+    for $caller in /caller[fn:deep-equal(spell:double-metaphone(.), $dm)] <br>
+    return fn:doc(fn:base-uri($caller))</span><br>
+  </li>
+  <li class="exercise-step">Click Run, to see the result:<br>
+    <br>
+    <img src="../images/unit03/monolakis.png" width="679" height="430" class="image-border"></li>
+  <li class="exercise-step">See that <strong>both </strong>calls were returned, even though one had her name recorded incorrectly.</li>
+  <li class="exercise-step">If desired, navigate to <a href="http://www.marklogic.com/blog/master-data-management-justice-system" target="_blank">www.marklogic.com/blog/master-data-management-justice-system</a>, to read a blog post about using MarkLogic for  master data management.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="03f1_summary.htm" class="exercise-link">Summary (Unit 3)</a></p>
+<p>Back: <a href="0307_resolving_entities.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

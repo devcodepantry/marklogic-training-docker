@@ -1,0 +1,193 @@
+<contacts>
+  <contact>
+    <id>1770</id>
+    <name>
+      <first>Dee</first>
+      <last>Monolakis</last>
+    </name>
+    <co>Napa Biking Tours</co>
+    <addr>545 Highway 29</addr>
+    <city>Yountville</city>
+    <state>California</state>
+    <zip>94574</zip>
+    <phone>
+      <mobile>707-991-1007</mobile>
+    </phone>
+    <email>dee.monolakis@napabikingtours.com</email>
+    <communications>
+      <mailok>no</mailok>
+      <emailok>yes</emailok> 
+      <frequency>weekly</frequency>
+    </communications>
+  </contact>	
+  <contact>
+    <id>1223</id>
+    <name>
+      <first>Chris</first>
+      <last>Clark</last>
+    </name>
+    <co>Campus Bikes</co>    
+    <addr>6000 Alcala Park Way</addr>
+    <city>San Diego</city>
+    <state>California</state>
+    <zip>92110</zip>
+    <phone>
+      <work>619-849-4554</work>
+    </phone>
+    <email>cclark@campusbikes.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>daily</frequency>
+    </communications>
+  </contact>
+  <contact>
+    <id>1001</id>
+    <name>
+      <first>Laurie</first>
+      <last>Lapadula</last>
+    </name>
+    <addr>1 Pinecrest Way</addr>
+    <city>Bass Lake</city>
+    <state>California</state>
+    <zip>93604</zip>
+    <phone>
+      <home>559-555-1212</home>
+      <mobile>559-556-7473</mobile>
+    </phone>
+    <email>laurie@basslake.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>monthly</frequency>
+    </communications>
+    <dob>1980-03-17</dob>
+  </contact>
+  <contact>
+    <id>1222</id>
+    <name>
+      <first>Graham</first>
+      <last>Warman</last>
+    </name>
+    <co>Rolling Fast Deliveries</co>
+    <addr>800 Market Street</addr>
+    <city>San Francisco</city>
+    <state>California</state>
+    <zip>94111</zip>
+    <phone>
+      <work>415-787-1212</work>
+      <mobile>415-784-2200</mobile>
+    </phone>
+    <email>graham@rollingfast.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>monthly</frequency>
+    </communications>
+    <dob>1978-01-13</dob>
+  </contact>
+  <contact>
+    <id>1300</id>
+    <name>
+      <first>Jan</first>
+      <last>Daniels</last>
+    </name>
+    <addr>3 Papaya Lane</addr>
+    <city>Miami</city>
+    <state>Florida</state>
+    <zip>33133</zip>
+    <phone>
+      <mobile>305-616-6031</mobile>
+    </phone>
+    <email>jdaniels@outdoors.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>no</emailok> 
+      <frequency>none</frequency>
+    </communications>
+  </contact>
+  <contact>
+    <id>1455</id>
+    <name>
+      <first>Sammy</first>
+      <last>Stone</last>
+    </name>
+    <co>Outback Rides</co>
+    <addr>200 Lakeview Road</addr>
+    <city>South Lake Tahoe</city>
+    <state>California</state>
+    <zip>96150</zip>
+    <phone>
+      <mobile>530-404-7796</mobile>
+    </phone>
+    <email>sam@outbackrides.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>weekly</frequency>
+    </communications>
+  </contact>
+  <contact>
+    <id>1777</id>
+    <name>
+      <first>Bridget</first>
+      <last>Keenan</last>
+    </name>
+    <co>Napa Biking Tours</co>
+    <addr>545 Highway 29</addr>
+    <city>Yountville</city>
+    <state>California</state>
+    <zip>94574</zip>
+    <phone>
+      <mobile>707-991-1003</mobile>
+    </phone>
+    <email>bridget.keenan@napabikingtours.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>monthly</frequency>
+    </communications>
+  </contact>
+  <contact>
+    <id>1805</id>
+    <name>
+      <first>Bob</first>
+      <last>Garrison</last>
+    </name>
+    <co>Biking Winery Tours</co>
+    <addr>545 Highway 29</addr>
+    <city>Yountville</city>
+    <state>California</state>
+    <zip>94574</zip>
+    <phone>
+      <mobile>707-991-1002</mobile>
+    </phone>
+    <email>bob@bikingwinerytours.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>yes</emailok> 
+      <frequency>weekly</frequency>
+    </communications>
+  </contact>
+  <contact>
+    <id>1828</id>
+    <name>
+      <first>Melissa</first>
+      <last>McCormick</last>
+    </name>
+    <co>Campus Bikes</co>    
+    <addr>6000 Alcala Park Way</addr>
+    <city>San Diego</city>
+    <state>California</state>
+    <zip>92110</zip>
+    <phone>
+      <work>619-849-4557</work>
+    </phone>
+    <email>mmccormick@campusbikes.com</email>
+    <communications>
+      <mailok>yes</mailok>
+      <emailok>no</emailok> 
+      <frequency>none</frequency>
+    </communications>
+  </contact>
+</contacts>

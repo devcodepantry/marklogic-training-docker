@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use Document Criteria</strong></p>
+<p>In this walkthrough exercise, you return rows based on document criteria.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a <strong>new tab</strong>, and enter the following, to only return rows from the calls view where the rows come from documents that have the word 'tour' anywhere in them (unit07/<strong>ex03a.txt</strong>):<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+    <br>
+    op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(cts.wordQuery('tour'))<br>
+&nbsp;&nbsp;.limit(10)    <br>
+    &nbsp;&nbsp;.result()</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the results:<br>
+    <br>
+    <img src="../images/unit07/result_napa.png" width="700" height="214" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Modify the query to be for the phrase<span class="code"> speedpro ultimate</span>:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(cts.wordQuery('<strong>speedpro ultimate</strong>')) <br>
+&nbsp;&nbsp;.limit(10)<br>
+&nbsp;&nbsp;.result()</span>    <br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the call from Dee Monolakis is  returned.
+    <br>
+  </li>
+  <li class="exercise-step">Modify the query to instead be for the word<span class="code"> puncture</span>:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(cts.wordQuery('<strong>puncture</strong>')) <br>
+&nbsp;&nbsp;.limit(10)<br>
+&nbsp;&nbsp;.result()</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that no results are returned.</li>
+  <li class="exercise-step">In the Admin Interface, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>, to go to the settings for the database.</li>
+  <li class="exercise-step">Locate the <strong>stemmed searches </strong>setting (approximately  seven settings down):<br>
+    <br>
+  <img src="../images/unit07/stemming_off.png" width="558" height="59" class="image-border"></li>
+  <li class="exercise-step">Select <strong>basic</strong>.</li>
+  <li class="exercise-step">Click the <strong>ok</strong> button.</li>
+  <li class="exercise-step">Select the <strong>Status</strong> tab, to check that the database is done reindexing:<br>
+    <br>
+    <img src="../images/unit07/reindexing_status.png" width="397" height="27" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Back in <strong>Query Console</strong>, click <strong>Run</strong>, to rerun the query for rows from the calls view that have the word 'puncture' in them.</li>
+  <li class="exercise-step">See that the call from Jan Daniels is now in the results, because it contains the word 'punctured':<br>
+    <br>
+    <img src="../images/unit07/punctured.png" width="697" height="174" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Modify the query to include documents that have the word 'puncture' or 'chain' anywhere in them:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(cts.wordQuery(<strong>['puncture', 'chain']</strong>)) <br>
+&nbsp;&nbsp;.limit(10)<br>
+&nbsp;&nbsp;.result()</span>    <br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the result:<br>
+    <br>
+    <img src="../images/unit07/or_result.png" width="699" height="347" class="image-border"><br>
+  </li>
+</ol>
+<p>&nbsp;</p>
+<p>Next: <a href="0704_creating_a_document_join.htm" class="exercise-link">Topic (Creating a Document Join)</a></p>
+<p>Back: <a href="0703_using_document_criteria.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

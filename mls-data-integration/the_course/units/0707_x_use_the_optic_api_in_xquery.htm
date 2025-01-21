@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use the  Optic API  in XQuery</strong> (optional)</p>
+<p>In this walkthrough exercise, you do row and triple queries using the Optic API in XQuery.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button. </li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit07</strong> - <strong>XQuery Exercise Optic API.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>Rows</strong>.</li>
+  <li class="exercise-step">Notice the  command, to  retrieve orders from customer Rolling Fast Deliveries:<br>
+    <br>
+    <span class="code">xquery version &quot;1.0-ml&quot;;  <br>
+    import module namespace op=&quot;http://marklogic.com/optic&quot; at &quot;/MarkLogic/optic.xqy&quot;;  <br>
+    declare default function namespace &quot;http://marklogic.com/optic&quot;;  <br>
+    <br>
+    op:from-view(&quot;customer360&quot;, &quot;purchases&quot;)  <br>
+    =&gt; where(eq(col(&quot;company&quot;), &quot;Rolling Fast Deliveries&quot;))  <br>
+    =&gt; select((&quot;order_date&quot;, &quot;product&quot;, &quot;price&quot;, &quot;quantity&quot;, as(&quot;total&quot;, multiply(col(&quot;price&quot;), col(&quot;quantity&quot;)))))  <br>
+    =&gt; order-by((desc(&quot;order_date&quot;), &quot;product&quot;))  <br>
+    =&gt; limit(10)  <br>
+    =&gt; result()</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the result of the row query:<br>
+    <br>
+  <img src="../images/unit07/xquery_rows_result.png" width="704" height="112" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Triples</strong> tab.</li>
+  <li class="exercise-step">Notice the query, to retrieve the IRIs for companies where Michael Ross is a board member:<br>
+    <br>
+  <span class="code">xquery version &quot;1.0-ml&quot;;  <br>
+  import module namespace op=&quot;http://marklogic.com/optic&quot; at &quot;/MarkLogic/optic.xqy&quot;;  <br>
+  declare default function namespace &quot;http://marklogic.com/optic&quot;;  <br>
+  <br>
+  let $resource := op:prefixer(&quot;http://procycling.com/resource/&quot;) <br>
+  let $onto := op:prefixer(&quot;http://procycling.com/ontology/&quot;) <br>
+  <br>
+  return <br>
+  op:from-triples((   pattern(col(&quot;company&quot;), $onto(&quot;boardMember&quot;), $resource(&quot;Michael_Ross&quot;)) ))  <br>
+  =&gt; result()</span></li>
+  <li class="exercise-step">Click the <strong>Run</strong> button, to see the result:<br>
+    <br>
+  <img src="../images/unit07/xquery_triples_result_michael_ross.png" width="581" height="73" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Rows and Triples</strong> tab</li>
+  <li class="exercise-step">Understand that this query will fetch, from the triples, the names of the companies where Michael Ross is a board member, and then use those company names to retrieve, and then total up, the sales for each of those customers:<br>
+    <br>
+    <span class="code">xquery version &quot;1.0-ml&quot;; <br>
+import module namespace op=&quot;http://marklogic.com/optic&quot; at &quot;/MarkLogic/optic.xqy&quot;; <br>
+declare default function namespace &quot;http://marklogic.com/optic&quot;; <br>
+<br>
+let $resource := op:prefixer(&quot;http://procycling.com/resource/&quot;) <br>
+let $onto := op:prefixer(&quot;http://procycling.com/ontology/&quot;) <br>
+let $foaf := op:prefixer(&quot;http://xmlns.com/foaf/0.1/&quot;) <br>
+<br>
+let $purchases := op:from-view(&quot;customer360&quot;, &quot;purchases&quot;) <br>
+let $companyName := col(&quot;companyName&quot;) <br>
+<br>
+return op:from-triples((<br>
+&nbsp; pattern(col(&quot;companyId&quot;), $onto(&quot;boardMember&quot;), $resource(&quot;Michael_Ross&quot;)), <br>
+&nbsp; pattern(col(&quot;companyId&quot;), $foaf(&quot;name&quot;), $companyName)<br>
+)) <br>
+=&gt; join-inner($purchases, on($companyName, view-col(&quot;purchases&quot;, &quot;company&quot;))) <br>
+=&gt; select((view-col(&quot;purchases&quot;, &quot;company&quot;), view-col(&quot;purchases&quot;, &quot;row_total&quot;))) <br>
+=&gt; group-by(view-col(&quot;purchases&quot;, &quot;company&quot;), (sum(&quot;sum&quot;, view-col(&quot;purchases&quot;, &quot;row_total&quot;)))) <br>
+=&gt; result()</span>    <br>
+  </li>
+  <li class="exercise-step">Click the Run button, to see the total sales for customers that have Michael Ross as a board member:<br>
+    <br>
+    <img src="../images/unit07/xquery_triples_and_rows.png" width="653" height="74" class="image-border">    <br>
+  </li>
+  <li class="exercise-step">If desired, access additional XQuery Optic API examples at <a href="http://docs.marklogic.com/guide/app-dev/OpticAPI#id_68685" target="_blank">docs.marklogic.com/guide/app-dev/OpticAPI#id_68685</a>.</li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0708_using_the_optic_api_with_the_rest_api.htm" class="exercise-link">Topic (Using the Optic API with the REST API)</a></p>
+<p>Back: <a href="0707_writing_an_optic_api_query_in_xquery.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

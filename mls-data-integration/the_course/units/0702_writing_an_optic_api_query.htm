@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Writing an Optic API Query</strong></p>
+<p>To write an Optic API query, you build a query plan for querying rows, documents, and/or triples, and then execute it with .result(). </p>
+<p>Detail for the various op functions is available at <strong>docs.marklogic.com</strong>.</p>
+<p><span class="exercise-step"><img src="../images/unit07/op_functions.png" width="203" height="216" class="image-border"></span></p>
+<p class="topic-sub-heading">Rows</p>
+<p>To query rows, <strong>op.fromView()</strong> is used. For example, to retrieve rows from the purchases view, for the columns named customer, product, and quantity, ordering them by customer, and limiting the resultset to just the first twenty rows, the following could be used.</p>
+<p class="code">const op = require('/MarkLogic/optic');  <br>
+  <br>
+op.fromView('customer360', 'purchases')  <br>
+&nbsp;&nbsp;.where(op.ne(op.col('company'), '')) <br>
+&nbsp;&nbsp;.select(['company', 'product', 'quantity']) <br>
+&nbsp;&nbsp;.orderBy('company') <br>
+&nbsp;&nbsp;.limit(20) <br>
+&nbsp;&nbsp;.result();</p>
+<p>In the example above, the output from each operation (e.g. .where(), .select(), .orderBy(), .limit()) is the input to the next operation (e.g. .select(), .orderBy(), limit(), .result()). The order of the operations can be configured as desired. Once .result() is called on, MarkLogic optimizes the query plan and then runs it.</p>
+<p>Result:</p>
+<p><img src="../images/unit07/optic_api_results.png" width="492" height="296" class="image-border"></p>
+<p>Or, for the purchases from a specific customer, such as Rolling Fast Deliveries, the following query could be written.</p>
+<p class="code">const op = require('/MarkLogic/optic'); </p>
+<p class="code">op.fromView('customer360', 'purchases') <br>
+  &nbsp;&nbsp;.where(op.eq(op.col('company'), 'Rolling Fast Deliveries'))<br>
+  &nbsp;&nbsp;.select(['order_date', 'product', 'price', 'quantity', op.as('total', op.multiply(op.col('price'), op.col('quantity')))])<br>
+  &nbsp;&nbsp;.orderBy([op.desc('order_date'), 'product']) <br>
+  &nbsp;&nbsp;.limit(10)<br>
+  &nbsp;&nbsp;.result();</p>
+<p>Result:</p>
+<p><img src="../images/unit07/optic_api_rolling_fas_deliveries_results.png" width="470" height="330" class="image-border"></p>
+<p class="topic-sub-heading">.groupBy()</p>
+<p>The<strong> .groupBy()</strong> operation provides a way to group the rows in the resultset. For example, to see the products ordered for each customer,  the following could be used.</p>
+<p class="code">const op = require('/MarkLogic/optic');  <br>
+op.fromView('customer360', 'purchases')  <br>
+&nbsp; .groupBy(['company'], op.arrayAggregate('prodList', 'product', {values:'distinct'})) <br>
+&nbsp;&nbsp;.orderBy('company') <br>
+&nbsp;&nbsp;.result();</p>
+<p>Result:</p>
+<p><img src="../images/unit07/groupby_results.png" width="340" height="440" class="image-border"><br>
+</p>
+<p class="topic-sub-heading">Aggregating </p>
+<p>Various methods such as op.sum(), op.multiply(), op.count(), and op.arrayAggregate()  are available for aggregating values. For example, imagine wanting to calculate sales per product. </p>
+<p class="code">const op = require('/MarkLogic/optic.sjs'); <br>
+  <strong>const quantity_sum = op.col('quantity_sum');</strong><br>
+<br>
+op.fromView('customer360', 'purchases') <br>
+&nbsp;&nbsp;.groupBy('product', ['price', <strong>op.sum(quantity_sum, 'quantity')</strong>])<br>
+&nbsp;&nbsp;.select(['product', 'price', 'quantity_sum', <strong>op.as('total',<br>
+op.multiply(op.col('price'), op.col('quantity_sum')))</strong>])<br>
+&nbsp;&nbsp;.result();</p>
+<p>In the example above, a column named quantity_sum is defined, to contain the result of adding the values in the quantity column. Then, op.as() is used to hold the result of using op.multiply() on the price and quantity_sum columns.</p>
+<p>Result:</p>
+<p><img src="../images/unit07/aggregate_products.png" width="348" height="503" class="image-border"></p>
+<p class="topic-sub-heading">Joins </p>
+<p>To have a row be made up of  data from more than one view,  .joinInner()  can be used. For example, imagine wanting to return rows that are made up of data from the purchases view as well as the factsheets view. </p>
+<p class="code">const op = require('/MarkLogic/optic');  <br>
+  <strong>const purchasesView = op.fromView('customer360', 'purchases'); <br>
+const factsheetsView = op.fromView('customer360', 'factsheets'); </strong><br>
+<br>
+purchasesView <br>
+<strong>.joinInner(factsheetsView, <br>
+&nbsp; op.on(purchasesView.col('company'), factsheetsView.col('company_name'))) </strong><br>
+.select([purchasesView.col('company'), purchasesView.col('product'), purchasesView.col('quantity'), factsheetsView.col('market'), factsheetsView.col('notes')])  <br>
+.orderBy('product')
+<br>
+.result();</p>
+<p>Result (ordered by product, to see what companies have been purchasing each of the products):</p>
+<p><img src="../images/unit07/purchases_orderedby_product.png" width="633" height="567" class="image-border"></p>
+<p class="topic-sub-heading">Understanding an Optic Pipeline</p>
+<p>With the Optic API's fluent interface, a ModifyPlan object is passed from one method to the next in the flow.</p>
+<p><img src="../images/unit07/modifyplan_object_diagram.png" width="643" height="433" class="image-border"></p>
+<p>Detail is in the Optic API section of the Application Developer's Guide at docs.marklogic.com/guide/app-dev/OpticAPI#id_29095.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0702_x_write_an_optic_api_query_in_javascript.htm" class="exercise-link">Exercise (Write an Optic API Query in JavaScript)</a></p>
+<p>Back: <a href="0701_x_learn_about_the_optic_api.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

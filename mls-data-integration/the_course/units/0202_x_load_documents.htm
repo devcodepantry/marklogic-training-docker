@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Load Documents</strong></p>
+<p>In this walkthrough exercise, you  load  documents exported from  accounting, marketing, and tech support systems into the customer360 database, through port 8055, using MarkLogic Content Pump.<br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In your virtual machine, open a command prompt window (Applications - System Tools - Mate Terminal) and enter<span class="code"> java -version</span>. </li>
+  <li class="exercise-step">See that the JRE version is at least 1.8:<br>
+    <br>
+  <img src="../images/unit02/java_version_cs.png" width="665" height="100" class="image-border"></li>
+  <li class="exercise-step">On the desktop of the virtual machine, open the <strong>mlcp</strong> folder:<br>
+    <br>
+  <img src="../images/unit02/mlcp_folder.png" width="95" height="82" class="image-border"></li>
+  <li class="exercise-step">Within the folder, open the <strong>bin</strong> folder.</li>
+  <li class="exercise-step">Notice there is a file named <strong>mlcp.sh</strong> in the bin folder:<br>
+    <br>
+    <img src="../images/unit02/mlcp-sh_cs.png" width="657" height="141" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In the mls-data-integration/<strong>unit02</strong> folder, open the <strong>ex02a.txt</strong> file in a text editor:<br>
+    <br>
+    <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/accounting-system -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/data/accounting-system/,'/accounting/'" -output_collections &quot;raw&quot;</span><br>
+  </li>
+  <li class="exercise-step">Realize that the command will call on the mlcp.sh file, telling it to load the documents in the Desktop/mls-data-integration/unit02/data/<strong>accounting-system</strong> folder into the database associated with  port  <strong>8055</strong> (i.e. the customer360 database).</li>
+  <li class="exercise-step"><strong>Copy</strong> the command.</li>
+  <li class="exercise-step">In the command prompt window, right-click to select <strong>Paste</strong>, and then press Enter, to run the command.</li>
+  <li class="exercise-step">See that the command ran:<br>
+    <br>
+  <img src="../images/unit02/mlcp_ran_cs.png" width="665" height="406" class="image-border"></li>
+  <li class="exercise-step">In a browser within the virtual machine, navigate to<span class="code"> localhost:8000 </span>(i.e. Query Console).</li>
+  <li class="exercise-step">If prompted, log in with the User Name of<span class="code"> admin </span>and Password of<span class="code"> admin</span>.</li>
+  <li class="exercise-step">From the Database drop-down list, select the <strong>customer360</strong> database, and click the <strong>Explore</strong> button:<br>
+    <br>
+    <img src="../images/unit02/database_dropdown.png" width="305" height="43" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See that the documents loaded:<br>
+    <br>
+    <img src="../images/unit02/docs_loaded.png" width="568" height="328" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the <strong>link</strong> for one of the documents, to see its content.</li>
+  <li class="exercise-step">Click the back triangle to return to the list of documents.</li>
+  </ol>
+<p>Access the documents programmatically:</p>
+<ol start="17" class="exercise-step">
+  <li class="exercise-step">In Query Console, with the  Query Type  set to <strong>JavaScript</strong>, enter<span class="code"> fn.doc('/accounting/order-10072.json')</span>, and click the <strong>Run</strong> button, to see the document returned:<br>
+    <br>
+    <img src="../images/unit02/json_doc_result.png" width="340" height="297" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Change  Query Type to be <strong>XQuery</strong>, delete the 'use strict'; line,  modify the query to be<span class="code"> fn<strong>:</strong>doc(&quot;/accounting/order-10072.json&quot;)</span>, and click the Run button, to see the  document returned via an XQuery function.<br>
+  </li>
+  <li class="exercise-step">Back in the <strong>command prompt</strong> window, enter the following to read the document using the MarkLogic REST API, through port 8055 (can copy from unit02/<strong>ex02b.txt</strong>):<br>
+    <br>
+    <span class="code">curl --anyauth --user admin:admin -X GET &quot;http://localhost:8055/v1/documents?uri=/accounting/order-10072.json&quot;</span></li>
+  <li class="exercise-step">See the result:<br>
+    <br>
+  <img src="../images/unit02/rest_api_read_result_cs.png" width="663" height="187" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0203_splitting_a_multiple-record_xml_document.htm" class="exercise-link">Topic (Splitting a Multiple-Record XML Document)</a></p>
+<p>Back: <a href="0202_loading_documents.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

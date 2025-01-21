@@ -1,0 +1,43 @@
+{
+"orderNum": "10072", 
+"orderDate": "2017-01-14", 
+"items": 
+  [{
+         "item": 
+   		   {
+            "product": "SpeedPro Ultimate",
+            "price": 999,
+            "quantity": 1  			
+            }
+   },
+   {
+         "item": 
+            {
+            "product": "Mens Racer Helmet",
+            "price": 95,
+            "quantity": 1         
+            }
+   }], 
+"shipTo": 
+   {
+   		"firstName": "Dave",
+   		"lastName": "Delansantos",
+   		"company": "Rolling Fast Deliveries",
+   		"street": "800 Market Street",
+   		"city": "San Francisco",
+   		"state": "California",
+   		"zipcode": "94111",
+   		"phone": "415-787-1212",
+   		"email": "dave@rollingfast.com"
+   },  
+"billing": 
+   {
+   		"firstName": "Graham",
+   		"lastName": "Warman",
+   		"company": "Rolling Fast Deliveries",
+   		"street": "800 Market Street",
+   		"city": "San Francisco",
+   		"state": "California",
+   		"zipcode": "94111"
+   } 
+}

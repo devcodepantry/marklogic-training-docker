@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using mlsql</strong></p>
+<p>Provided with MarkLogic on Linux and Windows, <strong>mlsql</strong> is a command line tool that is handy for testing external SQL queries.</p>
+<p>Linux location: <span class="code">/opt/MarkLogic/bin/mlsql</span></p>
+<p>Windows location: <span class="code">c:\Program Files\MarkLogic\mlsql.exe </span></p>
+<p> The first step toward using mlsql is to connect it to the desired MarkLogic database, via the <strong>port</strong> that represents the ODBC app server for the database, as a user that is either <strong>admin</strong> or one with the <strong>sql-execution</strong> role. </p>
+<p class="code">/opt/MarkLogic/bin/mlsql -h localhost -p 3366 -U admin</p>
+<p>Once mlsql is connected to a database, SQL queries can be entered at the mlsql prompt. </p>
+<p><img src="../images/unit06/sql_purchases.png" width="697" height="404" class="image-border"><br>
+The end of queries in mlsql are designated with a semicolon (<span class="code">;</span>).</p>
+<p>To exit mlsql,<span class="code"> \q </span>can be entered.</p>
+<p>Detail on mlsql is at docs.marklogic.com/guide/sql/setup#id_32009. </p>
+<p class="topic-sub-heading">Tableau and Qlik</p>
+<p>SQL queries can be made to a MarkLogic database from most SQL-based tools.</p>
+<p>Steps for connecting<strong> Tableau</strong> to a MarkLogic database are at docs.marklogic.com/guide/sql/tableau.</p>
+<p>Steps for connecting <strong>Qlik</strong>  to a MarkLogic database are at docs.marklogic.com/guide/sql/Qlik.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0606_x_use_mlsql.htm" class="exercise-link">Exercise (Use mlsql)</a></p>
+<p>Back: <a href="0605_x_install_the_odbc_driver.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

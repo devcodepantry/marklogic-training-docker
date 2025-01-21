@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Querying an Envelope</strong></p>
+<p>Like regular XML and JSON documents, a document that is enveloped is  queryable through any of the MarkLogic APIs, including through XQuery functions, JavaScript functions, the REST API, the Node API, or the Java API, as well through the Optic API or SQL via views.</p>
+<p>XQuery:</p>
+<p class="code"><span class="exercise-step">  for $c in /envelope/canonical[company = &quot;Campus Bikes&quot;] <br>
+return concat($c/firstName/text(), &quot; &quot;, $c/lastName/text())</span></p>
+<p>Returns:</p>
+<p><span class="exercise-step"><img src="../images/unit03/all_three.png" width="269" height="101" class="image-border"></span></p>
+<p><br>
+JavaScript:</p>
+<p class="code">'use strict'; <br>
+const names = []; <br>
+<br>
+for (const doc of fn.collection('canonical')) {   <br>
+&nbsp; if ((doc.xpath('/envelope/canonical/company/text()').toString()) === 'Campus Bikes') {     <br>
+&nbsp; names.push(`${doc.xpath('/envelope/canonical/firstName/text()')} ${doc.xpath('/envelope/canonical/lastName/text()')}`);   <br>
+&nbsp; } <br>
+} <br>
+names;</p>
+<p>Returns:</p>
+<p><img src="../images/unit03/javascript_results.png" width="278" height="106" class="image-border"></p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0304_x_query_an_envelope.htm">Exercise (Query an Envelope)</a></p>
+<p>Back: <a href="0303_x_add_data_to_an_envelope.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>View Data to be Harmonized</strong></p>
+<p>In this walkthrough exercise, you view  data to be harmonized, and then query the data as it currently is.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">On the <strong>desktop</strong> of the virtual machine, in the mls-data-integration/<strong>unit03</strong>/<strong>data</strong> folder, open the <strong>contact-cs003.xml</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/karline.png" width="564" height="262" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Understand that this is a marketing contact that was collected at the LA Cycle Show, using a collection system different than the ProCycling's regular system for collecting marketing contacts.</li>
+  <li class="exercise-step">Close the file.</li>
+  <li class="exercise-step">In a <strong>command prompt</strong> window within your virtual machine, run the following to load the contact-cs003.xml document into the customer360 database (can copy from unit03/<strong>ex01a_mlcp.txt</strong>):<br>
+    <br>
+    <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit03/data -output_uri_replace &quot;home/cent/Desktop/mls-data-integration/unit03/data,'marketing'&quot; -output_collections &quot;raw&quot;</span> <br>
+  </li>
+  <li class="exercise-step">See that the document loaded:<br>
+    <br>
+    <img src="../images/unit03/contact_loaded_cs.png" width="664" height="286" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In <strong>Query Console</strong>, with the <strong>customer360</strong> database selected, click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step"><strong>Scroll</strong> down to locate the /marketing/contact-cs003.xml document:<br>
+    <br>
+    <img src="../images/unit03/cs003_link.png" width="197" height="36" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the link for the document, to see the contents:<br>
+    <br>
+    <img src="../images/unit03/karline_loaded.png" width="387" height="242" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> the elements named <strong>first-name</strong>,  <strong>last-name</strong>, and <strong>company</strong>.</li>
+  <li class="exercise-step">Realize that this document has a different structure and element names as compared to the other marketing contact documents.</li>
+  <li class="exercise-step">Click the back triangle, to go back to the list of documents.</li>
+  <li class="exercise-step">Click the link for <strong>/marketing/contact-1223.xml</strong>, to see its contents:<br>
+    <br>
+    <img src="../images/unit03/cclark.png" width="346" height="338" class="image-border">    <br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> that in this document, the element name for company  is  <strong>co</strong>, and that there are elements named <strong>first</strong> and <strong>last</strong>, inside of a name element, for the contact's first and last name. </li>
+  <li class="exercise-step">Imagine wanting to retrieve all of the  contact names for Campus Bikes, in spite of the varied document structures and element names.</li>
+</ol>
+<p>Try out querying  the contact documents as they are, using XQuery and JavaScript:</p>
+<ol start="15" class="exercise-step">
+  <li class="exercise-step">In Query Console, create a <strong>new tab</strong>, select <strong>XQuery</strong> for the Query Type, and enter the following to query for contacts at Campus Bikes (unit03/<strong>ex01b.txt</strong>):<br>
+    <br>
+    <span class="code">for $doc in /contact[co = &quot;Campus Bikes&quot;] <br>
+    return concat($doc/name/first/text(), &quot; &quot;, $doc/name/last/text())</span><br>
+  </li>
+  <li class="exercise-step">Click Run, to see the results:<br>
+    <br>
+    <img src="../images/unit03/co_results.png" width="275" height="67" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> that Karline Kosdrosky is not included in the results.</li>
+  <li class="exercise-step">Create a <strong>new tab</strong>, and enter the following, to handle both document structures (<strong>ex01c.txt</strong>):<br>
+    <br>
+    <span class="code">let $company-name := &quot;Campus Bikes&quot; <br>
+    <br>
+    let $co-results := <br>
+&nbsp;&nbsp;for $co-doc in /contact[co/text()=$company-name] <br>
+&nbsp; let $co-doc-first := $co-doc/name/first <br>
+&nbsp; let $co-doc-last := $co-doc/name/last <br>
+&nbsp; return fn:concat($co-doc-first/text(), &quot; &quot;, $co-doc-last/text()) <br>
+<br>
+let $company-results := <br>
+&nbsp;&nbsp;for $company-doc in /contact[company/text()=$company-name]<br>
+&nbsp; let $company-doc-first-name := $company-doc/first-name<br>
+&nbsp; let $company-doc-last-name := $company-doc/last-name<br>
+&nbsp;&nbsp;return fn:concat($company-doc-first-name/text(), &quot; &quot;, $company-doc-last-name/text())<br>
+<br>
+return ($co-results, $company-results)</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>. </li>
+  <li class="exercise-step"><strong>See</strong> that all three contacts for Campus Cycles are returned:<br>
+    <br>
+    <img src="../images/unit03/campus_cycles_results.png" width="279" height="101" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Imagine</strong> this query, as well as other queries, getting more and more complicated as marketing contacts with other structures are  added to the database over time.</li>
+  <li class="exercise-step">Do  the JavaScript equivalent by creating  a new tab, selecting <strong>JavaScript</strong> for the Query Type, and entering the following (<strong>ex01d.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict';</span>
+    <span class="code"><br>
+    <br>
+    const companyName = 'Campus Bikes';</span>
+    <br>
+    <br>
+    <span class="code">const coSearchResult =  cts.search(cts.andQuery([cts.elementWordQuery(xs.QName('co'),companyName),  cts.directoryQuery('/marketing/')]));<br>
+      const companySearchResult =  cts.search(cts.andQuery([cts.elementWordQuery(xs.QName('company'),companyName),  cts.directoryQuery('/marketing/')]));<br>
+    const names = [];</span>
+    <span class="code"><br>
+    <br>
+    for (const item of coSearchResult) {<br>
+      names.push(`${item.xpath('/contact/name/first/text()')}  ${item.xpath('/contact/name/last/text()')}`);<br>
+      };</span>
+    <span class="code"><br>
+    <br>
+    for (const item of companySearchResult) {<br>
+      names.push(`${item.xpath('/contact/first-name/text()')}  ${item.xpath('/contact/last-name/text()')}`);<br>
+      };</span>
+  <span class="code"><br>
+  <br>
+  names;</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step"><strong>See</strong> that all three contacts for Campus Cycles are returned:<br>
+    <br>
+  <img src="../images/unit03/all_three_javascript.png" width="492" height="32" class="image-border"></li>
+  <li class="exercise-step"><strong>Imagine</strong> only having to refer to one document structure for either of the above queries, even if the original documents came in with varied structures. </li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0302_using_an_envelope_pattern_to_harmonize_data.htm" class="exercise-link">Topic (Using an Envelope Pattern to Harmonize Data)</a></p>
+<p>Back: <a href="0301_understanding_data_harmonization.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

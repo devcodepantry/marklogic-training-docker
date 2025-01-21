@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Defining Variables</strong></p>
+<p>If there is an element  that is to  be repeatedly referenced in the rows definition, a variable can be set up in the vars element of the template and then used. </p>
+<p>For example, in the vars section of the template below, a variable named date is defined, to contain an order date, and is then called on as $date in the columns section.</p>
+<p><span class="code">let $purchases-template :=<br>
+&lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  &nbsp;&nbsp;<br>
+&nbsp;&nbsp;&lt;context&gt;/order/items/item&lt;/context&gt; <br>
+<strong>&nbsp;&nbsp;&lt;vars&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;date&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../../order-date&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+&nbsp;&nbsp;&lt;/vars&gt; </strong><br>
+&nbsp;&nbsp;&lt;rows&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;date&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;date&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>$date</strong>&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+&nbsp;&nbsp;&lt;/rows&gt;<br>
+&lt;/template&gt;</span></p>
+<p class="topic-sub-heading">Nesting Templates</p>
+<p>Templates can be nested. For example, to set an upper context of /order, and then a lower context of items/item, the following nested template structure can be used:</p>
+<p><span class="code">let $purchases-template :=<br>
+&lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  &nbsp;&nbsp;<br>
+&nbsp;&nbsp;&lt;context&gt;<strong>/order</strong>&lt;/context&gt; <br>
+&nbsp;&nbsp;&lt;vars&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;date&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>order-date</strong>&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+&nbsp;&nbsp;&lt;/vars&gt; <br>
+&nbsp;&nbsp;<strong>&lt;templates&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;context&gt;items/item&lt;/context&gt;</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;rows&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt; <br>
+&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt; <br>
+&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt; <br>
+&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;columns&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;date&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;date&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$date&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&lt;column&gt;                <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;product&lt;/name&gt;                <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;                <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>product</strong>&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/rows&gt;<br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/template&gt;</strong></span><br>
+<span class="code"><strong>&nbsp;&nbsp;&lt;/templates&gt;<br>
+</strong>&lt;/template&gt; </span><br>
+</p>
+<p>Documentation on nesting templates is in the Creating Template Views chapter in the SQL Data Modeling Guide, at docs.marklogic.com/guide/sql/creating-template-views#id_28999. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0504_x_define_variables.htm" class="exercise-link">Exercise (Define Variables)</a></p>
+<p>Back: <a href="0503_x_apply_a_template.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

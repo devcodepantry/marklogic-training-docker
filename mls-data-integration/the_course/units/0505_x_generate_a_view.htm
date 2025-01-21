@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Generate a View</strong></p>
+<p>In this walkthrough exercise, you create a schemas database, attach it to the customer360 database, and then insert a template using the tde:template-insert() function, to generate a view. <br>
+</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, select <strong>Configure</strong> - <strong>Databases</strong> - <strong>customer360</strong>.</li>
+  <li class="exercise-step">On the Configure tab, <strong>notice</strong> that the schema database is currently set to Schemas:<br>
+    <br>
+    <img src="../images/unit05/schema_database.png" width="672" height="344" class="image-border"><br>
+  </li>
+</ol>
+<p>Instead of using the default Schemas database, create a dedicated schemas database for the customer360 database:</p>
+<ol class="exercise-step" start="3">
+  <li class="exercise-step">In <strong>Query Console</strong>, create a new tab and enter the following  (unit05/<strong>ex05a.txt</strong>) to create a forest named <strong>customer360-schemas-01</strong>, a database named <strong>customer360-schemas</strong>, and <strong>attach</strong> the customer360-schemas-01 forest to the customer360-schemas database:<br>
+    <br>
+    <span class="code">(: forest :)<br>
+    xquery version &quot;1.0-ml&quot;;<br>
+    import module namespace admin = &quot;http://marklogic.com/xdmp/admin&quot; at &quot;/MarkLogic/admin.xqy&quot;;<br>
+    let $config := admin:get-configuration()<br>
+    let $config := admin:forest-create(<br>
+    $config, <br>
+  &quot;customer360-schemas-1&quot;,<br>
+    xdmp:host(), <br>
+    ())<br>
+  return admin:save-configuration($config);<br>
+  <br>
+  (: database :)<br>
+    xquery version &quot;1.0-ml&quot;;<br>
+    import module namespace admin = &quot;http://marklogic.com/xdmp/admin&quot; at &quot;/MarkLogic/admin.xqy&quot;;<br>
+    let $config := admin:get-configuration()<br>
+    let $config := admin:database-create(<br>
+    $config,<br>
+  &quot;customer360-schemas&quot;,<br>
+    xdmp:database(&quot;Security&quot;),<br>
+    xdmp:database(&quot;Schemas&quot;))<br>
+  return admin:save-configuration($config);<br>
+  <br>
+  (: attach forest to database :)<br>
+    xquery version &quot;1.0-ml&quot;;<br>
+    import module namespace admin = &quot;http://marklogic.com/xdmp/admin&quot; at &quot;/MarkLogic/admin.xqy&quot;;<br>
+    let $config := admin:get-configuration()<br>
+    let $config := admin:database-attach-forest(<br>
+    $config,<br>
+    xdmp:database(&quot;customer360-schemas&quot;), <br>
+    xdmp:forest(&quot;customer360-schemas-1&quot;))<br>
+  return admin:save-configuration($config)</span></li>
+  <li class="exercise-step">With the Query Type set to <strong>XQuery</strong>, click <strong>Run</strong>, to create the customer360-schemas database.</li>
+  <li class="exercise-step"><strong>Refresh</strong> the browser page for Query Console, to refresh the list of databases.</li>
+  <li class="exercise-step"><strong>See</strong> that  the customer360-schemas  database is now in the list of databases:<br>
+    <br>
+  <img src="../images/unit05/database_list.png" width="323" height="88" class="image-border"></li>
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, click the <strong>Configure</strong> link on the left, to see the new customer360-schemas database in the list of Databases:<br>
+    <br>
+    <img src="../images/unit05/databases_list.png" width="211" height="213" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the link for the  <strong>customer360</strong> database, to edit it.</li>
+  <li class="exercise-step">For the <strong>schema database</strong> setting, select <strong>customer360-schemas</strong>:<br>
+    <br>
+  <img src="../images/unit05/customer360-schemas_selected.png" width="429" height="197" class="image-border"></li>
+  <li class="exercise-step">Click the <strong>ok</strong> button, to apply the change.</li>
+</ol>
+<p>Insert the template:</p>
+<ol class="exercise-step" start="11">
+  <li class="exercise-step">In Query Console,  in your previous  tab, <strong>add</strong> an import statement at the beginning of your existing code, to be able to use the tde:template-insert() function (<strong>ex05b.txt</strong>):<br>
+    <br>
+    <span class="code"><strong>import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";</strong></span><br>
+    <br>
+    <span class="code">let $purchases-template := </span><br>
+    <span class="code">... </span><br>
+  </li>
+  <li class="exercise-step">At the bottom of your existing code, <strong>modify</strong> the return clause to be (<strong>ex05c.txt</strong>):<br>
+    <br>
+    <span class="code">return <strong>tde:template-insert("/templates/purchases-template.xml"</strong>, $purchases-template)</span><br>
+  </li>
+  <li class="exercise-step">With the <strong>customer360</strong> database selected, click the <strong>Run</strong> button.</li>
+  <li class="exercise-step">See that the response is <em>your query returned an empty sequence</em>, indicating no errors.</li>
+</ol>
+<p>See that the view was generated:</p>
+<ol class="exercise-step" start="15">
+  <li class="exercise-step">Create a new tab and enter the following:<br>
+    <br>
+    <span class="code">tde:get-view(&quot;customer360&quot;, &quot;purchases&quot;)    </span><br>
+  </li>
+  <li class="exercise-step">Click Run, to see the view:<br>
+    <br>
+    <img src="../images/unit05/get_view.png" width="368" height="373" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Create a <strong>new tab</strong> and enter the following to see that the template is applied by default (<strong>ex05e.txt</strong>):<br>
+    <br>
+  <span class="code">tde:node-data-extract(fn:doc(&quot;/accounting/order-14502.xml&quot;))</span></li>
+  <li class="exercise-step">Realize that, because you are using the tde:node-data-extract() function, you did not have to specify the template in order to have it be applied to the document:<br>
+    <br>
+    <img src="../images/unit05/applied_by_default.png" width="414" height="513" class="image-border"><br>
+  </li>
+</ol>
+<p>Explore the template location:</p>
+<ol class="exercise-step" start="19">
+  
+  <li class="exercise-step">In <strong>Query Console</strong>, in the Database list, select <strong>customer360-schemas</strong>. </li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step"><strong>See</strong> the template listed:<br>
+    <br>
+    <img src="../images/unit05/customer360-schemas_explore.png" width="492" height="107" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Realize</strong> that even though you used the tde:template-insert() function with the customer360 database selected, the template was actually inserted into the customer360-schemas database.</li>
+  <li class="exercise-step">Click the <strong>/templates/purchases-template.xml</strong> link, to see the template definition.</li>
+  <li class="exercise-step"><strong>Know</strong> that the  rows defined by this template will be automatically updated in the row index whenever any documents that match the context are inserted, updated, or deleted in the customer360 database.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0506_disabling_and_deleting_a_template.htm" class="exercise-link">Topic (Disabling and Deleting a Template)</a></p>
+<p>Back: <a href="0505_generating_a_view.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

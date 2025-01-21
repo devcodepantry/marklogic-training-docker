@@ -1,0 +1,14 @@
+<div class="card" *ngIf="customerInfo">
+  <div class="card-block">
+    <h4 class="card-title">{{ customerInfo?.companyName }}</h4>
+    <!--<pre>{{ customerInfo | json }}</pre>-->
+      <dd>{{ customerInfo?.headquarters }}</dd>
+      <dd>{{ customerInfo?.phone }}</dd>
+      <dd>{{ customerInfo?.website }}</dd>
+      <dd>Founded: {{ customerInfo?.founded }}</dd>
+      <dd>Employees: {{ customerInfo?.employees }}</dd>
+      <dd>Yearly revenue: {{ customerInfo?.yearlyRevenue | currency:'USD':true:'1.0' }}</dd>
+      <dd>{{ customerInfo?.market }}</dd>
+      <dd>{{ customerInfo?.notes }}</dd>
+  </div>
+</div>

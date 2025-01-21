@@ -1,0 +1,9 @@
+{ 
+  "rest-api": {
+  "name": "8055-customer360",
+  "database": "customer360",
+  "modules-database": "customer360-modules",
+  "port": "8055",
+  "forests-per-host": 1
+  } 
+}

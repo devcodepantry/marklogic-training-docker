@@ -1,0 +1,201 @@
+<export><workspace name="Optic API (JavaScript)"><query name="Simple Query" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases') 
+  .limit(100)
+  .result();</query><query name="Select" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases') 
+  .select(['company', 'product', 'price', 'quantity'])
+  .limit(100)
+  .result();</query><query name="Order By" focus="false" listorder="3" taborder="3" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases') 
+  .select(['company', 'product', 'price', 'quantity'])
+  .orderBy('product') 
+  .limit(100)
+  .result();</query><query name="Where" focus="false" listorder="4" taborder="4" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases') 
+  .where(op.eq(op.col('product'), 'SpeedPro Ultimate'))
+  .select(['company', 'product', 'price', 'quantity'])
+  .orderBy('product') 
+  .limit(100)
+  .result();</query><query name="Group By" focus="false" listorder="5" taborder="5" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'purchases') 
+  .select(['product', 'price', 'quantity'])
+  .groupBy('product')
+  .orderBy('product') 
+  .limit(100)
+  .result();</query><query name="Group By Array" focus="false" listorder="6" taborder="6" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+const quantity_sum = op.col('quantity_sum'); 
+
+op.fromView('customer360', 'purchases') 
+  .select(['product', 'price', 'quantity'])
+  .groupBy('product', ['price', op.sum(quantity_sum, 'quantity')]) 
+  .orderBy('product') 
+  .limit(100)
+  .result();</query><query name="Aggregates" focus="false" listorder="7" taborder="7" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic.sjs'); 
+const quantity_sum = op.col('quantity_sum'); 
+
+op.fromView('customer360', 'purchases') 
+  .groupBy('product', ['price', op.sum(quantity_sum, 'quantity')])
+  .select(['product', 'price', 'quantity_sum', op.as('total',
+op.multiply(op.col('price'), op.col('quantity_sum')))])
+  .orderBy(op.desc('total')) 
+  .limit(100)
+  .result();</query><query name="Contacts Template" focus="false" listorder="8" taborder="8" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $marketing-contacts-template := 
+&lt;template xmlns="http://marklogic.com/xdmp/tde"&gt;
+  &lt;context&gt;/envelope/canonical&lt;/context&gt;
+  &lt;rows&gt; 
+    &lt;row&gt; 
+      &lt;schema-name&gt;customer360&lt;/schema-name&gt; 
+      &lt;view-name&gt;marketing_contacts&lt;/view-name&gt; 
+      &lt;columns&gt; 
+        &lt;column&gt;
+          &lt;name&gt;first_name&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;firstName&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt; 
+        &lt;column&gt;
+          &lt;name&gt;last_name&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;lastName&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;         
+        &lt;column&gt;
+          &lt;name&gt;company&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;company&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;address&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;address&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;                
+        &lt;column&gt;
+          &lt;name&gt;city&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;city&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt;  
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;state&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;state&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;zip&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;zip&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;phone_work&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;phoneWork&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;phone_mobile&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;phoneMobile&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt; 
+        &lt;column&gt;
+          &lt;name&gt;phone_home&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;phoneHome&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;               
+        &lt;column&gt;
+          &lt;name&gt;email&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;email&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;mail_ok&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;mailOk/mailok&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;
+        &lt;column&gt;
+          &lt;name&gt;email_ok&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;emailOk&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt;        
+        &lt;column&gt;
+          &lt;name&gt;frequency&lt;/name&gt; 
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt; 
+          &lt;val&gt;frequency&lt;/val&gt; 
+          &lt;nullable&gt;true&lt;/nullable&gt; 
+        &lt;/column&gt; 
+        &lt;column&gt;
+          &lt;name&gt;uri&lt;/name&gt;
+          &lt;scalar-type&gt;string&lt;/scalar-type&gt;
+          &lt;val&gt;xdmp:node-uri(.)&lt;/val&gt;
+          &lt;nullable&gt;true&lt;/nullable&gt;
+        &lt;/column&gt;                              
+      &lt;/columns&gt;
+    &lt;/row&gt;
+  &lt;/rows&gt;
+&lt;/template&gt;
+
+return tde:template-insert("/templates/marketing-contacts-template.xml", $marketing-contacts-template)</query><query name="See Contacts" focus="false" listorder="9" taborder="9" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('customer360', 'marketing_contacts') 
+  .limit(100)
+  .result();</query><query name="All Views" focus="false" listorder="10" taborder="10" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+op.fromView('sys', 'sys_tables') 
+  .result();</query><query name="Factsheets View" focus="false" listorder="11" taborder="11" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">tde.getView("customer360", "factsheets")</query><query name="Join" focus="false" listorder="12" taborder="12" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const factsheetsView = op.fromView('customer360', 'factsheets'); 
+const contactsView = op.fromView('customer360', 'marketing_contacts'); 
+
+factsheetsView 
+.joinInner(contactsView, op.on(factsheetsView.col('company_name'), contactsView.col('company'))) 
+.select([factsheetsView.col('company_name'), factsheetsView.col('market'), factsheetsView.col('notes'), contactsView.col('first_name'), contactsView.col('last_name'), contactsView.col('email'), contactsView.col('phone_work'), contactsView.col('phone_mobile')]) 
+.limit(100)
+.result();</query><query name="Order By" focus="false" listorder="13" taborder="13" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const factsheetsView = op.fromView('customer360', 'factsheets'); 
+const contactsView = op.fromView('customer360', 'marketing_contacts'); 
+
+factsheetsView 
+.joinInner(contactsView, op.on(factsheetsView.col('company_name'), contactsView.col('company'))) 
+.select([factsheetsView.col('company_name'), factsheetsView.col('market'), factsheetsView.col('notes'), contactsView.col('first_name'), contactsView.col('last_name'), contactsView.col('email'), contactsView.col('phone_work'), contactsView.col('phone_mobile')]) 
+.orderBy(factsheetsView.col('company_name'))
+.limit(100)
+.result();</query><query name="Where" focus="false" listorder="14" taborder="14" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const factsheetsView = op.fromView('customer360', 'factsheets'); 
+const contactsView = op.fromView('customer360', 'marketing_contacts'); 
+
+factsheetsView 
+.where(op.eq(factsheetsView.col('company_name'), 'Rolling Fast Deliveries'))
+.joinInner(contactsView, op.on(factsheetsView.col('company_name'), contactsView.col('company'))) 
+.select([factsheetsView.col('company_name'), factsheetsView.col('market'), factsheetsView.col('notes'), contactsView.col('first_name'), contactsView.col('last_name'), contactsView.col('email'), contactsView.col('phone_work'), contactsView.col('phone_mobile')]) 
+.orderBy(factsheetsView.col('company_name'))
+.limit(100)
+.result();</query><query name="OYO Answer" focus="false" listorder="15" taborder="15" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const callsView = op.fromView('customer360', 'calls'); 
+const factsheetsView = op.fromView('customer360', 'factsheets'); 
+
+callsView 
+.joinInner(factsheetsView, op.on(callsView.col('customer'), factsheetsView.col('company_name'))) 
+.select([callsView.col('customer'), callsView.col('caller'), 
+         callsView.col('phone'), callsView.col('reason'), callsView.col('resolved'), 
+         factsheetsView.col('market'), factsheetsView.col('notes')]) 
+.orderBy(callsView.col('customer'))
+.limit(100)
+.result();</query></workspace></export>

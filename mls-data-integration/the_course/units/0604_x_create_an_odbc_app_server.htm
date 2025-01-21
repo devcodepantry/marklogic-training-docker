@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Create an ODBC App Server</strong></p>
+<p>In this walkthrough exercise, you create an ODBC App Server at port 3366 for the customer360 database.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In the <strong>Admin Interface</strong>, select <strong>Configure</strong> - <strong>Groups</strong> - <strong>Default</strong> - <strong>App Servers</strong>.<br>
+  </li>
+  <li class="exercise-step">Select the <strong>Create ODBC</strong> tab:<br>
+    <br>
+    <img src="../images/unit06/create_odbc_tab.png" width="600" height="33" class="image-border"><br>
+  </li>
+  <li class="exercise-step">For <strong>odbc server name</strong>, enter<span class="code"> 3366-customer360-odbc</span>.<br>
+  </li>
+  <li class="exercise-step">For <strong>root</strong>, enter<span class="code"> /</span>.  </li>
+  <li class="exercise-step">For <strong>port</strong>, enter<span class="code"> 3366</span>.<br>
+  </li>
+  <li class="exercise-step">For <strong>database</strong>, select <strong>customer360</strong>.</li>
+  <li class="exercise-step">Click the ok button.</li>
+  <li class="exercise-step">Once it is done (i.e. the <em>Waiting for localhost</em> message in the lower-left corner is gone), click the <strong>Configure</strong> link in the upper-left corner.</li>
+  <li class="exercise-step">See the new ODBC App Server in the list:<br>
+    <br>
+  <img src="../images/unit06/app_servers_list.png" width="254" height="217" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0605_installing_the_odbc_driver.htm" class="exercise-link">Topic (Installing the ODBC Driver)</a></p>
+<p>Back: <a href="0604_creating_an_odbc_app_server.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

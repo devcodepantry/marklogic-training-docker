@@ -1,0 +1,32 @@
+<order>
+  <order-num>10663</order-num>
+    <order-date>2017-01-15</order-date>
+  <items>
+    <item>
+      <product>SpeedPro Ultimate</product>
+      <price>999</price>
+      <quantity>1</quantity>
+    </item>
+    <item>
+      <product>Ladies Racer Helmet</product>
+      <price>115</price>
+      <quantity>1</quantity>
+    </item>
+  </items>
+  <ship-to>
+    <first-name>Jan</first-name>
+    <last-name>Daniels</last-name>
+    <street>3 Papaya Lane</street>
+    <city>Miami</city>
+    <state>Florida</state>
+    <zipcode>33133</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Jan</first-name>
+    <last-name>Daniels</last-name>
+    <street>3 Papaya Lane</street>
+    <city>Miami</city>
+    <state>Florida</state>
+    <zipcode>33133</zipcode>
+  </billing>
+</order>

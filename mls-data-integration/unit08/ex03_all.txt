@@ -1,0 +1,30 @@
+{ 
+  "info": { 
+    "title": "procycling", 
+    "version": "0.0.1", 
+    "baseUri": "http://procycling.com/entity-types", 
+    "description": "ProCycling schema to define entity types, such as for products, orders, and customers." 
+  }, 
+  "definitions": {
+    "Product": {
+      "properties": {
+        "id": {"datatype": "string"},
+        "name": {"datatype": "string"},
+        "price": {"datatype": "double"},
+        "weightKg": {"datatype": "double"},
+        "weightLb": {"datatype": "double"},
+        "material": {"datatype": "string"},
+        "gender": {"datatype": "string"},
+        "color": {"datatype": "string"},
+        "description": {"datatype": "string"},
+        "speeds": {"datatype": "decimal"},
+        "recommend": {
+          "datatype": "array",
+          "items": {"$ref": "#/definitions/Product"}
+        }
+      },
+      "primaryKey": "id",
+      "required": ["name", "price"]
+    }
+  }
+}

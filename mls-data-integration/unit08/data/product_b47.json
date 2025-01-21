@@ -1,0 +1,10 @@
+{
+"prodId": "b47",
+"name": "SpeedPro Ultimate", 
+"price": 999,
+"weightLb": 42,
+"madeOf": "alloy",
+"gender": "mens",
+"speeds": 21,
+"description": "Alloy bike designed for performance and quality. Suitable for inside leg of 32-36 inches."
+}

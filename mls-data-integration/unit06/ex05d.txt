@@ -1,0 +1,1 @@
+odbcinst -i -s -f /opt/MarkLogic/templates/mlsql.template

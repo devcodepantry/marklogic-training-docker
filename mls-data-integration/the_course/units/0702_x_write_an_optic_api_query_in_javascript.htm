@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Write an Optic API Query in JavaScript</strong></p>
+<p>In this walkthrough exercise, you write Optic API queries in JavaScript.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit07</strong> - <strong>Optic API.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>Simple Query</strong>.</li>
+  <li class="exercise-step">Notice the  command:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'purchases') <br>
+&nbsp;&nbsp;.limit(100)<br>
+&nbsp;&nbsp;.result();</span></li>
+  <li class="exercise-step">With the <strong>customer360</strong> database selected, and <strong>JavaScript</strong> as the Query Type, click <strong>Run.</strong></li>
+  <li class="exercise-step">See that all of the rows in the purchases view are returned: <br>
+    <br>
+    <img src="../images/unit07/all_rows.png" width="560" height="395" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to the query to just return the customer, product, price, and quantity columns:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'purchases') <br>
+<strong>&nbsp;&nbsp;.select(['company', 'product', 'price', 'quantity'])</strong><br>
+&nbsp;&nbsp;.limit(100)<br>
+&nbsp; .result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that rows for just those columns are returned:<br>
+    <br>
+    <img src="../images/unit07/select.png" width="563" height="252" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to sort the results by product name:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+      <br>
+      op.fromView('customer360', 'purchases') <br>
+  &nbsp;&nbsp;.select(['company', 'product', 'price', 'quantity'])<br>
+  <strong>&nbsp;&nbsp;.orderBy('product')  </strong><br>
+  &nbsp;&nbsp;.limit(100)  <br>
+      &nbsp;&nbsp;.result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that rows are now sorted by product name:<br>
+    <br>
+    <img src="../images/unit07/orderby.png" width="506" height="367" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to only return the rows where the product is SpeedPro Ultimate:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'purchases') <br>
+<strong>&nbsp;&nbsp;.where(op.eq(op.col('product'), 'SpeedPro Ultimate'))</strong><br>
+&nbsp;&nbsp;.select(['company', 'product', 'price', 'quantity'])<br>
+&nbsp;&nbsp;.orderBy('product') <br>
+&nbsp;&nbsp;.limit(100)<br>
+&nbsp;&nbsp;.result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that only the rows for  SpeedPro Ultimate   are returned:<br>
+    <br>
+    <img src="../images/unit07/speedpro_ultimate.png" width="538" height="377" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Remove </strong>the where and click Run, to see all of the products returned.</li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to group the rows by product, and <strong>remove company</strong> from the select clause (not needed):<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'purchases') <br>
+&nbsp;&nbsp;.select(['product', 'price', 'quantity'])<br>
+<strong>&nbsp;&nbsp;.groupBy('product')</strong><br>
+&nbsp;&nbsp;.orderBy('product') <br>
+&nbsp;&nbsp;.limit(100)<br>
+&nbsp;&nbsp;.result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the rows are being grouped by product:<br>
+    <br>
+    <img src="../images/unit07/groupby_product.png" width="359" height="361" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to display the price:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+op.fromView('customer360', 'purchases') <br>
+&nbsp;&nbsp;.select(['product', 'price', 'quantity'])<br>
+&nbsp;&nbsp;.groupBy('product'<strong>, ['price']</strong>) <br>
+&nbsp;&nbsp;.orderBy('product') <br>
+&nbsp;&nbsp;.limit(100) <br>
+&nbsp;&nbsp;.result();</span><br>
+  </li>
+  <li class="exercise-step">Add to the query, to sum the quantity per product (<strong>Group By Array</strong> tab):<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+    <strong>const quantity_sum = op.col('quantity_sum'); </strong><br>
+    <br>
+    op.fromView('customer360', 'purchases') <br>
+    &nbsp;&nbsp;.select(['product', 'price', 'quantity'])<br>
+    &nbsp;&nbsp;.groupBy('product'<strong>, </strong>['price'<strong>, op.sum(quantity_sum, 'quantity')</strong>]) <br>
+    &nbsp;&nbsp;.orderBy('product') <br>
+&nbsp;&nbsp;.limit(100)    <br>
+    &nbsp;&nbsp;.result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the price and quantity per product are returned:<br>
+    <br>
+    <img src="../images/unit07/quantity_total.png" width="352" height="432" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Modify</strong> and <strong>add</strong> to the query, to calculate and display the total (price * quantity_sum) per product, sorting the results by total in descending order:<br>
+    <br>
+    <span class="code"> const op = require('/MarkLogic/optic.sjs');  <br>
+const quantity_sum = op.col('quantity_sum'); <br>
+<br>
+op.fromView('customer360', 'purchases')  <br>
+<strong>&nbsp;&nbsp;.groupBy('product', ['price', op.sum(quantity_sum, 'quantity')])<br>
+ &nbsp;&nbsp;.select(['product', 'price', 'quantity_sum', op.as('total',
+op.multiply(op.col('price'), op.col('quantity_sum')))])<br>
+&nbsp;&nbsp;.orderBy(op.desc('total')) </strong><br>
+&nbsp;&nbsp;.limit(100)<br>
+&nbsp;&nbsp;.result(); </span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the total per product is returned, in descending order:<br>
+    <br>
+  <img src="../images/unit07/orderby_desc.png" width="324" height="362" class="image-border"></li>
+</ol>
+<p>Do a  join:</p>
+<ol class="exercise-step" start="29">
+  <li class="exercise-step">Select the <strong>Contacts Template</strong> tab, to define a view for  data in the marketing contact documents, such as from /marketing/contact-1770.xml:<br>
+    <br>
+    <img src="../images/unit07/contacts_template_tab.png" width="694" height="573" class="image-border"><br>
+  </li>
+  <li class="exercise-step">With the customer360 database selected, and <strong>XQuery </strong> as the Query Type, click <strong>Run</strong>.</li>
+  <li class="exercise-step">Select the <strong>See Contacts </strong>tab:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+      <br>
+      op.fromView('customer360', 'marketing_contacts') <br>
+&nbsp;&nbsp;.limit(100)      <br>
+      &nbsp;&nbsp;.result();</span></li>
+  <li class="exercise-step">With Query Type set to <strong>JavaScript</strong>, click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that  marketing contacts data is returned: <br>
+    <br>
+    <img src="../images/unit07/contacts_returned.png" width="652" height="460" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong> All Views </strong> tab, to review the views that you have defined in the customer360 schema:<br>
+    <br>
+  <span class="code">const op = require('/MarkLogic/optic');  <br>
+  <br>
+  op.fromView('sys', 'sys_tables') <br>
+  &nbsp;&nbsp;.result(); </span></li>
+  <li class="exercise-step"> Click Run.</li>
+  <li class="exercise-step">See that you have   a view defined for factsheets  (created in the Unit 5 Lab):<br>
+    <br>
+    <img src="../images/unit07/sys_tables.png" width="410" height="154" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>Factsheets View </strong>tab, to see the column names defined in the factsheets view:<br>
+    <br>
+    <span class="code">tde.getView(&quot;customer360&quot;, &quot;factsheets&quot;)</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">Skim through the view definition to see columns for  company_name, headquarters, phone, website, founded, employees, yearly_revenue, market, and notes:<br>
+    <br>
+    <img src="../images/unit07/factsheets_view_definition.png" width="376" height="375" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>Join</strong> tab, to join data from the factsheets view and the marketing_contacts view:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+    <br>
+    const factsheetsView = op.fromView('customer360', 'factsheets'); <br>
+    const contactsView = op.fromView('customer360', 'marketing_contacts'); <br>
+    <br>
+    factsheetsView <br>
+    .joinInner(contactsView, op.on(factsheetsView.col('company_name'), contactsView.col('company'))) <br>
+    .select([factsheetsView.col('company_name'), factsheetsView.col('market'), factsheetsView.col('notes'), contactsView.col('first_name'), contactsView.col('last_name'), contactsView.col('email'), contactsView.col('phone_work'), contactsView.col('phone_mobile')])  <br>
+    .limit(100)
+    <br>
+    .result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the rows are made up of data from both views:<br>
+    <br>
+  <img src="../images/unit07/from_both_views.png" width="622" height="352" class="image-border"></li>
+  <li class="exercise-step">Right before .limit(), <strong>add</strong> a .orderBy(), to sort the rows by company name:<br>
+    <br>
+    <span class="code"><strong>.orderBy(factsheetsView.col('company_name'))</strong><br>
+.limit(100)<br>
+.result();</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see that the contacts are now ordered by company:<br>
+    <br>
+  <img src="../images/unit07/orderedbycompanyname.png" width="592" height="371" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> a .where() at the beginning, to only return the contacts for Rolling Fast Deliveries:<br>
+    <br>
+  <span class="code">factsheetsView  <strong><br>
+  .where(op.eq(factsheetsView.col('company_name'), 'Rolling Fast Deliveries'))</strong><br>
+  .joinInner(contactsView, op.on(factsheetsView.col('company_name'), contactsView.col('company')))  <br>
+  .select([factsheetsView.col('company_name'), factsheetsView.col('market'), factsheetsView.col('notes'), contactsView.col('first_name'), contactsView.col('last_name'), contactsView.col('email'), contactsView.col('phone_work'), contactsView.col('phone_mobile')])  <br>
+  .orderBy(factsheetsView.col('company_name')) <br>
+  .limit(100)<br>
+  .result();</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see that only the marketing contacts for Rolling Fast Deliveries are returned:<br>
+    <br>
+    <img src="../images/unit07/only_rolling_fast.png" width="645" height="214" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In a browser window, navigate to <a href="http://docs.marklogic.com" target="_blank">docs.marklogic.com</a>. </li>
+  <li class="exercise-step">On the left, in the list of JavaScript functions, click the '<strong>+</strong>' to the left of<strong> JavaScript Functions by Name</strong>, to expand it.</li>
+  <li class="exercise-step">Click the '<strong>+</strong>' to the left of <strong>op.</strong>, to expand it.</li>
+  <li class="exercise-step">See that there are many Optic API functions available in JavaScript:<br>
+    <br>
+    <img src="../images/unit07/op_functions.png" width="226" height="213" class="image-border"><br>
+  </li>
+  <li class="exercise-step">As desired, click on any of the functions, to learn more about them.</li>
+</ol>
+<p>On your own:</p>
+<ol class="exercise-step" start="52">
+  <li class="exercise-step">Create a new tab and write an Optic API query that joins across the calls and factsheets views, to return rows that have values from the <strong>customer</strong>, <strong>caller</strong>, <strong>phone</strong>, <strong>reason</strong>, and <strong>resolved</strong> columns of the <strong>calls </strong> view, and values from the <strong>market</strong> and <strong>notes</strong> columns of the <strong>factsheets</strong> view, ordered by customer.</li>
+  <li class="exercise-step">Check  your result:<br>
+    <br>
+  <img src="../images/unit07/on_your_own_result.png" width="702" height="578" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0703_using_document_criteria.htm" class="exercise-link">Topic (Using Document Criteria)</a></p>
+<p>Back: <a href="0702_writing_an_optic_api_query.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

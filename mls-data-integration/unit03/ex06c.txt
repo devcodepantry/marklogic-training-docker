@@ -1,0 +1,7 @@
+  <dependencies>
+    <dependency>
+      <groupId>com.marklogic</groupId>
+      <artifactId>marklogic-client-api</artifactId>
+      <version>4.0.0-EA4</version>
+    </dependency>
+  </dependencies>

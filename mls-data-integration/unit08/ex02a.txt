@@ -1,0 +1,11 @@
+{ 
+  "info": { 
+    "title": "procycling", 
+    "version": "0.0.1", 
+    "baseUri": "http://procycling.com/entity-types", 
+    "description": "ProCycling schema to define entity types, such as for products, orders, and customers." 
+  }, 
+  "definitions": {
+
+  }
+}

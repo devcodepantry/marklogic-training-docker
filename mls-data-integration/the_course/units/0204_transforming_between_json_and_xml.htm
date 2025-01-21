@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Transforming Between JSON and XML </strong></p>
+<p>While it is  fine to have a mix of XML and JSON documents in the same database, it is also possible to transform content from one  format to the other, if one  is preferred.</p>
+<p>Various strategies for converting between XML and JSON are in the Application Developer's Guide at <strong>docs.marklogic.com/9.0/guide/app-dev/json#id_55967</strong>.</p>
+<p><img src="../images/unit02/docs_converting_json_to_xml.png" width="632" height="330" class="image-border"></p>
+<p class="topic-sub-heading">JSON to XML</p>
+<p>To generate XML from JSON, the main XQuery function is <strong>json:transform-from-json()</strong> and JavaScript function is <strong>json.transformFromJson()</strong>. </p>
+<p>Example JSON document (doc-01.json):</p>
+<p class="code">{ <br>
+  &nbsp;  &quot;foo&quot;: { <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&quot;bar&quot;: &quot;bar text&quot;, <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&quot;qux&quot;: &quot;qux text&quot; <br>
+  &nbsp; } <br>
+  }</p>
+<p>Example XQuery:</p>
+<p class="code">xquery version &quot;1.0-ml&quot;; <br>
+  <br>
+  import module namespace json = &quot;http://marklogic.com/xdmp/json&quot; at &quot;/MarkLogic/json/json.xqy&quot;; <br>
+  <br>
+  <strong>json:transform-from-json</strong>(fn:doc(&quot;doc-01.json&quot;), json:config(&quot;custom&quot;))</p>
+<p><br>
+Example JavaScript:</p>
+<p class="code">'use strict'; <br>
+  <br>
+const json = require('/MarkLogic/json/json.xqy');                        <br>
+<br>
+<strong>json.transformFromJson</strong>(cts.doc('doc-01.json'), json.config('custom'));</p>
+<br>
+Result:<br>
+<p><span class="code">&lt;foo&gt;<br>
+  &nbsp;  &lt;bar&gt;bar text&lt;/bar&gt; <br>
+  &nbsp;&nbsp;&lt;qux&gt;qux text&lt;/qux&gt; <br>
+  &lt;/foo&gt;</span></p>
+<p><br>
+Detail on   the <strong>json:transform-to-json()</strong> function is available at docs.marklogic.com/json:transform-to-json. Detail on using <strong>json:config()</strong> to specify a strategy of basic, full, or custom is at docs.marklogic.com/json:config.</p>
+<p class="topic-sub-heading">XML to JSON</p>
+<p>To generate JSON from XML, the main XQuery function is <strong>json:transform-to-json()</strong> and JavaScript function is <strong>json.transformToJson()</strong>. </p>
+<p>Example XML document (doc-01.xml):<br>
+</p>
+<p><span class="code">&lt;foo&gt;<br>
+&nbsp;  &lt;bar&gt;bar text&lt;/bar&gt; <br>
+&nbsp;&nbsp;&lt;qux&gt;qux text&lt;/qux&gt; <br>&lt;/foo&gt;</span></p>
+<p><br>
+  Example XQuery:<br>
+</p>
+<p class="code">xquery version &quot;1.0-ml&quot;; <br>
+  <br>
+import module namespace json = &quot;http://marklogic.com/xdmp/json&quot; at &quot;/MarkLogic/json/json.xqy&quot;; <br>
+<br>
+<strong>json:transform-to-json</strong>(fn:doc(&quot;doc-01.xml&quot;), json:config(&quot;custom&quot;))</p>
+<p><br>
+Example JavaScript:</p>
+<p class="code">'use strict'; <br>
+  <br>
+  const json = require('/MarkLogic/json/json.xqy'); <br>
+  <br>
+  <strong>json.transformToJson</strong>(cts.doc('doc-01.xml'), json.config('custom')); </p>
+<p><br>
+Result:</p>
+<p class="code">{ <br>
+&nbsp;  &quot;foo&quot;: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;bar&quot;: &quot;bar text&quot;,  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;qux&quot;: &quot;qux text&quot; <br>
+&nbsp; } <br>
+}</p>
+<p class="topic-sub-heading">Handling Whitespace</p>
+<p>To ignore  extraneous whitespace or line breaks when transforming an XML or JSON document, a whitespace ignore  setting can be passed into the transformation function.</p>
+<p class="code">xquery version &quot;1.0-ml&quot;;</p>
+<p class="code">import module namespace json = &quot;http://marklogic.com/xdmp/json&quot; at &quot;/MarkLogic/json/json.xqy&quot;;</p>
+<p class="code">let $xml := fn:doc(&quot;/accounting/order-10991.xml&quot;)</p>
+<p class="code"><strong>let $custom :=<br>
+  let $config := json:config(&quot;custom&quot;)<br>
+  let $_ := map:put($config, &quot;whitespace&quot;, &quot;ignore&quot;)<br>
+  return $config</strong></p>
+<p class="code">return json:transform-to-json($xml<strong>, $custom</strong>)</p>
+<p class="topic-sub-heading">JSON vs. XML</p>
+<p>As MarkLogic  supports both JSON and XML, either can be used for storing data in a MarkLogic database. Therefore, the preference for one over the other is often determined by whether the source data is already in one of the  formats, what format the output is to be in, the preference of the development team, and/or whether one of the formats is predominantly used within the organization.</p>
+<p>Further discussion on JSON vs XML is provided in the Knowledgebase article at <strong>help.marklogic.com/knowledgebase/article/View/212/0/server-side-javascript-and-json-vs-xquery-and-xml-in-marklogic-server</strong>. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0204_x_transform_between_json_and_xml.htm">Exercise (Transform Between JSON and XML)</a></p>
+<p>Back: <a href="0203_x_split_a_multiple-record_xml_document.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

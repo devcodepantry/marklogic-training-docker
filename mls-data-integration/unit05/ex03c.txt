@@ -1,0 +1,6 @@
+        <column>
+          <name>row_total</name> 
+          <scalar-type>decimal</scalar-type> 
+          <val>price * quantity</val> 
+          <invalid-values>ignore</invalid-values> 
+        </column>

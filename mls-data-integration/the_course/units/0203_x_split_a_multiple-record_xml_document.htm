@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Split a Multiple-Record XML Document</strong></p>
+<p>In this walkthrough exercise, you  split a long XML file of marketing contacts into individual  documents as part of the loading process.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">On the desktop of the virtual machine, in the mls-data-integration/<strong>unit02</strong>/<strong>data</strong>/<strong>marketing-system</strong> folder, open the <strong>contacts.xml</strong> file in a text editor (right-click - Open With gedit).</li>
+  <li class="exercise-step">See that the file contains a contact element for each  contact:<br>
+    <br>
+    <img src="../images/unit02/contacts_cs.png" width="607" height="604" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In the mls-data-integration/<strong>unit02</strong> folder, open the <strong>ex03.txt</strong> file in a text editor:<br>
+    <br>
+  <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/marketing-system/contacts.xml -input_file_type aggregates -aggregate_record_element contact  -output_uri_prefix /marketing/contact-   -uri_id id -output_uri_suffix .xml -output_collections &quot;raw&quot;</span> </li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>-input_file_type aggregates</strong> option.</li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>-aggregate_record_element contact</strong> option.<br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>-output_uri_prefix /marketing/contact- -uri_id id -output_uri_suffix .xml </strong>options.</li>
+  <li class="exercise-step"><strong>Copy</strong> all of the text.</li>
+  <li class="exercise-step">In a command prompt window within the virtual machine, right-click to select <strong>Paste</strong>.</li>
+  <li class="exercise-step">Press Enter, to run the command.</li>
+  <li class="exercise-step">See that the command completes:<br>
+    <br>
+  <img src="../images/unit02/mlcp_split_cs.png" width="660" height="271" class="image-border"></li>
+  <li class="exercise-step">In Query Console (localhost:8000), click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">See that  9 new documents have been added, one for each contact  from the source file:<br>
+    <br>
+    <img src="../images/unit02/split_docs_loaded.png" width="563" height="303" class="image-border"></li>
+  <li class="exercise-step">Select the link for one of the documents (e.g. /marketing/contact-1770.xml), to see that it contains just one contact:<br>
+    <br>
+  <img src="../images/unit02/just_one_contact.png" width="440" height="415" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0204_transforming_between_json_and_xml.htm" class="exercise-link">Topic (Transforming Between JSON and XML)</a></p>
+<p>Back: <a href="0203_splitting_a_multiple-record_xml_document.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

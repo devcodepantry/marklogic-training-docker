@@ -1,0 +1,6 @@
+        <column>
+          <name>company</name>
+          <scalar-type>string</scalar-type>
+          <val>../../billing/company</val>
+          <nullable>true</nullable> 
+        </column>

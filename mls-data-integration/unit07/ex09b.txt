@@ -1,0 +1,1 @@
+curl --anyauth -u admin:admin -X POST -H "content-type: application/json" -H "accept: text/csv" -d@/home/cent/Desktop/mls-data-integration/unit07/optic_api_query.json "http://localhost:8055/v1/rows"

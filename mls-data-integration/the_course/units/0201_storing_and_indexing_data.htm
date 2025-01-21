@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Storing and Indexing Data</strong></p>
+<p>With MarkLogic being a document-oriented database, data is commonly stored in a <strong>JSON</strong> or <strong>XML</strong> document format. </p>
+<p class="topic-sub-heading">Getting Data into a Document Format</p>
+<p>If the data  to bring into MarkLogic is not already structured as XML or JSON (e.g. if it is currently in a relational database), there are various  ways to export, or transform it, from the source. </p>
+<p>For example, many relational databases provide an option to export relational data in an XML or JSON format. Or, a SQL script could be written to fetch the data from the database, outputting it in an XML or JSON structure. Or, using MarkLogic, rows from a .csv file can be imported as XML or JSON documents. In any case, it is normal to first denormalize the data being exported from the relational database, to first put the content back together, in its <strong>original form</strong>.</p>
+<p>Denormalization, which naturally occurs when working with documents in their original form, greatly reduces the  need for joins, accelerating performance. </p>
+<p class="topic-sub-heading"><strong>Schema Agnostic</strong></p>
+<p>Schemas are <strong>optional</strong> in MarkLogic. With documents not having to adhere to a schema, data to be loaded intact, in its original form (e.g. a prescription, an insurance policy, a real estate listing, etc.), without having to be chopped up to fit into a relational database.</p>
+<p>To address a group of documents within a database, directories (i.e. included the naming convention used for addressing documents),  collections, and/or the internal structure of the documents can be used. For detail on  directories and collections, see the MarkLogic Fundamentals course. </p>
+<p>With MarkLogic easily supporting data from disparate systems all in the same database, it is common to have documents of different structures and  types all in the same database.</p>
+<p class="topic-sub-heading">Document Size</p>
+<p>When loading documents,  a best practice is to have <strong>one document per entity</strong>. MarkLogic is most performant with many small documents, rather than one large document.  Target document  size is <strong>1KB to 100KB</strong>, but <strong>can be larger</strong>.</p>
+<p>For example, rather than loading a bunch of employees all as one document, have each employee be a document. Or, for a bunch of patents, have each patent be a document. Or, for a bunch of emails, have each email be a document.</p>
+<p class="topic-sub-heading">Document Structure </p>
+<p>When defining a document, use XML element and attribute names, or JSON property names,  that are  descriptive. Do not create generic names. Make documents <strong>human readable</strong>. Using this convention helps indexes be efficient, reducing and/or eliminating false positives. </p>
+<p>Know that if you have multiple values for an element, you can easily have more than one instance of an element.</p>
+<p><span class="code">&nbsp;&nbsp;&lt;items&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;SpeedPro Ultimate&lt;/product&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;999&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;/item&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;item&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;product&gt;Mens Racer Helmet&lt;/product&gt;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;price&gt;95&lt;/price&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;quantity&gt;1&lt;/quantity&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;/item&gt; <br>
+&nbsp;&nbsp;&lt;/items&gt;</span></p>
+<p>Use elements rather than attributes when possible, for expandability, and because element values are included  in default search results.</p>
+<p>Realize that sparse table data is not an issue with documents. If you do not have a value, you do not need to define the element. For example, in the document above, if you do not have a value for notes, you do not specify the element.</p>
+<p class="topic-sub-heading">Indexing Documents</p>
+<p>As documents are loaded, all of the words in each document, as well as the structure of each document, are indexed, so that <strong>documents are immediately searchable</strong>.</p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0201_x_view_data_to_load.htm" class="exercise-link">Exercise (View Data to Load)</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+/opt/MarkLogic/bin/mlsql -h localhost -p 3366 -U admin

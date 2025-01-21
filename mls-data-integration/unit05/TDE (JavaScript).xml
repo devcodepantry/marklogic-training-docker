@@ -1,0 +1,965 @@
+<export><workspace name="TDE (JavaScript)"><query name="ex02.txt" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/order/items/item',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'purchases',
+       'columns':[
+         {
+           'name':'product',
+           'scalarType':'string',
+           'val':'product', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'price',
+           'scalarType':'decimal',
+           'val':'price', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'quantity',
+           'scalarType':'integer',
+           'val':'quantity', 
+           'invalidValues':'ignore'
+         }
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.validate([purchasesTemplate]);
+</query><query name="ex03a.txt" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/order/items/item',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'purchases',
+       'columns':[
+         {
+           'name':'product',
+           'scalarType':'string',
+           'val':'product', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'price',
+           'scalarType':'decimal',
+           'val':'price', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'quantity',
+           'scalarType':'integer',
+           'val':'quantity', 
+           'invalidValues':'ignore'
+         }         
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.nodeDataExtract([cts.doc('/accounting/order-10072.xml')], [purchasesTemplate]);</query><query name="ex03b.txt" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'order/items/item',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'purchases',
+       'columns':[
+         {
+           'name':'product',
+           'scalarType':'string',
+           'val':'product', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'price',
+           'scalarType':'decimal',
+           'val':'price', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'quantity',
+           'scalarType':'integer',
+           'val':'quantity', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'../../notes', 
+           'nullable': true
+         }
+        
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.nodeDataExtract([cts.doc('/accounting/order-10991.xml')], [purchasesTemplate]);</query><query name="ex03c.txt" focus="false" listorder="4" taborder="4" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'order/items/item',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'purchases',
+       'columns':[
+         {
+           'name':'product',
+           'scalarType':'string',
+           'val':'product', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'price',
+           'scalarType':'decimal',
+           'val':'price', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'quantity',
+           'scalarType':'integer',
+           'val':'quantity', 
+           'invalidValues':'ignore'
+         },
+          {
+           'name':'row_total',
+           'scalarType':'decimal',
+           'val': 'price * quantity', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'../../notes', 
+           'nullable':true
+         }
+        
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.nodeDataExtract([cts.doc('/accounting/order-10991.xml')], [purchasesTemplate]);</query><query name="ex05b.txt" focus="false" listorder="7" taborder="8" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/order',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'order-date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'order-num'
+           },
+           {
+           'name':'company',
+           'val':'billing/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'/items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);</query><query name="ex05c.txt" focus="false" listorder="8" taborder="9" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+    'context':'/order',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'order-date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'order-num'
+           },
+           {
+           'name':'company',
+           'val':'billing/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'/items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+tde.templateInsert('/templates/purchasesTemplate.json', purchasesTemplate);</query><query name="ex05d.txt" focus="false" listorder="9" taborder="10" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+
+tde.getView('customer360', 'purchases');</query><query name="ex05e.txt" focus="false" listorder="10" taborder="11" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+
+tde.nodeDataExtract([cts.doc('/accounting/order-14502.xml')]);
+
+</query><query name="ex07b.txt" focus="false" listorder="14" taborder="16" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesSecondTemplate = xdmp.toJSON(
+{
+ 'template':{
+    'context':'/booking',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'@id'
+           },
+           {
+           'name':'company',
+           'val':'customer/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'line-items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+
+tde.validate([purchasesSecondTemplate]);</query><query name="ex03d.txt" focus="false" listorder="5" taborder="5" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'order/items/item',
+   'rows':[
+     {
+       'schemaName':'customer360',
+       'viewName':'purchases',
+       'columns':[
+         {
+           'name':'company',
+           'scalarType':'string',
+           'val':'../../billing/company', 
+           'nullable':true
+         },
+         {
+           'name':'product',
+           'scalarType':'string',
+           'val':'product', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'price',
+           'scalarType':'decimal',
+           'val':'price', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'quantity',
+           'scalarType':'integer',
+           'val':'quantity', 
+           'invalidValues':'ignore'
+         },
+          {
+           'name':'row_total',
+           'scalarType':'decimal',
+           'val': 'price * quantity', 
+           'invalidValues':'ignore'
+         },
+         {
+           'name':'notes',
+           'scalarType':'string',
+           'val':'../../notes', 
+           'nullable':true
+         }
+        
+       ]
+     }
+   ]
+ }
+}
+);
+
+tde.nodeDataExtract([cts.doc('/accounting/order-14502.xml')], [purchasesTemplate]);</query><query name="ex04a.txt" focus="false" listorder="11" taborder="6" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+const tde = require ('/MarkLogic/tde');
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/order',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'order-date',
+           },
+           {
+           'name': 'orderId',
+           'val':'order-num'
+           },
+           {
+           'name':'company',
+           'val':'billing/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'/items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+tde.nodeDataExtract([cts.doc('/accounting/order-14502.xml')], [purchasesTemplate]);</query><query name="ex05a.txt" focus="false" listorder="6" taborder="7" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+const admin = require('/MarkLogic/admin.xqy'); 
+
+//create forest
+let forestConfig = admin.getConfiguration(); 
+forestConfig = admin.forestCreate(forestConfig, 'customer360-schemas-1', xdmp.host(), '', '', ''); 
+admin.saveConfiguration(forestConfig);
+
+//create database
+let dbConfig = admin.getConfiguration(); 
+dbConfig = admin.databaseCreate(dbConfig, 'customer360-schemas', xdmp.database('Security'), xdmp.database('Schemas')); 
+admin.saveConfiguration(dbConfig);
+
+//attach forest to database
+let forestAttachConfig = admin.getConfiguration(); 
+forestAttachConfig = admin.databaseAttachForest(forestAttachConfig, xdmp.database('customer360-schemas'), xdmp.forest('customer360-schemas-1')); 
+admin.saveConfiguration(forestAttachConfig);</query><query name="ex06step3.txt" focus="false" listorder="12" taborder="12" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'enabled':false,
+   'context':'/order',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'order-date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'order-num'
+           },
+           {
+           'name':'company',
+           'val':'billing/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'/items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+tde.templateInsert('/templates/purchasesTemplate.json', purchasesTemplate);</query><query name="ex06step13.txt" focus="false" listorder="13" taborder="14" active="true" database="11123689857096227656" server="738866833787184594" database-name="customer360-schemas" server-name="App-Services" mode="javascript">'use strict';
+declareUpdate();
+xdmp.documentDelete('/templates/purchasesTemplate.json')</query><query name="ex07c.txt" focus="false" listorder="15" taborder="17" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesSecondTemplate = xdmp.toJSON(
+{
+ 'template':{
+    'context':'/booking',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'@id'
+           },
+           {
+           'name':'company',
+           'val':'customer/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'line-items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+tde.nodeDataExtract([cts.doc('/accounting-source02/order-113.xml')],[purchasesSecondTemplate]);</query><query name="ex07d.txt" focus="false" listorder="16" taborder="18" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesSecondTemplate = xdmp.toJSON(
+{
+ 'template':{
+    'context':'/booking',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'@id'
+           },
+           {
+           'name':'company',
+           'val':'customer/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'line-items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+tde.templateInsert('/templates/purchasesSecondTemplate.json', purchasesSecondTemplate);</query><query name="ex07Step19" focus="false" listorder="17" taborder="19" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="sql">SELECT * FROM purchases
+
+</query><query name="ex06step10.txt" focus="false" listorder="18" taborder="13" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+
+tde.nodeDataExtract([cts.doc('/accounting/order-14502.xml')]);</query><query name="ex06step17.txt" focus="false" listorder="19" taborder="15" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+const tde = require ('/MarkLogic/tde');
+const purchasesTemplate = xdmp.toJSON(
+{
+ 'template':{
+   'context':'/order',
+    'vars':
+     [
+           {
+           'name': 'orderDate',
+           'val':'order-date',
+           },
+           {
+           'name': 'orderNum',
+           'val':'order-num'
+           },
+           {
+           'name':'company',
+           'val':'billing/company'
+           }
+     ],
+   'templates':[
+   {
+   'context':'/items/item',
+   'rows':
+     [
+             {
+               'schemaName':'customer360',
+               'viewName':'purchases',
+               'columns':
+                 [
+                           {
+                             'name':'order_date',
+                             'scalarType':'date',
+                             'val':'$orderDate', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'order_id',
+                             'scalarType':'string',
+                             'val':'$orderNum', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'company',
+                             'scalarType':'string',
+                             'val':'$company', 
+                             'nullable':true
+                           },
+
+                           {
+                             'name':'product',
+                             'scalarType':'string',
+                             'val':'product', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'price',
+                             'scalarType':'decimal',
+                             'val':'price', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'quantity',
+                             'scalarType':'integer',
+                             'val':'quantity', 
+                             'invalidValues':'ignore'
+                           },
+                            {
+                             'name':'row_total',
+                             'scalarType':'decimal',
+                             'val': 'price * quantity', 
+                             'invalidValues':'ignore'
+                           },
+                           {
+                             'name':'notes',
+                             'scalarType':'string',
+                             'val':'notes', 
+                             'nullable':true
+                           }
+                ]
+           }
+         ]
+       }
+    ]
+   }
+  }
+);
+
+tde.templateInsert('/templates/purchasesTemplate.json', purchasesTemplate);</query></workspace></export>

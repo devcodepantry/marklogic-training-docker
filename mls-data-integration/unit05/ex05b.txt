@@ -1,0 +1,1 @@
+import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";

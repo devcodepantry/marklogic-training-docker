@@ -1,0 +1,31 @@
+<order>
+  <order-num>14999</order-num>
+  <order-date>2017-02-23</order-date>  
+  <priority>true</priority>
+  <items>
+    <item>
+      <product>Cyclone FS</product>
+      <price>799</price>
+      <quantity>1</quantity>
+    </item>
+  </items>
+  <ship-to>
+    <first-name>Sam</first-name>
+    <last-name>Stone</last-name>
+    <company>Outback Rides</company>
+    <street>200 Lakeview Road</street>
+    <city>South Lake Tahoe</city>
+    <state>California</state>
+    <zipcode>96150</zipcode>
+  </ship-to>
+  <billing>
+    <first-name>Sam</first-name>
+    <last-name>Stone</last-name>
+    <company>Outback Rides</company>
+    <street>200 Lakeview Road</street>
+    <city>South Lake Tahoe</city>
+    <state>California</state>
+    <zipcode>96150</zipcode>
+  </billing>
+  <notes>This bike must arrive by March 4 for a special event.</notes>
+</order>

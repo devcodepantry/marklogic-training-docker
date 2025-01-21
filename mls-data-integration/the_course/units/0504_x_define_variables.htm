@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Define Variables</strong></p>
+<p>In this walkthrough exercise, you create variables for order_date, order_id, and customer, and then use them in the  rows definition. </p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, add variables to the template for  order_date, order_id, and company (unit05/<strong>ex04a.txt</strong>):<br>
+    <br>
+    <span class="code">let $purchases-template :=<br>
+&lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  &nbsp;&nbsp;<br>
+&nbsp;&nbsp;&lt;context&gt;/order/items/item&lt;/context&gt; <br>
+<strong>&nbsp;&nbsp;&lt;vars&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_date&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../../order-date&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_id&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../../order-num&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;company&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../../billing/company&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+&nbsp;&nbsp;&lt;/vars&gt; </strong></span><br>
+  </li>
+  <li class="exercise-step">In the columns element, <strong>add</strong> an order_date column, <strong>add</strong> an order_id column, and <strong>modify</strong> the value for the company column (<strong>ex04b.txt</strong>):<br>
+    <br>
+    <span class="code">&lt;columns&gt;<br>
+    <strong>&nbsp;&nbsp;&lt;column&gt;<br>
+    &nbsp;&nbsp;&nbsp; &lt;name&gt;order_date&lt;/name&gt; <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;date&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$order_date&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;name&gt;order_id&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$order_id&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;</strong>&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;name&gt;company&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>$company</strong>&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+&nbsp;&nbsp;&lt;/column&gt;</strong></span><br>
+  </li>
+  <li class="exercise-step">Click Run, to see the results:<br>
+    <br>
+    <img src="../images/unit05/with_variables.png" width="404" height="513" class="image-border"><br>
+  </li>
+  <li class="exercise-step">See the order_date, order_id, and company listed.</li>
+  <li class="exercise-step">Edit your existing code or create a <strong>new tab</strong> to enter the following, using a nested template, to have a more direct path to the variable values (<strong>ex04c.txt</strong>):<br>
+    <br>
+    <span class="code">let $purchases-template := <br>
+    &lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;<br>
+  &nbsp;&nbsp;&lt;context&gt;<strong>/order</strong>&lt;/context&gt;<br>
+  &nbsp;&nbsp;&lt;vars&gt;<br>  
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_date&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>order-date</strong>&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_id&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>order-num</strong>&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;var&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;company&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;<strong>billing/company</strong>&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/var&gt;<br>
+  &nbsp;&nbsp;&lt;/vars&gt;<br>
+  &nbsp;&nbsp;<strong>&lt;templates&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;context&gt;items/item&lt;/context&gt;</strong><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;rows&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_date&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;date&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$order_date&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;order_id&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$order_id&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;company&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;$company&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;product&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;product&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;price&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;decimal&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;price&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;quantity&lt;/name&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;integer&lt;/scalar-type&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;quantity&lt;/val&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;row_total&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;decimal&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;price * quantity&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;notes&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;../../notes&lt;/val&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/rows&gt;<br>
+  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/template&gt;<br>
+  &nbsp;&nbsp;&lt;/templates&gt;</strong><br>
+  &lt;/template&gt;<br>
+  <br>
+  return tde:node-data-extract(fn:doc(&quot;/accounting/order-14502.xml&quot;), $purchases-template)</span></li>
+  <li class="exercise-step">Click <strong>Run</strong> to see that the  results are  still returned.</li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0505_generating_a_view.htm" class="exercise-link">Topic (Generating a View)</a></p>
+<p>Back: <a href="0504_defining_variables.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

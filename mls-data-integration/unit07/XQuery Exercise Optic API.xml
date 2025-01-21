@@ -1,0 +1,37 @@
+<export><workspace name="XQuery Exercise Optic API"><query name="Rows" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">xquery version "1.0-ml"; 
+import module namespace op="http://marklogic.com/optic" at "/MarkLogic/optic.xqy"; 
+declare default function namespace "http://marklogic.com/optic"; 
+
+op:from-view("customer360", "purchases") 
+=&gt; where(eq(col("company"), "Rolling Fast Deliveries")) 
+=&gt; select(("order_date", "product", "price", "quantity", as("total", multiply(col("price"), col("quantity"))))) 
+=&gt; order-by((desc("order_date"), "product")) 
+=&gt; limit(10) 
+=&gt; result()</query><query name="Triples" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">xquery version "1.0-ml"; 
+import module namespace op="http://marklogic.com/optic" at "/MarkLogic/optic.xqy"; 
+declare default function namespace "http://marklogic.com/optic"; 
+
+let $resource := op:prefixer("http://procycling.com/resource/") 
+let $onto := op:prefixer("http://procycling.com/ontology/") 
+
+return 
+op:from-triples(( pattern(col("company"), $onto("boardMember"), $resource("Michael_Ross")) )) 
+=&gt; result()</query><query name="Rows and Triples" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="4215614479001315984" database-name="customer360" server-name="3366-customer360-odbc" mode="xquery">xquery version "1.0-ml"; 
+import module namespace op="http://marklogic.com/optic" at "/MarkLogic/optic.xqy"; 
+declare default function namespace "http://marklogic.com/optic"; 
+
+let $resource := op:prefixer("http://procycling.com/resource/") 
+let $onto := op:prefixer("http://procycling.com/ontology/") 
+let $foaf := op:prefixer("http://xmlns.com/foaf/0.1/") 
+
+let $purchases := op:from-view("customer360", "purchases") 
+let $companyName := col("companyName") 
+
+return op:from-triples((
+  pattern(col("companyId"), $onto("boardMember"), $resource("Michael_Ross")), 
+  pattern(col("companyId"), $foaf("name"), $companyName)
+)) 
+=&gt; join-inner($purchases, on($companyName, view-col("purchases", "company"))) 
+=&gt; select((view-col("purchases", "company"), view-col("purchases", "row_total"))) 
+=&gt; group-by(view-col("purchases", "company"), (sum("sum", view-col("purchases", "row_total")))) 
+=&gt; result() </query></workspace></export>

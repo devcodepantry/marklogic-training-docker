@@ -1,0 +1,4 @@
+PREFIX t: <http://procycling.com/entity-types#> 
+
+SELECT ?p ?o 
+WHERE {t:procycling-0.0.1 ?p ?o}

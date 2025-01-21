@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Transform Data While Loading</strong> (optional)</p>
+<p>In this walkthrough exercise, you use MLCP to transform the date in a document to be in the international  date format (ISO 8601) while loading the document into the customer360 database. </p>
+<p><br>
+</p>
+<ol class="exercise-step">
+<li class="exercise-step">In a browser window, navigate to <a href="https://docs.marklogic.com/guide/mlcp/import#id_82518" target="_blank">docs.marklogic.com/guide/mlcp/import#id_82518</a>.</li>
+<li class="exercise-step">Skim through the section, <strong>Transforming Content During Ingestion</strong>, noting that MLCP transformation modules can be written in XQuery or JavaScript.</li>
+<li class="exercise-step">On the desktop of your virtual machine, in the unit02/<strong>ex06_input</strong> folder, open the <strong>ex06_doc.xml</strong> file in a text editor. </li>
+<li class="exercise-step">Notice the date in the document: <br>
+  <br>
+  <span class="code">&lt;foo&gt;<br>
+    &nbsp;  &lt;bar&gt;<strong>2/28/2017 08:00:00 AM</strong>&lt;/bar&gt;<br>
+    &nbsp;  &lt;baz&gt;some text&lt;/baz&gt; <br>  &lt;/foo&gt;<br>
+  </span></li>
+<li class="exercise-step">In the <strong>unit02</strong> folder, open the <strong>ex06_transformation_module.xqy</strong> file in a text editor:<br>
+  <br>
+  <span class="code">xquery version &quot;1.0-ml&quot;; </span>
+  <span class="code"><br>
+  <br>
+  module namespace td = &quot;http://marklogic.com/mlu/transform-date&quot;; </span>
+  <span class="code"><br>
+  <br>
+  import module namespace mem = &quot;http://xqdev.com/in-mem-update&quot; at &quot;/MarkLogic/appservices/utils/in-mem-update.xqy&quot;; <br>
+  <br>
+  </span>
+  <span class="code">declare function td:transform(<strong>$content</strong> as map:map, $context as map:map) as map:map* <br>
+    { <br>
+  &nbsp; let $doc := map:get($content, &quot;value&quot;) <br>
+  &nbsp; let $old-date-format := &quot;[M]/[D]/[Y0001] [h01]:[m01]:[s01] [P]&quot; <br>
+  &nbsp; let $new-date-format := &quot;[Y0001]-[M01]-[D01]&quot; <br>
+  &nbsp; let $old-date-value := $doc/foo/bar/data() <br>
+  &nbsp; let $new-date-value := fn:format-date(xs:date(xdmp:parse-dateTime($old-date-format, $old-date-value)), $new-date-format) <br>
+  &nbsp; let $new-doc := mem:node-replace($doc/foo/bar, &lt;bar&gt;{$new-date-value}&lt;/bar&gt;) <br>
+  &nbsp; let $_ := map:put($content, &quot;value&quot;, $new-doc)   <br>
+&nbsp;  return $content <br>
+    };</span>
+</li>
+<li class="exercise-step">Realize that the  function is to transform the  date in the bar element to the international date format (yyyy-mm-dd).</li>
+<li class="exercise-step">In Query Console, click the <strong>+</strong> button to create a new tab, select the <strong>customer360-modules</strong> database, select <strong>XQuery</strong>, and replace the placeholder text with the following (can copy from unit02/<strong>ex06_module_insert.txt</strong>):<br>
+  <br>
+  <span class="code">xdmp:document-load(&quot;/home/cent/Desktop/mls-data-integration/unit02/ex06_transformation_module.xqy&quot;,<br>
+  &lt;options xmlns=&quot;xdmp:document-load&quot;&gt;<br>
+&nbsp;&nbsp;&lt;uri&gt;/ex06_transformation_module.xqy&lt;/uri&gt;<br>
+&lt;/options&gt;)</span><br>
+</li>
+<li class="exercise-step">Click <strong>Run</strong>, to insert the transformation module into the   <strong>customer360-modules</strong> database.</li>
+<li class="exercise-step">If desired, click the Explore button, to see the file listed:<br>
+  <br>
+  <img src="../images/unit02/transform_file_listed.png" width="585" height="32" class="image-border"><br>
+</li>
+<li class="exercise-step">On the desktop of your virtual machine, in the mls-data-integration/<strong>unit02</strong> folder, open the <strong>ex06_mlcp.txt</strong> file in a text editor. </li>
+<li class="exercise-step"><strong>Notice</strong> the -transform_module, -transform_namespace, and -transform_param options:<br>
+  <br>
+  <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input/ex06_doc.xml <strong>-transform_module /ex06_transformation_module.xqy -transform_namespace &quot;http://marklogic.com/mlu/transform-date&quot; -transform_param &quot;value&quot; </strong>-output_uri_replace &quot;/home/cent/Desktop/mls-data-integration/unit02/ex06_input/,''&quot;</span><br>
+</li>
+<li class="exercise-step"><strong>Copy</strong> the command.</li>
+<li class="exercise-step">In a <strong>command prompt</strong> window, right-click to <strong>paste</strong> the command, and then press <strong>Enter</strong>.</li>
+<li class="exercise-step">See that the command completes:<br>
+  <br>
+  <img src="../images/unit02/mlcp_transform_cs.png" width="664" height="318" class="image-border"><br>
+</li>
+<li class="exercise-step">In Query Console, select the <strong>customer360</strong> database, and  click the <strong>Explore</strong> button.</li>
+<li class="exercise-step">Scroll down to locate the <strong>ex06_doc.xml </strong>link.</li>
+<li class="exercise-step">Click the link, to see  that the date is now in the international date format: <br>
+  <br>
+  <img src="../images/unit02/transformed_date.png" width="353" height="105" class="image-border"></li>
+</ol>
+<p>Use a JavaScript  module to transform a date in a JSON document: </p>
+<ol class="exercise-step" start="18">
+  <li class="exercise-step">On the desktop of your virtual machine, in the mls-data-integration/unit02/<strong>ex06_input</strong>_<strong>json</strong> folder, open the <strong>ex06_doc.json</strong> file in a text editor. </li>
+  <li class="exercise-step">Notice the date in the document: <br>
+    <br>
+    <img src="../images/unit02/ex06_doc_json.png" width="583" height="155" class="image-border"><span class="code"><br>
+    </span></li>
+  <li class="exercise-step">In the unit02/<strong>ex06_javascript_transformation</strong> folder, open the <strong>ex06_transformation_module.sjs</strong> file in a text editor:<br>
+    <br>
+  <img src="../images/unit02/transformation_module_sjs.png" width="624" height="669" class="image-border"></li>
+  <li class="exercise-step">Realize that the  function is to transform the  date_and_time value in the bar element to the international date and time format of yyyy-mm-dd.</li>
+  <li class="exercise-step">In Query Console, create a new tab, select the <strong>customer360-modules</strong> database, select <strong>JavaScript </strong>for the Query Type, and replace the placeholder text with the following (unit02/ex06_javascript_transformation/<strong>ex06_module_insert_javascript.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict'; <br>
+    declareUpdate(); <br>
+    <br>
+    xdmp.documentLoad('/home/cent/Desktop/mls-data-integration/unit02/ex06_javascript_transformation/ex06_transformation_module.sjs',    {&quot;uri&quot;: '/ex06_transformation_module.sjs'}); </span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to insert the transformation module into the <strong>customer360-modules</strong> database.</li>
+  <li class="exercise-step">In the unit02/<strong>ex06_javascript_transformation</strong> folder, open the <strong>ex06_mlcp_js.txt</strong> file in a text editor. </li>
+  <li class="exercise-step"><strong>Notice</strong> the -transform_module and -transform_function options:<br>
+    <br>
+    <span class="code">~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input_json/ex06_doc.json -transform_module /ex06_transformation_module.sjs -transform_function transformDate -document_type json -output_uri_replace &quot;/home/cent/Desktop/mls-data-integration/unit02/ex06_input_json/,''&quot;</span><br>
+  </li>
+  <li class="exercise-step"><strong>Copy</strong> the command.</li>
+  <li class="exercise-step">In a command prompt window, right-click to <strong>paste</strong> the command, and then press <strong>Enter</strong>.</li>
+  <li class="exercise-step">See that the command completes:<br>
+    <br>
+    <img src="../images/unit02/mlcp_transform_json_cs.png" width="665" height="286" class="image-border"><br>
+    
+  </li>
+  <li class="exercise-step">In Query Console, select the <strong>customer360</strong> database, and click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Scroll down to locate and click the <strong>ex06_doc.json </strong>link.</li>
+  <li class="exercise-step">See that the date is now in the yyyy-mm-dd format:<br>
+    <br>
+  <img src="../images/unit02/ex06_doc_json_transformed.png" width="528" height="102" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="02f1_summary.htm" class="exercise-link">Summary (Unit 2)</a></p>
+<p>Back: <a href="0206_transforming_data_while_loading.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

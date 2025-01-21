@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Using an Envelope Pattern to Harmonize Data</strong></p>
+<p>Using an envelope pattern provides a way to keep  the original data, while  creating a way to store additional data within a document.</p>
+<p class="code">&lt;envelope&gt;<br>
+  &nbsp;&nbsp;&lt;extra-content&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+  &nbsp;&nbsp;&lt;/extra-content&gt;<br>
+  &nbsp;&nbsp;&lt;source&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... <br>
+  &nbsp;&nbsp;&lt;/source&gt;<br>
+  &lt;/envelope&gt;</p>
+<p><em>Note: There is nothing special about the element names used above: envelope, extra-content, and source. Since the names are abitrary, they could just as well  be  container, metadata, and original. It is the concept of creating an envelope around the  source data, to be able to add additional data to the document, while keeping the source contact intact, that is significant.</em></p>
+<p>Within the extra-content section, a standard vocabulary can then be used for the XML element (or JSON property) names.</p>
+<p><img src="../images/unit03/envelope_diagram.png" width="456" height="359"></p>
+<p class="topic-sub-heading">Creating an Envelope</p>
+<p>As creating an envelope is done by modifying a document, any of the  programming interfaces for modifying a document can be used, such as XQuery, JavaScript, Node.js, Java, or REST.</p>
+<p><strong>XQuery</strong> example:</p>
+<p class="code">let $envelope := <br>
+  <br>
+  &lt;envelope&gt;<br>
+&nbsp;  &lt;source&gt;{fn:doc(&quot;/marketing/contact-cs003.xml&quot;)}&lt;/source&gt;<br>
+&lt;/envelope&gt; <br>
+<br>
+return xdmp:document-insert(&quot;/marketing/contact-cs003.xml&quot;, $envelope, (), &quot;envelope&quot;)</p>
+<p>The fourth argument in xdmp:document-insert() is for assigning the document to one or more collections.</p>
+<p><strong>JavaScript</strong> example:</p>
+<p class="code">'use strict'; <br>
+declareUpdate();   <br>
+<br>
+const uri = '/marketing/contact-cs003.xml'; <br>
+const docroot = cts.doc(uri).root.xpath('/element()'); <br>
+const root = xdmp.unquote(`&lt;envelope&gt;&lt;source&gt;${cts.doc(uri).xpath('/contact')}&lt;/source&gt;&lt;/envelope&gt;`);   <br>
+<br>
+if (fn.name(docroot) === 'envelope') { <br>
+&nbsp; 'envelope root node already exists' <br>
+} else {   <br>
+&nbsp; xdmp.documentInsert(uri, root, [], ['envelope']); <br>
+}</p>
+<p class="topic-sub-heading"> Batch Process</p>
+<p>In addition, in the case of a large number of documents  to be modified, a batch process can be created by using the Data Movement SDK (Java-based) or CoRB (XQuery-based or JavaScript-based). </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0302_x_create_an_envelope.htm" class="exercise-link">Exercise (Create an Envelope)</a></p>
+<p>Back: <a href="0301_x_view_data_to_be_harmonized.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

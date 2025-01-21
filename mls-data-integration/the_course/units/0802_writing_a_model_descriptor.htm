@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Writing a Model Descriptor</strong></p>
+<p>A <strong>model descriptor</strong> is for defining  entity types, their attributes,  and relationships between entities. To create a model descriptor, XML or JSON is used. For example, imagine wanting to create a model that defines entity types for products, orders, and customers.</p>
+<p class="code">{   <br>
+&nbsp;  &quot;info&quot;: {     <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;title&quot;: &quot;procycling&quot;,     <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;version&quot;: &quot;0.0.1&quot;,     <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;,     <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;:&quot;ProCycling schema to define  entity types for products, orders, and customers.&quot; <br>
+&nbsp; },   <br>
+&nbsp;  &quot;definitions&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// definition for product entity type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// definition for order entity type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// definition for customer entity type <br>
+  &nbsp;&nbsp;}<br>
+  }
+  <br>
+</p>
+<p>The descriptor must  contain the <strong>title</strong> and <strong>version</strong> properties in the info section, and define <strong>at least one entity type</strong> with<strong> at least one property</strong> in the definitions section. </p>
+<p>Once a model descriptor is deployed, the model can be used to generate code for entity manipulation tasks. </p>
+<p>JSON most closely aligns with the internal representation of the model. If using XML to write the model descriptor, then es:model-from-xml() and es:model-validate() are needed to translate the descriptor when using functions that receive the model as input. </p>
+<p>The modeling vocabulary was inspired by Swagger and the OpenAPI Specification. </p>
+<p>Detail on creating model descriptors is available in the Creating and Managing Models section of the Entity Services Developer's Guide at docs.marklogic.com/guide/entity-services/models.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0802_x_write_a_model_descriptor.htm" class="exercise-link">Exercise (Write a Model Descriptor)</a></p>
+<p>Back: <a href="0801_x_learn_about_entity_services.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

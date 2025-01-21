@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Lab: <strong>Add Canonical Data</strong></p>
+<p>In this lab exercise, you  either use the steps below (normal steps), or the <a href="03f4_alt_lab_add_canonical_data.htm">alternate steps</a> (less detailed, so more challenging), to  add more canonical elements to the marketing contact documents.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">On the <strong>desktop</strong> of your virtual machine, in the mls-data-integration/<strong>unit03</strong> folder, open the <strong>laba.properties</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/lab_properties.png" width="565" height="214" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Notice the values for the URIS-MODULE and PROCESS-MODULE properties.</li>
+  <li class="exercise-step">Open the<strong> laba_uris.xqy</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/lab_uris.png" width="565" height="227" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Realize</strong> that this returns the URIs of documents that are in the '/marketing/' directory and in the 'canonical' collection, but not documents with a URI pattern of '/marketing/contact-cs*.xml'.</li>
+  <li class="exercise-step">Open the <strong>laba_transformation.xqy</strong> file in a text editor:<br>
+    <br>
+    <img src="../images/unit03/lab_transformation.png" width="697" height="802" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Realize that this script reads source data from the documents,  transforms it, and then writes it into the canonical section of the documents.</li>
+  <li class="exercise-step">In a new <strong>command prompt</strong> window,  enter the following, to navigate to the mls-data-integration/unit03 folder:<br>
+    <br>
+    <span class="code">cd ~/Desktop/mls-data-integration/unit03</span></li>
+  <li class="exercise-step">Enter the following, to call on CoRB, passing it the lab.properties file:<br>
+    <br>
+    <span class="code">corb/corb.sh laba.properties</span></li>
+  <li class="exercise-step">Press Enter, to run the command. </li>
+  <li class="exercise-step">See that it has completed:<br>
+    <br>
+  <img src="../images/unit03/corb_lab_done_cs.png" width="666" height="77" class="image-border"></li>
+  <li class="exercise-step">In <strong>Query Console</strong>, click the <strong>Explore</strong> button. </li>
+  <li class="exercise-step">Click  one of the marketing contact documents (e.g. <strong>/marketing/contact-1222.xml</strong>). </li>
+  <li class="exercise-step">See that data has been added to the canonical section of the document, using the canonical elements:<br>
+    <br>
+    <img src="../images/unit03/caonical_added_lab.png" width="439" height="513" class="image-border"><br>
+  </li>
+</ol>
+<p>Add canonical elements to  the marketing contacts that came in from the second data source:</p>
+<ol class="exercise-step" start="14">
+  <li class="exercise-step">In the mls-data-integration/<strong>unit03</strong> folder, open each of the <strong>labb.properties</strong>, <strong>labb_uris.xqy</strong>, and <strong>labb_tranformation.xqy</strong> files  in a text editor.</li>
+  <li class="exercise-step">In the command prompt window, in the unit03 directory, enter the following to pass the properties file to CoRB:<br>
+    <br>
+  <span class="code">corb/corb.sh labb.properties</span>  </li>
+  <li class="exercise-step">See that it finishes running:<br>
+    <br>
+    <img src="../images/unit03/labb_done_cs.png" width="665" height="77" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In Query Console, click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Click the ﻿ <span id="explore-uri-path"><strong>/marketing/contact-cs003.xm</strong></span><strong>l </strong>link, to see the contents.</li>
+  <li class="exercise-step">See that the canonical elements have been added:<br>
+    <br>
+    <img src="../images/unit03/lab_cs_canonical_added.png" width="478" height="396" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Unit 3 End: <a href="../index.htm">Course Home</a></p>
+<p>Back: <a href="03f3_quiz_answers.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<div class="card" *ngIf="recentPurchases">
+  <div class="card-block" *ngIf="recentPurchases?.length === 0">
+    <h4 class="card-title">Recent purchases</h4>
+    <p>No recent purchases for this customer</p>
+  </div>
+  <div class="card-block" *ngIf="recentPurchases?.length !== 0">
+    <h4 class="card-title">Recent purchases</h4>
+    <table class="table table-striped">
+      <thead class="table-info">
+        <tr>
+          <th>Order date</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recentPurchase of recentPurchases">
+          <td>{{ recentPurchase['customer360.purchases.order_date'] }}</td>
+          <td>{{ recentPurchase['customer360.purchases.product'] }}</td>
+          <td>{{ recentPurchase['customer360.purchases.price'] | currency:'USD':true }}</td>
+          <td>{{ recentPurchase['customer360.purchases.quantity'] }}</td>
+          <td>{{ recentPurchase['total']  | currency:'USD':true }}</td>
+          <td>
+            <popover-content #myPopover title="Original Document" [closeOnClickOutside]="true" placement="left">
+              <pre><code>{{ recentPurchase.doc }}</code></pre>
+            </popover-content>
+            <button type="button" class="btn btn-secondary btn-sm" [popover]="myPopover">source</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="card-block">
+      <form class="form-inline">
+        <div class="form-group">
+          <label>from:</label>
+          <input type="text" class="form-control form-control-sm mx-sm-3" id="from" required [(ngModel)]="model.from" name="from" (ngModelChange)="(model.from.length === 0) ? reset() : null">
+        </div>
+        <div class="form-group">
+          <label>to:</label>
+          <input type="text" class="form-control form-control-sm mx-sm-3" required [(ngModel)]="model.to" name="to" (ngModelChange)="(model.to.length === 0) ? reset() : null">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="form-control form-control-sm mx-sm-3" (click)="search()" [disabled]="!model.from || !model.to">search</button>
+        </div>
+        <div class="form-group" *ngIf="total">
+          <small>Total: {{ total | currency:'USD':true }}</small>
+        </div>
+      </form>
+  </div>
+</div>

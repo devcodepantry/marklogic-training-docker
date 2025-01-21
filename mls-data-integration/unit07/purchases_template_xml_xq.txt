@@ -1,0 +1,84 @@
+import module "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $purchases-template := 
+<template xmlns="http://marklogic.com/xdmp/tde">
+  <context>/order</context>
+  <vars>
+    <var>
+      <name>order_date</name>
+      <val>order-date</val>
+    </var>
+    <var>
+      <name>order_id</name>
+      <val>order-num</val>
+    </var>
+    <var>
+      <name>company</name>
+      <val>billing/company</val>
+    </var>
+  </vars>
+  <templates>
+    <template>
+      <context>items/item</context>
+      <rows>
+        <row>
+          <schema-name>customer360</schema-name>
+          <view-name>purchases</view-name>
+          <columns>
+            <column>
+              <name>order_date</name>
+              <scalar-type>date</scalar-type>
+              <val>$order_date</val>
+            </column>
+            <column>
+              <name>order_id</name>
+              <scalar-type>string</scalar-type>
+              <val>$order_id</val>
+            </column>
+            <column>
+              <name>company</name>
+              <scalar-type>string</scalar-type>
+              <val>$company</val>
+              <nullable>true</nullable>
+            </column>
+            <column>
+              <name>product</name>
+              <scalar-type>string</scalar-type>
+              <val>product</val>
+            </column>
+            <column>
+              <name>price</name>
+              <scalar-type>decimal</scalar-type>
+              <val>price</val>
+            </column>
+            <column>
+              <name>quantity</name>
+              <scalar-type>integer</scalar-type>
+              <val>quantity</val>
+            </column>
+            <column> 
+              <name>row_total</name>
+              <scalar-type>decimal</scalar-type> 
+              <val>price * quantity</val>
+              <invalid-values>ignore</invalid-values>
+            </column>
+            <column>
+              <name>notes</name>
+              <scalar-type>string</scalar-type>
+              <val>../../notes</val>
+              <nullable>true</nullable>
+            </column> 
+            <column>
+              <name>uri</name>
+              <scalar-type>string</scalar-type>
+              <val>xdmp:node-uri(.)</val>
+              <nullable>true</nullable>
+            </column>
+          </columns>
+        </row>
+      </rows>
+    </template>
+  </templates>
+</template>
+
+return tde:template-insert("/templates/purchases-template.xml", $purchases-template)

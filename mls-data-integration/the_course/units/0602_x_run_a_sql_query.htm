@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Run a SQL Query</strong></p>
+<p>In this walkthrough exercise, you write SQL expressions to query data in the purchases view.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In <strong>Query Console</strong>, create a <strong>new tab</strong>.</li>
+  <li class="exercise-step">For Query Type, select <strong>SQL</strong>.</li>
+  <li class="exercise-step">Enter the following to retrieve everything in the purchases view:<br>
+    <br>
+  <span class="code">SELECT * FROM purchases</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the result:<br>
+    <br>
+  <img src="../images/unit06/results_all_rows.png" width="704" height="353" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> an ORDER BY clause, to sort the rows by the product column:<br>
+    <br>
+    <span class="code">SELECT * FROM purchases<br>
+    <strong>ORDER BY purchases.product </strong></span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that the rows are ordered by product name:<br>
+    <br>
+  <img src="../images/unit06/by_product.png" width="698" height="351" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> a WHERE clause, to just return the rows for order 14502:<br>
+    <br>
+    <span class="code">SELECT * FROM purchases<br>
+    <strong>WHERE purchases.order_id = '14502'</strong><br>
+    ORDER BY purchases.product </span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that just the rows for order 14502 are returned:<br>
+    <br>
+  <img src="../images/unit06/order_14502.png" width="702" height="54" class="image-border"></li>
+  <li class="exercise-step"><strong>Modify</strong> the query to return  rows that have Rolling Fast Deliveries as the customer:<br>
+    <br>
+    <span class="code">SELECT * FROM purchases<br>
+    <strong>WHERE purchases.company = 'Rolling Fast Deliveries'</strong><br>
+ORDER BY purchases.product </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>. </li>
+  <li class="exercise-step">See that the rows for Rolling Fast Deliveries are returned:<br>
+    <br>
+  <img src="../images/unit06/rolling_fast.png" width="702" height="93" class="image-border"></li>
+  <li class="exercise-step">Create a <strong>new tab</strong> and enter the following, to sum the quantities:<br>
+    <br>
+    <span class="code">SELECT SUM(purchases.quantity)  <br>
+    FROM purchases </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>. </li>
+  <li class="exercise-step">See that the sum of all the quantities is returned:<br>
+    <br>
+  <img src="../images/unit06/quantity_sum.png" width="609" height="50" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> to the query, to group the results by product:<br>
+    <br>
+    <span class="code">SELECT SUM(purchases.quantity) <br>
+    FROM purchases <br>
+    <strong>GROUP BY purchases.product</strong></span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that sum of the quantity for each product are returned: <br>
+    <br>
+  <img src="../images/unit06/sum_results.png" width="598" height="172" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> to the SELECT clause, to also display the product names:<br>
+    <br>
+    <span class="code">SELECT <strong>purchases.product, </strong>SUM(purchases.quantity) <br>
+FROM purchases <br>
+      GROUP BY purchases.product</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that the product names are now also displayed:<br>
+    <br>
+  <img src="../images/unit06/product_names.png" width="622" height="174" class="image-border"></li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0603_doing_a_join.htm" class="exercise-link">Topic (Doing a Join)</a></p>
+<p>Back: <a href="0602_running_a_sql_query.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# MarkLogic secrets
+setup/mldb_admin_password.txt
+setup/mldb_admin_username.txt
+setup/mldb_license_key.txt
+setup/mldb_licensee.txt

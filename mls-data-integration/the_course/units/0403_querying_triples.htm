@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Querying Triples</strong></p>
+<p>There are a number of ways that triples can be queried in MarkLogic. </p>
+<p>One way to query triples in MarkLogic is to use <strong>SPARQL</strong>, which is the W3C Recommendation (i.e. the standard) for querying semantic data. </p>
+<p>For example, a SPARQL query could be run to return the IRIs for all of the Napa Biking Tours board members.</p>
+<p><span class="code">SELECT ?o <br>
+WHERE {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;﻿http://procycling.com/resource/Napa_Biking_Tours&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;http://procycling.com/ontology/boardMember&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ?o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } </span></p>
+<p>Result:</p>
+<p><img src="../images/unit04/board_members_bwt.png" width="280" height="75" class="image-border"></p>
+<p>Or, a SPARQL query could be run to return the IRIs for all board members for all companies (e.g. to gain insight for sales):</p>
+<p class="code">SELECT ?s ?o <br>
+WHERE {?s &lt;http://procycling.com/ontology/boardMember&gt;<strong> </strong>?o}</p>
+<p>Result:</p>
+<p><img src="../images/unit04/board_members_all.png" width="621" height="149" class="image-border"></p>
+<p>Or, a SPARQL could be run to return the IRIs for variations of a company name.</p>
+<p class="code">SELECT ?s  <br>
+WHERE {?s &lt;http://www.w3.org/2002/07/owl#sameAs&gt;* &lt;http://procycling.com/resource/Napa_Biking_Tours&gt;}</p>
+<p>Result:</p>
+<p><span class="exercise-step"><img src="../images/unit04/path_results.png" width="401" height="50" class="image-border"></span><br>
+  <br>
+</p>
+<p><strong>SPARQL</strong> <strong>queries</strong> can be run via <strong>Query Console</strong>, or from application code written in <strong>XQuery</strong>, <strong>JavaScript</strong>, or <strong>Java</strong>, or through the <strong>REST API</strong>.</p>
+<p>Triples can also be queried via  the <strong>Optic API</strong>, covered in Unit 7 of this course.</p>
+<p>Yet another way triples can be queried is by using the XQuery <strong>cts:triples()</strong> or JavaScript <strong>cts.triples()</strong> function.</p>
+<p>In all cases, MarkLogic takes advantage of the underlying triple index to provide real-time results.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0403_x_query_triples.htm">Exercise (Query Triples)</a></p>
+<p>Back: <a href="0402_x_insert_triples.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

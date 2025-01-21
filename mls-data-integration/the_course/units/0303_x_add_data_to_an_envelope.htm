@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Add Data to an Envelope </strong></p>
+<p>In this walkthrough exercise, you add canonical data and metadata to an envelope.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit03</strong> - <strong>Add Data to an Envelope.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>View Document</strong>:<br>
+    <br>
+    <span class="code">fn:doc(&quot;/marketing/contact-cs003.xml&quot;) </span> <br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see that there is not yet a canonical section:<br>
+    <br>
+  <img src="../images/unit03/no_canonical_yet.png" width="412" height="326" class="image-border"></li>
+  <li class="exercise-step">Select the second tab, <strong>Add Canonical Section</strong>.</li>
+  <li class="exercise-step">Notice the  command to add a canonical section to the  ﻿<span id="explore-uri-path2">/marketing/contact-cs003.xml</span> document:<br>
+    <br>
+    <span class="code">xdmp:node-insert-before(fn:doc(&quot;/marketing/contact-cs003.xml&quot;)/envelope/source, &lt;canonical&gt;&lt;/canonical&gt;) </span></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">Select the previous tab, <strong>View Document</strong>, and click Run,  to see that &lt;canonical&gt;&lt;/canonical&gt; has been added:<br>
+    <br>
+  <img src="../images/unit03/canonical_added.png" width="414" height="361" class="image-border"><br>
+  <br>
+  <em>Note: Know that there is nothing inherently special about the element name of canonical.</em></li>
+  <li class="exercise-step">Select the <strong>Add Canonical Content </strong>tab, to add  content to the canonical section:<br>
+    <br>
+    <span class="code">let $doc := fn:doc(&quot;/marketing/contact-cs003.xml&quot;)<br>
+    let $company := $doc/envelope/source/contact/company/text()
+    <br>
+    let $first-name := $doc/envelope/source/contact/first-name/text()<br>
+    let $last-name := $doc/envelope/source/contact/last-name/text()<br>
+    <br>
+    return
+    <br>
+    (<br>
+    xdmp:node-insert-child($doc/envelope/canonical, &lt;company&gt;{$company}&lt;/company&gt;), <br>
+    xdmp:node-insert-child($doc/envelope/canonical, &lt;firstName&gt;{$first-name}&lt;/firstName&gt;), <br>
+    xdmp:node-insert-child($doc/envelope/canonical, &lt;lastName&gt;{$last-name}&lt;/lastName&gt;)<br>
+    )
+    </span><br>
+  </li>
+  <li class="exercise-step">Click Run, to add the canonical data.</li>
+  <li class="exercise-step">Select the first tab, <strong>View Document,</strong> and click Run, to see that the canonical data was added:<br>
+    <br>
+    <img src="../images/unit03/added_canonical.png" width="427" height="397" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>Assign Collection</strong> tab, to assign the document to the canonical collection:<br>
+    <br>
+    <span class="code">xdmp:document-set-collections(&quot;/marketing/contact-cs003.xml&quot;, &quot;canonical&quot;)</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button, to see the list of documents.</li>
+  <li class="exercise-step">Scroll down to see that the /marketing/contact-cs003.xml document is now in the canonical collection:<br>
+    <br>
+  <img src="../images/unit03/canonical_collection.png" width="631" height="34" class="image-border"></li>
+  <li class="exercise-step">Scroll up to locate and click on the <strong>/marketing/contact-1223.xml</strong> link.</li>
+  <li class="exercise-step"><strong>Notice</strong> the  elements named first, last, and co:<br>
+    <br>
+    <img src="../images/unit03/co_1223.png" width="401" height="497" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Click the <strong>left triangle</strong>, to go back to the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-1828.xml</strong> link.</li>
+  <li class="exercise-step"><strong>Notice</strong> the  elements named first, last, and co:<br>
+    <br>
+  <img src="../images/unit03/contents_1828.png" width="409" height="496" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Add</strong> <strong>Canonical  1223 and 1828</strong> tab, to create a canonical element in both Campus Bikes documents, with child elements for firstName, lastName, and company:<br>
+    <br>
+    <span class="code">for $doc in fn:collection(&quot;envelope&quot;)[envelope/source/contact/co = &quot;Campus Bikes&quot;] <br>
+    <br>
+    let $co := $doc/envelope/source/contact/co/text()  <br>
+    let $first := $doc/envelope/source/contact/name/first/text() <br>
+    let $last := $doc/envelope/source/contact/name/last/text()<br>
+    <br>
+    return (<br>
+    xdmp:node-insert-before($doc/envelope/source, <br>
+    &lt;canonical&gt;<br>
+    &nbsp;&nbsp;&lt;company&gt;{$co}&lt;/company&gt;<br>
+&nbsp;    &lt;firstName&gt;{$first}&lt;/firstName&gt;<br>
+&nbsp;&nbsp;&lt;lastName&gt;{$last}&lt;/lastName&gt;<br>
+&lt;/canonical&gt;),<br>
+    xdmp:document-set-collections(fn:base-uri($doc), &quot;canonical&quot;)<br>
+    )    </span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button to see the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-1223.xml</strong> link, to see the document's contents.</li>
+  <li class="exercise-step"><strong>See </strong>that a canonical element has been added, with child elements for firstName, lastName, and company:<br>
+    <br>
+  <img src="../images/unit03/canonical_1223.png" width="419" height="595" class="image-border"></li>
+  <li class="exercise-step">Click the <strong>left triangle </strong>to go back to the  list of documents.</li>
+  <li class="exercise-step">Click the <strong>/marketing/contact-1828.xml</strong> link, to see the document's contents.</li>
+  <li class="exercise-step"><strong>See </strong>that a canonical element has been added, with child elements for firstName, lastName, and company:<br>
+    <br>
+  <img src="../images/unit03/canonical_1828.png" width="417" height="593" class="image-border"></li>
+</ol>
+<p>On your own:</p>
+<ol class="exercise-step" start="31">
+  <li class="exercise-step">Select the <strong>View Document </strong>tab, and click Run, to view the contents of the <strong>/marketing/contact-cs003.xml</strong> document:<br>
+    <br>
+  <img src="../images/unit03/no_metadata_yet.png" width="427" height="423" class="image-border"></li>
+  <li class="exercise-step">Imagine adding a metadata element after the canonical element, before the source element.</li>
+  <li class="exercise-step">Add a metadata  element to the /marketing/contact-cs003.xml document, that contains the following:<br>
+    <br>
+    <span class="code">&lt;metadata&gt; <br>
+    &nbsp;    &lt;leadSource&gt;2017 Los Angeles Cycle Show&lt;/leadSource&gt;<br>
+    &nbsp;    &lt;leadDate&gt;2017-04-15&lt;/leadDate&gt; <br>
+    &nbsp;    &lt;collectedBy&gt;Raffle bowl&lt;/collectedBy&gt; <br>    &lt;/metadata&gt;</span><br>
+  </li>
+  <li class="exercise-step">Check your work:<br>
+    <br>
+    <img src="../images/unit03/metadata_cs003.png" width="485" height="647" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0304_querying_an_envelope.htm" class="exercise-link">Topic (Querying an Envelope)</a></p>
+<p>Back: <a href="0303_adding_data_to_an_envelope.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

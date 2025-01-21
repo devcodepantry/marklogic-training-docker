@@ -1,0 +1,1 @@
+return tde:node-data-extract(fn:doc("/accounting/order-13333.xml"), $purchases-template)

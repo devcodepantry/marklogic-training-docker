@@ -1,0 +1,4 @@
+'use strict';
+declareUpdate(); 
+
+xdmp.documentLoad('/home/cent/Desktop/mls-data-integration/unit04/citycruiser.json', {'uri': '/factsheet/citycruiser.json', 'collections': ['raw']})

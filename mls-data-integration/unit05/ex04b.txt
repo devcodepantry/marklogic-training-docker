@@ -1,0 +1,12 @@
+         <column>
+           <name>order_date</name> 
+           <scalar-type>date</scalar-type> 
+           <val>$order_date</val> 
+           <invalid-values>ignore</invalid-values> 
+         </column>
+         <column>
+           <name>order_id</name> 
+           <scalar-type>string</scalar-type> 
+           <val>$order_id</val> 
+           <invalid-values>ignore</invalid-values> 
+         </column>

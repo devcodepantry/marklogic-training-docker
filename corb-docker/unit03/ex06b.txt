@@ -1,0 +1,7 @@
+  <repositories> 
+    <repository> 
+      <id>MarkLogic-releases</id> 
+      <name>MarkLogic Releases</name> 
+      <url>http://developer.marklogic.com/maven2/</url> 
+      </repository> 
+  </repositories>

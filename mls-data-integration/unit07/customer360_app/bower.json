@@ -1,0 +1,20 @@
+{
+  "name": "datamodel",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Tamas Piros <me@tamas.io>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ml-lodlive": "^0.4.2"
+  }
+}

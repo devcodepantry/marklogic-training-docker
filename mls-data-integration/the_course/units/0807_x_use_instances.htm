@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Use Instances</strong></p>
+<p>In this walkthrough exercise, you query the entity instances, as well as generate a model-based template.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a<strong> new tab </strong>and enter the following (unit08/<strong>ex07a.txt</strong>), to query the product entity instances:<br>
+    <br>
+    <span class="code">const results = cts.search(cts.andQuery(( <br>
+    &nbsp;&nbsp;cts.collectionQuery('es-product'), <br>
+    &nbsp;&nbsp;cts.elementQuery( <br>
+&nbsp;&nbsp;&nbsp;    fn.QName('http://marklogic.com/entity-services', 'instance'), <br>
+&nbsp;    &nbsp;&nbsp;cts.elementValueQuery(xs.QName('gender'), 'mens') ) <br>
+))); <br>
+<br>
+const names = []; <br>
+for (const doc of results) { <br>
+&nbsp; names.push(doc.xpath('//Product/name/fn:data()')); <br>
+} <br>
+names</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that the names of products that have a gender value of mens are returned:<br>
+    <br>
+  <img src="../images/unit08/gender_results.png" width="261" height="107" class="image-border"></li>
+  <li class="exercise-step">In a browser window, navigate to <a href="https://docs.marklogic.com/guide/entity-services/search" target="_blank">docs.marklogic.com/guide/entity-services/search</a>.</li>
+  <li class="exercise-step"><strong>Skim</strong> through the page, to learn about the many options for querying entities.</li>
+</ol>
+<p>Generate a TDE template, from the  model:</p>
+<ol class="exercise-step" start="6">
+  <li class="exercise-step">Create a new tab and enter the following (<strong>ex07b.txt</strong>):<br>
+    <br>
+    <p class="code">'use strict';<br>
+      const es = require('/MarkLogic/entity-services/entity-services.xqy');<br>
+  <br>
+      const template =
+      es.extractionTemplateGenerate(cts.doc('/es/models/procycling-0.0.1.json'));</p>
+    <span class="code">xdmp.save('/home/cent/Desktop/mls-data-integration/es/' + 'procycling-0.0.1-tde.tdex', template);</span></li>
+  <li class="exercise-step">Click Run, to generate the template.</li>
+  <li class="exercise-step">On the desktop, in the mls-data-integration/<strong>es</strong> folder, see that the <strong>procycling-0.0.1-tde.tdex</strong> template file was generated:<br>
+    <br>
+    <img src="../images/unit08/tde_generated_cs.png" width="542" height="146" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Open the procycling-0.0.1-tde.tdex file in a text editor, to view it.</li>
+  <li class="exercise-step">In Query Console, create a new tab and enter the following, to read the template (<strong>ex07c.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict';  <br>
+    declareUpdate();  <br>
+    <br>
+    const ES_DIR = '/home/cent/Desktop/mls-data-integration/es/'; <br>
+    <br>
+    xdmp.documentGet(ES_DIR + 'procycling-0.0.1-tde.tdex');</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the contents of the template displayed:<br>
+    <br>
+    <img src="../images/unit08/template_read.png" width="649" height="197" class="image-border"><br>
+  </li>
+  <li class="exercise-step">If desired, in a browser, navigate to <a href="http://docs.marklogic.com/guide/entity-services/codegen#chapter" target="_blank">docs.marklogic.com/guide/entity-services/codegen#chapter</a>, to see additional components that can be generated through Entity Services.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="08f1_summary.htm" class="exercise-link">Summary (Unit 8)</a></p>
+<p>Back: <a href="0807_using_instances.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

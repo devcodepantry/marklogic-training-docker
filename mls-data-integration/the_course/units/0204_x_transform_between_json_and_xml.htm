@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Transform Between JSON and  XML</strong></p>
+<p>In this walkthrough exercise, you use the json:transform-to-json() and json:transform-from-json() functions to transform  between JSON and XML. </p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, select <strong>Workspace</strong> - <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse... </strong>button.</li>
+  <li class="exercise-step">Select Desktop - <strong>mls-data-integration</strong> - <strong>unit02</strong> - <strong>JSON and XML.xml</strong>.</li>
+  <li class="exercise-step">Click the <strong>Open</strong> button.</li>
+  <li class="exercise-step">On the first tab, <strong>Insert XML Document</strong>, notice the code to insert an XML document:<br>
+    <br>
+  <span class="code">declareUpdate(); <br>
+  <br>
+  const xmlNode = xdmp.unquote('&lt;foo&gt;&lt;bar&gt;bar text&lt;/bar&gt;&lt;qux&gt;qux text&lt;/qux&gt;&lt;/foo&gt;'); <br>
+  <br>
+  xdmp.documentInsert('doc-01.xml', xmlNode);</span></li>
+  <li class="exercise-step">For Query Type, have <strong>JavaScript</strong> or <strong>XQuery</strong> selected, as appropriate.</li>
+  <li class="exercise-step">For Database, have <strong>customer360 </strong>selected<strong>.</strong></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button, to see the list of documents in the  database.</li>
+  <li class="exercise-step">Scroll down to locate the <strong>doc-01.xml</strong> document.</li>
+  <li class="exercise-step">Click the document link, to view the content:<br>
+    <br>
+    <img src="../images/unit02/xml_doc_01.png" width="355" height="106" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the second tab, <strong>Transform XML to JSON</strong>:<br>
+    <br>
+    <span class="code">'use strict'; <br>
+    <br>
+    const json = require('/MarkLogic/json/json');  <br>
+    <br>
+    json.transformToJson(fn.doc('doc-01.xml'), json.config('custom'));</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the JSON result:<br>
+    <br>
+    <img src="../images/unit02/foo_json_result.png" width="238" height="127" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Add to the expression, to insert the JSON document into the database (<strong>Insert as JSON Document</strong> tab):<br>
+    <br>
+    <span class="code">'use strict'; <br>
+    <br>
+    declareUpdate(); <br>
+    <br>
+    const json = require('/MarkLogic/json/json');  <br>
+    <br>
+    const doc = json.transformToJson(fn.doc('doc-01.xml'), json.config('custom')); <br>
+    <strong><br>
+    xdmp.documentInsert('doc-01.json', doc); </strong></span><span class="code"></span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">Click the <strong>Explore</strong> button.</li>
+  <li class="exercise-step">Scroll down to see the document in the list:<br>
+    <br>
+  <img src="../images/unit02/doc-01_json.png" width="481" height="36" class="image-border"></li>
+  <li class="exercise-step">Click the document link, to see the contents:<br>
+    <br>
+  <img src="../images/unit02/json_doc_contents.png" width="193" height="122" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Transform JSON to XML </strong>tab: <br>
+    <br>
+    <span class="code">'use strict'; <br>
+    <br>
+    const json = require('/MarkLogic/json/json'); <br>
+    <br>
+    json.transformFromJson(fn.doc('doc-01.json'), json.config('custom'));</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See the XML result:<br>
+    <br>
+  <img src="../images/unit02/doc-01_xml.png" width="242" height="92" class="image-border"></li>
+</ol>
+<p>Do a transformation ignoring whitespace characters:</p>
+<ol start="23" class="exercise-step">
+  <li class="exercise-step">Click the <strong>Explore</strong> button, to see the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/accounting/order-10991.xml</strong> link, to see the contents of the document:<br>
+    <br>
+    <img src="../images/unit02/order_10991_contents.png" width="385" height="281" class="image-border"><br>
+  </li>
+  <li class="exercise-step">Select the <strong>To JSON with Whitespace</strong> document:<br>
+    <br>
+    <span class="code">'use strict'; <br>
+      <br>
+    const json = require('/MarkLogic/json/json');  <br>
+    <br>
+   json.transformToJson(fn.doc('/accounting/order-10991.xml'), json.config('custom'));</span><br></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">In the result, notice that there are _value properties with \n line break values:<br>
+    <br>
+    <img src="../images/unit02/whitespace_ignore_before.png" width="367" height="327" class="image-border">
+  </li>
+  <li class="exercise-step">Select the <strong>Ignore Whitespace</strong> tab:<br>
+    <br>
+    <p class="code">'use strict'; <br>
+      <br>
+    const json = require('/MarkLogic/json/json.xqy');  <br>
+    const xml = fn.doc('/accounting/order-10991.xml'); <br>
+    const config = json.config('custom'); <br>
+    <br>
+    config['whitespace'] = 'ignore'; <br>
+    json.transformToJson(xml, config);<span class="code"></span></p></li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see that the \n link break characters no longer exist:<br>
+    <br>
+  <img src="../images/unit02/ignore_whitespace_results.png" width="369" height="293" class="image-border"></li>
+  <li class="exercise-step">In a browser window, navigate to <a href="https://docs.marklogic.com/guide/app-dev/json#id_55967" target="_blank">docs.marklogic.com/guide/app-dev/json#id_55967</a>.</li>
+  <li class="exercise-step">Skim through the page:<br>
+    <br>
+  <img src="../images/unit02/docs_converting_json_to_xml.png" width="698" height="309" class="image-border"></li>
+  <li class="exercise-step">See  that there are many techniques  available for converting between JSON and XML.</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0205_loading_records_from_a_csv_file.htm" class="exercise-link">Topic (Loading Records from a .csv File)</a></p>
+<p>Back: <a href="0204_transforming_between_json_and_xml.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<export><workspace name="Create an Envelope (JavaScript)"><query name="View Document" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+fn.doc('/marketing/contact-cs003.xml');</query><query name="Create Envelope" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+declareUpdate();
+ 
+const uri = '/marketing/contact-cs003.xml';
+const docroot = cts.doc(uri).root.xpath('/element()');
+const root = xdmp.unquote(`&lt;envelope&gt;&lt;source&gt;${cts.doc(uri).xpath('/contact')}&lt;/source&gt;&lt;/envelope&gt;`);
+ 
+if (fn.name(docroot) === 'envelope') {
+  'envelope root node already exists'
+} else {
+  xdmp.documentInsert(uri, root, [], ['envelope']);
+}</query></workspace></export>

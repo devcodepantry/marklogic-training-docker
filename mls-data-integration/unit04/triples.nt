@@ -1,0 +1,42 @@
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Dee_Monolakis> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Bridget_Keenan> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Michael_Ross> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/founder> <http://procycling.com/resource/Dee_Monolakis> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/founder> <http://procycling.com/resource/Bridget_Keenan> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/investor> <http://procycling.com/resource/Jessica_Pearson> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://procycling.com/ontology/investor> <http://procycling.com/resource/Rachel_Zane> . 
+<http://procycling.com/resource/Michael_Ross> <http://procycling.com/ontology/spouse> <http://procycling.com/resource/Rachel_Zane> . 
+<http://procycling.com/resource/Rachel_Zane> <http://procycling.com/ontology/spouse> <http://procycling.com/resource/Michael_Ross> . 
+<http://procycling.com/resource/Dee_Monolakis> <http://procycling.com/ontology/attended> <http://dbpedia.org/resource/University_of_California,_Davis> . 
+<http://procycling.com/resource/Dee_Monolakis> <http://procycling.com/ontology/knows> <http://procycling.com/resource/Davis_Bikes> . 
+<http://procycling.com/resource/Bridget_Keenan> <http://procycling.com/ontology/knows> <http://procycling.com/resource/Davis_Bikes> . 
+<http://procycling.com/resource/Rolling_Fast_Deliveries> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Graham_Warman> . 
+<http://procycling.com/resource/Rolling_Fast_Deliveries> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Michael_Ross> . 
+<http://procycling.com/resource/Rolling_Fast_Deliveries> <http://procycling.com/ontology/boardMember> <http://procycling.com/resource/Harvey_Specter> . 
+<http://procycling.com/resource/Rolling_Fast_Deliveries> <http://procycling.com/ontology/founder> <http://procycling.com/resource/Graham_Warman> . 
+<http://procycling.com/resource/Outback_Rides> <http://procycling.com/ontology/acquiredBy> <http://procycling.com/resource/Sam_Stone> . 
+<http://procycling.com/resource/Outback_Rides> <http://procycling.com/ontology/acquisitionDate> "2007-02-14"^^<http://www.w3.org/2001/XMLSchema#date> . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://procycling.com/ontology/hasStoreIn> <http://dbpedia.org/resource/Napa,_California> . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://procycling.com/ontology/hasStoreIn> <http://dbpedia.org/resource/Yountville,_California> . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://procycling.com/ontology/hasStoreIn> <http://dbpedia.org/resource/Calistoga,_California> . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://procycling.com/ontology/hasStoreIn> <http://dbpedia.org/resource/Healdsburg,_California> . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://procycling.com/ontology/hasStoreIn> <http://dbpedia.org/resource/Sonoma,_California> . 
+<http://procycling.com/resource/Napa_Biking_Tours> <http://xmlns.com/foaf/0.1/name> "Napa Biking Tours" . 
+<http://procycling.com/resource/Dee_Monolakis> <http://xmlns.com/foaf/0.1/name> "Dee Monolakis" . 
+<http://procycling.com/resource/Bridget_Keenan> <http://xmlns.com/foaf/0.1/name> "Bridget Keenan" . 
+<http://procycling.com/resource/Michael_Ross> <http://xmlns.com/foaf/0.1/name> "Michael Ross" . 
+<http://procycling.com/resource/Jessica_Pearson> <http://xmlns.com/foaf/0.1/name> "Jessica Pearson" . 
+<http://procycling.com/resource/Rachel_Zane> <http://xmlns.com/foaf/0.1/name> "Rachel Zane" . 
+<http://procycling.com/resource/University_of_California,_Davis> <http://xmlns.com/foaf/0.1/name> "University of California, Davis" . 
+<http://procycling.com/resource/Davis_Bikes> <http://xmlns.com/foaf/0.1/name> "Davis Bikes" . 
+<http://procycling.com/resource/Rolling_Fast_Deliveries> <http://xmlns.com/foaf/0.1/name> "Rolling Fast Deliveries" . 
+<http://procycling.com/resource/Graham_Warman> <http://xmlns.com/foaf/0.1/name> "Graham Warman" . 
+<http://procycling.com/resource/Harvey_Specter> <http://xmlns.com/foaf/0.1/name> "Harvey Specter" . 
+<http://procycling.com/resource/Outback_Rides> <http://xmlns.com/foaf/0.1/name> "Outback Rides" . 
+<http://procycling.com/resource/Sam_Stone> <http://xmlns.com/foaf/0.1/name> "Sam Stone" . 
+<http://procycling.com/resource/Biking_Winery_Tours> <http://xmlns.com/foaf/0.1/name> "Biking Winery Tours" . 
+<http://dbpedia.org/resource/Napa,_California> <http://xmlns.com/foaf/0.1/name> "Napa, California" . 
+<http://dbpedia.org/resource/Yountville,_California> <http://xmlns.com/foaf/0.1/name> "Yountville, California" . 
+<http://dbpedia.org/resource/Calistoga,_California> <http://xmlns.com/foaf/0.1/name> "Calistoga, California" . 
+<http://dbpedia.org/resource/Healdsburg,_California> <http://xmlns.com/foaf/0.1/name> "Healdsburg, California" . 
+<http://dbpedia.org/resource/Sonoma,_California> <http://xmlns.com/foaf/0.1/name> "Sonoma, California" . 

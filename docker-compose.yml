@@ -1,0 +1,38 @@
+services:
+  marklogic-training:
+    image: progressofficial/marklogic-db:latest-11
+    platform: linux/amd64
+    container_name: marklogic-training
+    environment:
+      - MARKLOGIC_INIT=true
+      - REALM=public
+      - TZ=America/Toronto
+      - MARKLOGIC_ADMIN_USERNAME_FILE=mldb_admin_username
+      - MARKLOGIC_ADMIN_PASSWORD_FILE=mldb_admin_password
+      - LICENSE_KEY_FILE=mldb_license_key
+      - LICENSEE_FILE=mldb_licensee
+    secrets:
+      - mldb_admin_username
+      - mldb_admin_password
+      - mldb_license_key
+      - mldb_licensee
+    volumes:
+      - marklogic_training_data:/var/opt/MarkLogic
+    ports:
+      - 127.0.0.1:8000-8002:8000-8002 # 8000: Query Console, 8001: Admin, 8002: Manage
+      - 127.0.0.1:7997:7997           # HealthCheck
+      - 127.0.0.1:8010:8010           # AppServices
+      - 127.0.0.1:8055:8055           # AppServices
+
+secrets:
+  mldb_admin_username:
+    file: ./setup/mldb_admin_username.txt
+  mldb_admin_password:
+    file: ./setup/mldb_admin_password.txt
+  mldb_license_key:
+    file: ./setup/mldb_license_key.txt
+  mldb_licensee:
+    file: ./setup/mldb_licensee.txt
+
+volumes:
+  marklogic_training_data:

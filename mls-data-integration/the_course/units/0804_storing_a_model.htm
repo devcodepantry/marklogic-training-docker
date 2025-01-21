@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Storing a Model</strong></p>
+<p> A model is stored in a MarkLogic database once a model descriptor file has been <strong>loaded</strong> with the <strong>collection </strong>name of <strong>http://marklogic.com/entity-services/models</strong>.</p>
+<p>The model can be loaded using any of the MarkLogic loading interfaces.</p>
+<p>JavaScript example of loading a model:</p>
+<p class="code">'use strict';<br>
+declareUpdate();<br>
+<br>
+const es = require('/MarkLogic/entity-services/entity-services.xqy');<br>
+<br>
+const ES_DIR = '/home/cent/Desktop/mls-data-integration/es/'; <br>
+<br>
+const desc = fn.head(<br>
+xdmp.documentGet(ES_DIR + 'procycling-model-descriptor.json'));<br>
+<br>
+xdmp.documentInsert(<br>
+'/es/models/procycling-0.0.1.json', es.modelValidate(desc),<br>
+{collections: ['http://marklogic.com/entity-services/models']}<br>
+);</p>
+<p>Once a model descriptor file has been loaded, the model is persisted in the database as triples stored in the triple index. </p>
+<p>To view entity types, the following can be used:</p>
+<p><span class="code">SELECT ?s  <br>
+WHERE  {?s ?p &lt;http://marklogic.com/entity-services#EntityType&gt;}<br>
+</span></p>
+<p>Result:</p>
+<p><img src="../images/unit08/entity_types.png" width="535" height="48" class="image-border"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0804_x_store_a_model.htm" class="exercise-link">Exercise (Store a Model)</a></p>
+<p>Back: <a href="0803_x_define_an_entity_type.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

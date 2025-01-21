@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Alternate Lab Steps: <strong>Create a Template</strong></p>
+<p>In this lab exercise, you   create a template for the factsheets.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, view the <strong>factsheets</strong> documents, to see how they are structured.</li>
+  <li class="exercise-step">Note the names of the properties.<br>
+  </li>
+  <li class="exercise-step">Using XQuery or JavaScript, <strong>create </strong>a template that has a view name of<span class="code"> factsheets</span>, and columns named<span class="code"> company_name</span>,<span class="code"> headquarters</span>,<span class="code"> phone</span>,<span class="code"> website</span>,<span class="code"> founded</span>,<span class="code"> employees</span>,<span class="code"> yearly_revenue</span>,<span class="code"> market</span>, and<span class="code"> notes</span>.</li>
+  <li class="exercise-step">Have all of the columns be nullable except company_name.</li>
+  <li class="exercise-step"><strong>Validate</strong> the template.</li>
+  <li class="exercise-step"><strong>Insert</strong> the template into the <strong>customer360</strong> database (to go into the customer360-schemas database in the background), giving it a URI of<span class="code"> /templates/factsheet-template.xml</span>.</li>
+  <li class="exercise-step">See the view:<br>
+    <br>
+  <img src="../images/unit05/view_definition.png" width="333" height="373" class="image-border"></li>
+  <li class="exercise-step"><strong>Run</strong> the following SQL query:<br>
+    <br>
+  <span class="code">SELECT * FROM factsheets</span></li>
+  <li class="exercise-step">Check your results:<br>
+    <br>
+<img src="../images/unit05/rows_returned_lab.png" width="702" height="469" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Unit 5 End: <a href="../index.htm">Course Home</a></p>
+<p>Back: <a href="05f4_lab_create_a_template.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

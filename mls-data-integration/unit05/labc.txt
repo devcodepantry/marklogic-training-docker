@@ -1,0 +1,2 @@
+
+return tde:template-insert("/templates/factsheet-template.xml", $factsheet-template)

@@ -1,0 +1,49 @@
+{ "factsheet": {
+ "triples": [{
+    "triple": {
+      "subject": "http://procycling.com/resource/City_Cruiser",
+      "predicate": "http://procycling.com/ontology/investor",
+      "object": "http://procycling.com/resource/Jessica_Pearson"
+    }
+  }, {
+    "triple": {
+      "subject": "http://procycling.com/resource/City_Cruiser",
+      "predicate": "http://procycling.com/ontology/owner",
+      "object": "http://procycling.com/resource/Chris_Cliff"
+    }
+  }, {
+    "triple": {
+      "subject": "http://procycling.com/resource/Chris_Cliff",
+      "predicate": "http://mlu.marklogic.com/knows",
+      "object": "http://procycling.com/resource/Graham_Warman"
+    }
+  }, {
+    "triple": {
+      "subject": "http://procycling.com/resource/City_Cruiser",
+      "predicate": "http://xmlns.com/foaf/0.1/name",
+      "object": {
+        "datatype": "http://www.w3.org/2001/XMLSchema#string",
+        "value": "City Cruiser"
+      }
+    }
+  }, {
+    "triple": {
+      "subject": "http://procycling.com/resource/Chris_Cliff",
+      "predicate": "http://xmlns.com/foaf/0.1/name",
+      "object": {
+        "datatype": "http://www.w3.org/2001/XMLSchema#string",
+        "value": "Chris Cliff"
+      }
+    }
+  }],	
+ "companyName": "City Cruiser",
+ "headquarters": "420 8th Ave, New York, NY 10001",
+ "phone": "212-594-3003",
+ "website": "www.nycitybikes.com",
+ "founded": "1999",
+ "employees": 20,
+ "yearlyRevenue": 5000000,
+ "market": "Manhattan bike rentals for tourists and locals alike.",
+ "notes": "Positioned next to Penn Station, this is the go-to bike company in Manhattan. Along with daily rentals for tourists, they also do long-term rentals, which are quite popular with locals, as they include free bike storage at the station."
+}
+}

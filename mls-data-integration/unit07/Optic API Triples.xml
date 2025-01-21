@@ -1,0 +1,126 @@
+<export><workspace name="Optic API Triples"><query name="Simple Query" focus="true" listorder="1" taborder="1" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('board_member'); 
+
+op.fromTriples([ 
+op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)
+]) 
+  .result(); </query><query name="And Query" focus="false" listorder="2" taborder="2" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('board_member'); 
+
+op.fromTriples([ 
+op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o), 
+op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o) 
+]) 
+  .result(); </query><query name="Or Query" focus="false" listorder="3" taborder="3" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) 
+  .result();</query><query name="Distinct" focus="false" listorder="4" taborder="4" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) 
+  .whereDistinct()
+  .result();</query><query name="Another Union" focus="false" listorder="5" taborder="5" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('investor'), o)))
+  .whereDistinct()
+  .result();</query><query name="Optional" focus="false" listorder="6" taborder="6" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+const spouse = op.col('spouse'); 
+
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('investor'), o))) 
+  .whereDistinct() 
+  .joinLeftOuter(op.fromTriples(op.pattern(o, onto('spouse'), spouse))) 
+  .result();</query><query name="Michael Ross" focus="false" listorder="7" taborder="7" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const s = op.col('company'); 
+
+op.fromTriples([ op.pattern(s, onto('boardMember'), resource('Michael_Ross')) ]) 
+  .result();</query><query name="Triples and Rows" focus="false" listorder="8" taborder="8" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+const foaf = op.prefixer('http://xmlns.com/foaf/0.1/'); 
+const companyId = op.col('companyId'); 
+const companyName = op.col('companyName'); 
+const sum = op.col('sum'); 
+const purchases = op.fromView('customer360', 'purchases'); 
+
+op.fromTriples([ 
+op.pattern(companyId, onto('boardMember'), resource('Michael_Ross')), 
+op.pattern(companyId, foaf('name'), companyName) 
+]) 
+  .joinInner(purchases, op.on(companyName, purchases.col('company'))) 
+  .select(['company', 'row_total']) 
+  .groupBy('company', [op.sum(sum, 'row_total')]) 
+  .result();</query><query name="OYO Start" focus="false" listorder="9" taborder="9" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) 
+  .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('investor'), o)))
+  .whereDistinct()
+  .result();</query><query name="OYO Part 1 Answer" focus="false" listorder="10" taborder="10" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+const c = op.col('company');
+
+op.fromTriples(op.pattern(c, onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(c, onto('founder'), o))) 
+  .union(op.fromTriples(op.pattern(c, onto('investor'), o)))
+  .whereDistinct()
+  .result();</query><query name="OYO Part 2 Answer" focus="false" listorder="11" taborder="11" active="true" database="4996640647998045689" server="3826658652035550009" database-name="customer360" server-name="3366-customer360-odbc" mode="javascript">const op = require('/MarkLogic/optic'); 
+
+const resource = op.prefixer('http://procycling.com/resource/'); 
+const onto = op.prefixer('http://procycling.com/ontology/'); 
+
+const o = op.col('vip'); 
+const c = op.col('company');
+const spouse = op.col('spouse');
+
+op.fromTriples(op.pattern(c, onto('boardMember'), o)) 
+  .union(op.fromTriples(op.pattern(c, onto('founder'), o))) 
+  .union(op.fromTriples(op.pattern(c, onto('investor'), o)))
+  .whereDistinct()
+  .joinLeftOuter(op.fromTriples(op.pattern(o, onto('spouse'), spouse)))
+  .result();</query></workspace></export>

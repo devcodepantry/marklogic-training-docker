@@ -1,0 +1,33 @@
+<export><workspace name="JSON and XML (JavaScript)"><query name="Insert XML Document" focus="true" listorder="1" taborder="1" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">declareUpdate();
+
+const xmlNode = xdmp.unquote('&lt;foo&gt;&lt;bar&gt;bar text&lt;/bar&gt;&lt;qux&gt;qux text&lt;/qux&gt;&lt;/foo&gt;');
+
+xdmp.documentInsert('doc-01.xml', xmlNode);</query><query name="Transform XML to JSON" focus="false" listorder="2" taborder="2" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const json = require('/MarkLogic/json/json'); 
+
+json.transformToJson(fn.doc('doc-01.xml'), json.config('custom'));</query><query name="Insert as JSON Document" focus="false" listorder="3" taborder="3" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+declareUpdate();
+
+const json = require('/MarkLogic/json/json'); 
+const doc = json.transformToJson(fn.doc('doc-01.xml'), json.config('custom'));
+
+xdmp.documentInsert('doc-01.json', doc); </query><query name="Transform JSON to XML" focus="false" listorder="4" taborder="4" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const json = require('/MarkLogic/json/json'); 
+
+json.transformFromJson(fn.doc('doc-01.json'), json.config('custom'));
+</query><query name="To JSON with Whitespace" focus="false" listorder="5" taborder="5" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const json = require('/MarkLogic/json/json'); 
+
+json.transformToJson(fn.doc('/accounting/order-10991.xml'), json.config('custom'));
+</query><query name="Ignore Whitespace" focus="false" listorder="6" taborder="6" active="true" database="12199291831647535309" server="12605660646165129542" database-name="customer360" server-name="8055-customer360" mode="javascript">'use strict';
+
+const json = require('/MarkLogic/json/json.xqy'); 
+const xml = fn.doc('/accounting/order-10991.xml');
+const config = json.config('custom');
+
+config['whitespace'] = 'ignore';
+json.transformToJson(xml, config);</query></workspace></export>

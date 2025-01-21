@@ -1,0 +1,1 @@
+~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/sales-system/factsheets -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/data/sales-system/factsheets,'/factsheet'" -output_collections "raw"

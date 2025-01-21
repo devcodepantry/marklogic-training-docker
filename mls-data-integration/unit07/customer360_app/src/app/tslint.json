@@ -1,0 +1,24 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "curly": true,
+    "quotemark": [true, "single", "avoid-escape"],
+    "member-ordering": [true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ],
+    "no-duplicate-variable": true,
+    "prefer-const": true,
+    "no-empty": true,
+    "no-eval": true,
+    "semicolon": [true, "always"],
+    "trailing-comma": [false],
+    "object-literal-sort-keys": false,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "no-string-literal": false,
+    "no-console": [
+      true, "log"
+    ]
+  }
+}

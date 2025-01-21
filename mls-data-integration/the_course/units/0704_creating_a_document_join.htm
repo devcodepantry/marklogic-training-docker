@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Creating a Document Join</strong></p>
+<p>It is possible to return an entire document as part of a row result (a.k.a. a document join). This can be useful when wanting to not only return the columns data for a row, but to also  be able to view the  document that the row came from. </p>
+<p><img src="../images/unit07/source_displayed.png" width="703" height="221" class="image-border"></p>
+<p>This could be useful in an application in a variety of ways, including for  master-detail functionality.</p>
+<p>To create a document join, the .joinDoc() method can be used.</p>
+<p class="code">const op = require('/MarkLogic/optic'); </p>
+<p class="code">op.fromView('customer360', 'calls')<br>
+&nbsp;&nbsp;.where(cts.wordQuery('napa biking tours')) <br>
+  <strong>&nbsp;&nbsp;.joinDoc('doc', op.col('uri'))</strong><br>
+&nbsp;&nbsp;.result()</p>
+<p>In the .joinDoc() method above, the second parameter (i.e. uri) is the name of the template column that contains the uri, and the first parameter (i.e. doc) is the name to give the new column that will be created to contain the contents of the document. </p>
+<p>Result:</p>
+<p><img src="../images/unit07/joindoc_result.png" width="697" height="451" class="image-border"></p>
+<p>In the document result above, the doc property contains the contents of the document that has the uri of /tech-support/call-002349.json.</p>
+<p class="topic-sub-heading">Creating a URI Column</p>
+<p>To define a URI column in a template, the xdmp:node-uri() function can be used. </p>
+<p><span class="code">&lt;column&gt; <br>
+&nbsp;  &lt;name&gt;uri&lt;/name&gt; <br>
+&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&lt;val&gt;xdmp:node-uri(.)&lt;/val&gt;<br>
+&lt;/column&gt;</span></p>
+<p>In addition, instead of simply returning the contents of a document as part of the row result, a list of the resultset URIs, based on the URI column content, could  then be used for further queries (e.g. using cts.documentQuery()) or document manipulation (e.g. using fn.doc()). </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0704_x_create_a_document_join.htm" class="exercise-link">Exercise (Create a Document Join)</a></p>
+<p>Back: <a href="0703_x_use_document_criteria.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

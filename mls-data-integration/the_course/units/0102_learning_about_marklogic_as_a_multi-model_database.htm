@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Learning About MarkLogic as a Multi-Model Database</strong></p>
+<p>MarkLogic is a multi-model database, which supports modeling and storing data as <strong>documents</strong> or as <strong>triples</strong>, or a combination of both. In addition, as an enterprise NoSQL database, MarkLogic provides scalability, high availability, ACID transactions, certified security,  built-in search, and optional schema.</p>
+<p>The types of content that can be stored in a MarkLogic database are JSON documents, XML documents,  triples, text files, and binary files (which includes most any type of document, such as images, videos, sound files, PDF documents, Word files, Excel files, PowerPoint files, etc.).</p>
+<p class="topic-sub-heading">Data in Documents</p>
+<p>In storing data as JSON or XML documents, <strong>data can be stored in its natural state</strong>, with the additional benefits of human-readability, ability to express hierarchy, superior support of sparse data, and the ability to use self-describing (JSON) property names or (XML) element names.</p>
+<p>Most data is naturally modeled as a document. For example, sales orders, insurance claims, patient records, emails, employees,  insurance policies, news articles, shipping documents, stock trades, blogs, tweets, reports, publications, manuals, patents, prescriptions, and press releases are all naturally modeled as documents.</p>
+<p>In MarkLogic, not only can documents be stored in their natural form, but also, data can be added to the documents, while preserving the source content. For example, imagine wanting to store metadata, such as provenance or lineage data, with the source document. Or adding triples data, for semantic queries.</p>
+<p>Example of a <strong>JSON</strong> document, containing metadata:</p>
+<p class="code">{<br>
+&nbsp;&nbsp;&quot;envelope&quot;:<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;metadata&quot;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;leadSource&quot;: &quot;2017 Los Angeles Cycle Show&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;leadDate&quot;: &quot;2017-04-15&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;collectedBy&quot;: &quot;Raffle bowl&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;source&quot;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;contact&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;first&quot;: &quot;Carol&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;last&quot;: &quot;Schwartz&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;co&quot;: &quot;Spinning Wheels&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;addr&quot;: &quot;450 State Street&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;city&quot;: &quot;Santa Barbara&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;state&quot;: &quot;California&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;zip&quot;: &quot;93101&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;phone&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;work&quot;: &quot;805-555-1212&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;email&quot;: &quot;carol@spinningwheels.com&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;communications&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;mailok&quot;: &quot;yes&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;emailok&quot;: &quot;yes&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;frequency&quot;: &quot;quarterly&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;dob&quot;: &quot;1966-05-14&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}<br>
+</p>
+<p>Example of an <strong>XML</strong> document, containing metadata:</p>
+<p class="code">&lt;envelope&gt;<br>
+&nbsp;&nbsp;&lt;metadata&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;leadSource&gt;2017 Los Angeles Cycle Show&lt;/leadSource&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;leadDate&gt;2017-04-15&lt;/leadDate&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;collectedBy&gt;Raffle bowl&lt;/collectedBy&gt;<br>
+&nbsp;&nbsp;&lt;/metadata&gt;<br>
+&nbsp;&nbsp;&lt;source&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;contact&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;first&gt;Carol&lt;/first&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;last&gt;Schwartz&lt;/last&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;co&gt;Spinning Wheels&lt;/co&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;addr&gt;450 State Street&lt;/addr&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;city&gt;Santa Barbara&lt;/city&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;state&gt;California&lt;/state&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;zip&gt;93101&lt;/zip&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;phone&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;work&gt;805-555-1212&lt;/work&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/phone&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;carol@spinningwheels.com&lt;/email&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;communications&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;mailok&gt;yes&lt;/mailok&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;emailok&gt;yes&lt;/emailok&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;frequency&gt;quarterly&lt;/frequency&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/communications&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dob&gt;1966-05-14&lt;/dob&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contact&gt;<br>
+&nbsp;&nbsp;&lt;/source&gt;<br>
+&lt;/envelope&gt;</p>
+<p class="topic-sub-heading">Triples</p>
+<p>Triples can be embedded in JSON or XML documents, or stored on their own, in triplestore documents. Modeling data through  triples provides a way to store relationships between entities, as well the option to store  facts.</p>
+<p>Example of a <strong>JSON</strong> document with <strong>embedded triples</strong>:</p>
+<p class="code">{<br>
+&nbsp;&nbsp;&quot;envelope&quot;:<br>
+&nbsp;&nbsp;{<br>
+  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&quot;triples&quot;: [{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;triple&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;subject&quot;: &quot;http://procycling.com/resource/Spinning_Wheels&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;predicate&quot;: &quot;http://procycling.com/ontology/founder&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;object&quot;: &quot;http://procycling.com/resource/Sheldon_Cooper&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}, {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;triple&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;subject&quot;: &quot;http://procycling.com/resource/Spinning_Wheels&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;predicate&quot;: &quot;http://procycling.com/ontology/investor&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;object&quot;: &quot;http://procycling.com/resource/Howard_Wolowitz&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}],</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;metadata&quot;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;leadSource&quot;: &quot;2017 Los Angeles Cycle Show&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;leadDate&quot;: &quot;2017-04-15&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;collectedBy&quot;: &quot;Raffle bowl&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;source&quot;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;contact&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;first&quot;: &quot;Carol&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;last&quot;: &quot;Schwartz&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;co&quot;: &quot;Spinning Wheels&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;addr&quot;: &quot;450 State Street&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;city&quot;: &quot;Santa Barbara&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;state&quot;: &quot;California&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;zip&quot;: &quot;93101&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;phone&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;work&quot;: &quot;805-555-1212&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;email&quot;: &quot;carol@spinningwheels.com&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;communications&quot;: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;mailok&quot;: &quot;yes&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;emailok&quot;: &quot;yes&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;frequency&quot;: &quot;quarterly&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;dob&quot;: &quot;1966-05-14&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}</p>
+<p>Example of an <strong>XML</strong> document with <strong>embedded triples</strong>:</p>
+<p class="code">&lt;envelope&gt;<br>
+  <strong>&nbsp;&nbsp;&lt;sem:triples xmlns:sem=&quot;http://marklogic.com/semantics&quot;&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:triple&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:subject&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://procycling.com/ontology/founder&lt;/sem:predicate&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object&gt;http://procycling.com/resource/Sheldon_Cooper&lt;/sem:object&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:triple&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:subject&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://procycling.com/ontology/investor&lt;/sem:predicate&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object&gt;http://procycling.com/resource/Howard_Wolowitz&lt;/sem:object&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+&nbsp;&nbsp;&lt;/sem:triples&gt;</strong><br>
+&nbsp;&nbsp;&lt;metadata&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;leadSource&gt;2017 Los Angeles Cycle Show&lt;/leadSource&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;leadDate&gt;2017-04-15&lt;/leadDate&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;collectedBy&gt;Raffle bowl&lt;/collectedBy&gt;<br>
+&nbsp;&nbsp;&lt;/metadata&gt;<br>
+&nbsp;&nbsp;&lt;source&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;contact&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;first&gt;Carol&lt;/first&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;last&gt;Schwartz&lt;/last&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;co&gt;Spinning Wheels&lt;/co&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;addr&gt;450 State Street&lt;/addr&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;city&gt;Santa Barbara&lt;/city&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;state&gt;California&lt;/state&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;zip&gt;93101&lt;/zip&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;phone&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;work&gt;805-555-1212&lt;/work&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/phone&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;carol@spinningwheels.com&lt;/email&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;communications&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;mailok&gt;yes&lt;/mailok&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;emailok&gt;yes&lt;/emailok&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;frequency&gt;quarterly&lt;/frequency&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/communications&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dob&gt;1966-05-14&lt;/dob&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contact&gt;<br>
+&nbsp;&nbsp;&lt;/source&gt;<br>
+&lt;/envelope&gt;</p>
+<p>Example of <strong> independent triples</strong> (not stored in a content document):</p>
+<p class="code">&lt;sem:triples xmlns:sem=&quot;http://marklogic.com/semantics&quot;&gt; <br>
+   &nbsp;&nbsp;&lt;sem:triple&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:subject&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://procycling.com/ontology/boardMember&lt;/sem:predicate&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object&gt;http://procycling.com/resource/Leonard_Hofstadter&lt;/sem:object&gt;<br>
+  &nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+  &nbsp;&nbsp;&lt;sem:triple&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/LA_Cycles&lt;/sem:subject&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://www.w3.org/2002/07/owl#sameAs&lt;/sem:predicate&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:object&gt;<br>
+  &nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+  &nbsp;&nbsp;&lt;sem:triple&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:subject&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://www.w3.org/2003/01/geo/wgs84_pos#lat&lt;/sem:predicate&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object datatype=&quot;http://www.w3.org/2001/XMLSchema#float&quot;&gt;‎34.4208&lt;/sem:object&gt;<br>
+  &nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+  &nbsp;&nbsp;&lt;sem:triple&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:subject&gt;http://procycling.com/resource/Spinning_Wheels&lt;/sem:subject&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:predicate&gt;http://www.w3.org/2003/01/geo/wgs84_pos#long&lt;/sem:predicate&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;sem:object datatype=&quot;http://www.w3.org/2001/XMLSchema#float&quot;&gt;‎119.6982&lt;/sem:object&gt;<br>
+  &nbsp;&nbsp;&lt;/sem:triple&gt;<br>
+&lt;/sem:triples&gt;</p>
+<p class="topic-sub-heading">Documents vs. Triples</p>
+<p>Documents provide a natural way to store entities (e.g. customers, orders, insurance policies, patents, articles), and triples provides a natural way to store relationships (e.g. customer purchased product, company ownedBy otherCompany, customer foundedIn 2013, etc.). Having said that, data integration could be done solely with documents, solely with triples, or a combination of both.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0102_x_learn_about_marklogic_as_a_multi-model_database.htm" class="exercise-link">Exercise (Read About MarkLogic as a Multi-Model Database)</a></p>
+<p>Back: <a href="0101_x_understand_an_operational_data_hub.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

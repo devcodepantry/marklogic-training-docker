@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Create a Template and Validate It</strong></p>
+<p>In this walkthrough exercise, you define a template for generating row data from the orders documents.</p>
+<p><br>
+</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, create a new workspace by going to the Workspace menu and selecting <strong>New Workspace</strong>.</li>
+  <li class="exercise-step">Edit the workspace name by double-clicking on the name.</li>
+  <li class="exercise-step">Type<span class="code"> TDE </span>to name the workspace.</li>
+  <li class="exercise-step">For Database, select <strong>customer360</strong>.</li>
+  <li class="exercise-step">For Query Type, select <strong>XQuery</strong>.</li>
+  <li class="exercise-step">Delete the placeholder text.</li>
+  <li class="exercise-step">Enter  the following,  to define a template (unit05/<strong>ex02a.txt</strong>):<br>
+    <br>
+    <span class="code">let $purchases-template :=<br>
+&lt;template xmlns=&quot;http://marklogic.com/xdmp/tde&quot;&gt;  &nbsp;&nbsp;<br>
+&nbsp;&nbsp;&lt;context&gt;/order/items/item&lt;/context&gt; <br>
+&nbsp;&nbsp;&lt;rows&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;row&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;schema-name&gt;customer360&lt;/schema-name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;view-name&gt;purchases&lt;/view-name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;columns&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;product&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;product&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;price&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;decimal&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;price&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;quantity&lt;/name&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;scalar-type&gt;integer&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;val&gt;quantity&lt;/val&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/column&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/columns&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/row&gt;<br>
+&nbsp;&nbsp;&lt;/rows&gt;<br>
+&lt;/template&gt;</span><br>
+  </li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>context</strong> of /order/items/item, addressing documents that have a root element named <strong>order</strong> that has one or more  child elements named <strong>items</strong> that has one or more child elements named <strong>item</strong>.</li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>schema</strong> name and <strong>view</strong> name.</li>
+  <li class="exercise-step"><strong>Notice</strong> the <strong>columns</strong> for product, price, and quantity.</li>
+  <li class="exercise-step"><strong>Add</strong> a return clause at the end, for validating the template:<br>
+    <br>
+    <span class="code">return tde:validate($purchases-template)    </span><br>
+  </li>
+  <li class="exercise-step">Click the <strong>Run</strong> button to check the validity of the template. <br>
+  </li>
+  <li class="exercise-step">See that true is returned, showing that the template is valid:<br>
+    <br>
+  <img src="../images/unit05/validated.png" width="453" height="132" class="image-border"></li>
+</ol>
+<p>If desired, create and validate a JSON template using JavaScript:</p>
+<ol class="exercise-step" start="14">
+  <li class="exercise-step">In Query Console, create a <strong>new tab</strong>, select <strong>JavaScript</strong> for the Query Type, and enter the following to define the template in JSON (<strong>ex02c.txt</strong>):<br>
+    <br>
+    <span class="code">'use strict';<br>
+  const purchasesTemplate = xdmp.toJSON(<br>
+  {<br>
+    'template':{<br>
+      'context':'/order/items/item',<br>
+      'rows':[<br>
+      {<br>
+        'schemaName':'customer360',<br>
+        'viewName':'purchases',<br>
+        'columns':[<br>
+         {<br>
+          'name':'product',<br>
+          'scalarType':'string',<br>
+          'val':'product', <br>
+          'invalidValues':'ignore'<br>
+         },<br>
+         {<br>
+          'name':'price',<br>
+          'scalarType':'decimal',<br>
+          'val':'price', <br>
+          'invalidValues':'ignore'<br>
+         },<br>
+         {<br>
+          'name':'quantity',<br>
+          'scalarType':'integer',<br>
+          'val':'quantity', <br>
+          'invalidValues':'ignore'<br>
+         }<br>
+        ]<br>
+      }]<br>
+    }<br>
+  }<br>
+  );<br>
+  <br>
+  tde.validate([purchasesTemplate]);  </span></li>
+  <li class="exercise-step">Click the <strong>Run</strong> button to check the validity of the template. <br>
+  </li>
+  <li class="exercise-step">See that the value of true is returned:<br>
+    <br>
+  <img src="../images/unit05/valid_json_template.png" width="300" height="71" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0503_applying_a_template.htm" class="exercise-link">Topic (Applying a Template)</a></p>
+<p>Back: <a href="0502_creating_a_template_for_rows.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

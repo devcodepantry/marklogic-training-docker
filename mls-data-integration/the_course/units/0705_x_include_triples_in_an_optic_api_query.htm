@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Include Triples in an Optic API Query</strong></p>
+<p>In this walkthrough exercise, you use the Optic API to return  triples to do with customers and people.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In Query Console, in the workspace menu, select <strong>Import Workspace...</strong>.</li>
+  <li class="exercise-step">Click the <strong>Browse</strong> button.</li>
+  <li class="exercise-step">Select Desktop - mls-data-integration - <strong>unit07</strong> - <strong>Optic API Triples.xml</strong>. </li>
+  <li class="exercise-step">Click the Open button, and then the Import button.</li>
+  <li class="exercise-step">Select the first tab, <strong>Simple Query</strong>.<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+  <br>
+  const resource = op.prefixer('http://procycling.com/resource/');  <br>
+  const onto = op.prefixer('http://procycling.com/ontology/');  <br>
+  <br>
+  const o = op.col('board_member');  <br>
+  <br>
+  op.fromTriples([ <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)<br>
+&nbsp; &nbsp;&nbsp;&nbsp;])  &nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;.result(); </span></li>
+  <li class="exercise-step">With the <strong>customer360</strong> database selected, and Query Type of <strong>JavaScript</strong>, click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that  IRIs for Bridget Keenan, Dee Monolakis, and Michael Ross are returned:<br>
+    <br>
+  <img src="../images/unit07/board_members.png" width="586" height="215" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> to the  query, to only return the IRIs for people that are both a board member and founder for Napa Biking Tours:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+      <br>
+      const resource = op.prefixer('http://procycling.com/resource/'); <br>
+      const onto = op.prefixer('http://procycling.com/ontology/'); <br>
+  <br>
+      const o = op.col('board_member'); <br>
+  <br>
+      op.fromTriples([ <br>
+  &nbsp;&nbsp;op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)<strong>, <br>
+  &nbsp; op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o)</strong> <br>
+  &nbsp;&nbsp;])  &nbsp;&nbsp;&nbsp;&nbsp;<br>
+      &nbsp;&nbsp;.result(); </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>.</li>
+  <li class="exercise-step">See that only the IRIs for Dee Monolakis and Bridget Keenan are returned:<br>
+    <br>
+    <img src="../images/unit07/board_and_founder.png" width="565" height="143" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Modify</strong> the query, using .union(), to create an OR statement:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+    <br>
+    const resource = op.prefixer('http://procycling.com/resource/');  <br>
+    const onto = op.prefixer('http://procycling.com/ontology/');  <br>
+    <br>
+    <strong>const o = op.col('vip'); </strong><br>
+    <br>
+    <strong>op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) <br>
+&nbsp;    .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) </strong><br>
+&nbsp; .result();</span></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that all three are returned:<br>
+    <br>
+  <img src="../images/unit07/all_with_dupes.png" width="511" height="362" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> a .whereDistinct() to the query, to have each person listed only once:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+const resource = op.prefixer('http://procycling.com/resource/'); <br>
+const onto = op.prefixer('http://procycling.com/ontology/'); <br>
+<br>
+const o = op.col('vip'); <br>
+<br>
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) <br>
+&nbsp;    .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) <br>
+<strong>&nbsp;&nbsp;.whereDistinct()</strong><br>
+&nbsp; .result();</span></li>
+  <li class="exercise-step">Click Run, to see that there are no longer duplicates listed:<br>
+    <br>
+    <img src="../images/unit07/wheredistinct.png" width="529" height="217" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> another .union() to the query, to include people that are board members, founders, or investors for Rolling Fast Deliveries:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+    <br>
+const resource = op.prefixer('http://procycling.com/resource/'); <br>
+const onto = op.prefixer('http://procycling.com/ontology/'); <br>
+<br>
+const o = op.col('vip'); <br>
+<br>
+op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o)) <br>
+&nbsp;    .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) <br>
+<strong>&nbsp;&nbsp;.union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('investor'), o)))</strong><br>
+&nbsp;&nbsp;.whereDistinct()<br>
+&nbsp; .result();</span></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that investors Jessica Pearson and Rachael Zane are now also  included in the results:<br>
+    <br>
+  <img src="../images/unit07/all_vip.png" width="540" height="361" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> to the query to include the IRIs for  spouses of people that are board members, founders, or investors for Napa Biking Tours, if they exist:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+    <br>
+    const resource = op.prefixer('http://procycling.com/resource/');  <br>
+    const onto = op.prefixer('http://procycling.com/ontology/');  <br>
+    <br>
+    const o = op.col('vip');  <br>
+    <strong>const spouse = op.col('spouse'); </strong><br>
+    <br>
+    op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('boardMember'), o))  <br>
+&nbsp;    .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('founder'), o))) <br>
+&nbsp; .union(op.fromTriples(op.pattern(resource('Napa_Biking_Tours'), onto('investor'), o))) <br>
+&nbsp; .whereDistinct() <br>
+&nbsp; <strong>.joinLeftOuter(op.fromTriples(op.pattern(o, onto('spouse'), spouse))) </strong><br>
+&nbsp; .result();</span></li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See that the spouses are included, if they exist: <br>
+    <br>
+  <img src="../images/unit07/spouses.png" width="522" height="452" class="image-border"></li>
+  <li class="exercise-step">Select the <strong>Michael Ross</strong> tab, to see which companies Michael Ross is a board member of:<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic');  <br>
+  <br>
+  const resource = op.prefixer('http://procycling.com/resource/');  <br>
+  const onto = op.prefixer('http://procycling.com/ontology/');  <br>
+  <br>
+  const s = op.col('company');  <br>
+  <br>
+  op.fromTriples([ op.pattern(s, onto('boardMember'), resource('Michael_Ross'))  ]) <br>
+  &nbsp;&nbsp;.result(); </span></li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the result:<br>
+    <br>
+    <img src="../images/unit07/michael_ross_companies.png" width="592" height="141" class="image-border"><br>
+  </li>
+  <li class="exercise-step"><strong>Add</strong> to and modify the query, to see the total sales to companies that Michael Ross is a board member of (<strong>Triples and Rows</strong> tab):<br>
+    <br>
+    <span class="code">const op = require('/MarkLogic/optic'); <br>
+const resource = op.prefixer('http://procycling.com/resource/'); <br>
+const onto     = op.prefixer('http://procycling.com/ontology/'); <br>
+<strong>const foaf     = op.prefixer('http://xmlns.com/foaf/0.1/'); <br>
+const companyId   = op.col('companyId'); <br>
+const companyName = op.col('companyName'); <br>
+const sum = op.col('sum'); <br>
+const purchases = op.fromView('customer360', 'purchases'); </strong><br>
+<br>
+op.fromTriples([ <br>
+op.pattern(<strong>companyId</strong>, onto('boardMember'), resource('Michael_Ross')), <br>
+<strong>op.pattern(companyId, foaf('name'), companyName) </strong><br>
+]) <br>
+<strong>&nbsp;&nbsp;.joinInner(purchases, op.on(companyName, purchases.col('company'))) <br>
+&nbsp; .select(['company', 'row_total']) <br>
+&nbsp; .groupBy('company', [op.sum(sum, 'row_total')]) </strong><br>
+&nbsp; .result();</span><br>
+  </li>
+  <li class="exercise-step">Click Run.</li>
+  <li class="exercise-step">See the  total sales for companies where Michael Ross is a board member:<br>
+    <br>
+  <img src="../images/unit07/ross_sales.png" width="373" height="179" class="image-border"></li>
+</ol>
+<p> On your own (optional):</p>
+<ol start="27" class="exercise-step">
+  <li class="exercise-step"><strong>Modify</strong> the query on the <strong>OYO Start</strong> tab, to return the IRIs for board members, founders, and investors for all customers.</li>
+  <li class="exercise-step">Check your work:<br>
+    <br>
+  <img src="../images/unit07/on_your_own_vip_result.png" width="583" height="501" class="image-border"></li>
+  <li class="exercise-step"><strong>Add</strong> to your query, to include  IRIs for the spouses, if they exist.</li>
+  <li class="exercise-step">Check your work:<br>
+    <br>
+  <img src="../images/unit07/on_your_own_spouse_result.png" width="638" height="667" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0706_using_the_optic_api_in_an_application.htm" class="exercise-link">Topic (Using the Optic API in an Application)</a></p>
+<p>Back: <a href="0705_including_triples.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

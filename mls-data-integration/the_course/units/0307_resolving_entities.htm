@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Resolving Entities</strong></p>
+<p>There are many ways to resolve entities, for which there may be data coming in from a multitude of silos. </p>
+<p>For example, imagine that the name of a person or company may have been spelled differently in  different source systems.</p>
+<p>Ways available for matching up the records for a person or company include:</p>
+<ul>
+  <li>Modifying the source documents, to ensure only one spelling</li>
+  <li>Doing 'or' queries, including each of the spellings</li>
+  <li>Matching by other record data, such as address or phone number</li>
+  <li>Using spell.doubleMetaphone(), for phonetic matching</li>
+</ul>
+<p class="topic-sub-heading"> spell.doubleMetaphone()</p>
+<p>The JavaScript spell.doubleMetaphone(), or XQuery spell:double-metaphone(), function is great for reconciling names that were written down from hearing them. </p>
+<p>For example, imagine a police organization that is attempting to gather all of the data about a person of interest, but where the person's name has been recorded with various spellings over the years, in documents from a wide variety of policing and social service systems such as emergency calls, a searched-but-not-arrested database, a traffic accident system, a sex offender   system, jail systems,  a  couple social service systems, and reports in a police callout system. </p>
+<p>Emily Jacobson<br>
+Emilie Jacobsen<br>
+ Amilee Jakobsen
+</p>
+<p>Example query:</p>
+<p><span class="code">spell.doubleMetaphone(&quot;Emily Jacobson&quot;)</span></p>
+<p>Result:</p>
+<p><img src="../images/unit03/emily.png" width="141" height="35" class="image-border"></p>
+<p>Example query:</p>
+<p><span class="code">spell.doubleMetaphone(&quot;Emilie Jacobsen&quot;)</span></p>
+<p>Result:</p>
+<p><img src="../images/unit03/emily.png" width="141" height="35" class="image-border"></p>
+<p>Example query:</p>
+<p><span class="code">spell.doubleMetaphone(&quot;Amilee Jakobsen&quot;)</span></p>
+<p>Result:</p>
+<p><img src="../images/unit03/emily.png" width="141" height="35" class="image-border"></p>
+<p>For performance at scale,  double metaphone values can be stored with content documents.</p>
+<p class="code">&lt;envelope&gt;<br>
+&nbsp;&nbsp;&lt;canonical&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;fullNameDM&gt;amljkpsn&lt;/fullNameDM&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&lt;/canonical&gt;<br>
+&nbsp;&nbsp;&nbsp;...<br>
+&lt;/envelope&gt;
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0307_x_use_doublemetaphone.htm">Exercise (Use spell.doubleMetaphone())</a></p>
+<p>Back: <a href="0306_x_use_the_dmsdk_for_a_batch_process.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

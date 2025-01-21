@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Apply a Template</strong></p>
+<p>In this walkthrough exercise, you test the purchases template using one of the orders documents. </p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In a browser window, navigate to <a href="http://docs.marklogic.com/tde:node-data-extract" target="_blank">docs.marklogic.com/tde:node-data-extract</a>.</li>
+  <li class="exercise-step"><strong>Notice</strong> the arguments for the tde:node-data-extract() function:<br>
+    <br>
+    <img src="../images/unit05/node-data-extract.png" width="300" height="108" class="image-border"><br>
+  </li>
+
+  <li class="exercise-step">See the descriptions:<br>
+    <br>
+    <img src="../images/unit05/parameters.png" width="505" height="164" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In Query Console, in the first tab, <strong>modify</strong> the return clause to be (unit05/<strong>ex03a.txt</strong>):<br>
+    <br>
+  <span class="code">return   tde:node-data-extract(fn:doc(&quot;/accounting/order-13333.xml&quot;),   $purchases-template)</span></li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see that it returns two rows (one for SpeedPro SF2, one for Mens Racer Helmet):<br>
+    <br>
+  <img src="../images/unit05/results_for_13333.png" width="357" height="529" class="image-border"></li>
+</ol>
+<p>Define a column as optional:</p>
+<ol class="exercise-step" start="6">
+  <li class="exercise-step">In Query Console, click the <strong>Explore</strong> button to see the list of documents in the customer360 database.</li>
+  <li class="exercise-step">Click the <strong>/accounting/order-13333.xml</strong> link, to see the document's contents.</li>
+  <li class="exercise-step">Notice that there is <strong>not</strong> a <strong>notes</strong> element:<br>
+    <br>
+  <img src="../images/unit05/not_notes_13333.png" width="365" height="202" class="image-border"></li>
+  <li class="exercise-step">Click the back triangle, to go back to the list of documents.</li>
+  <li class="exercise-step">Click the <strong>/accounting/order-10991.xml</strong> link, to see the document's contents.</li>
+  <li class="exercise-step">Notice that there <strong>is</strong> a <strong>notes</strong> element:<br>
+    <br>
+  <img src="../images/unit05/is_notes.png" width="515" height="224" class="image-border"></li>
+  <li class="exercise-step">In the template definition, after the quantity column, <strong>add</strong> a column for the notes element (<strong>ex03b.txt</strong>):<br>
+    <br>
+    <span class="code">&lt;column&gt;<br>
+&nbsp;&nbsp;&lt;name&gt;notes&lt;/name&gt;<br>
+&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+&nbsp;&nbsp;&lt;val&gt;../../notes&lt;/val&gt;<br>
+&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&lt;/column&gt;</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see no results returned because the notes element does not exist in the 13333 document: <br>
+    <br>
+  <img src="../images/unit05/no_results.png" width="345" height="92" class="image-border"></li>
+  <li class="exercise-step">Modify the notes column definition, <strong>replacing</strong> the invalid-values element with a nullable element, to make the notes element optional:<br>
+    <br>
+    <span class="code">&lt;column&gt;<br>
+&nbsp;&nbsp;&lt;name&gt;notes&lt;/name&gt;<br>
+&nbsp;&nbsp;&lt;scalar-type&gt;string&lt;/scalar-type&gt;<br>
+&nbsp;&nbsp;&lt;val&gt;../../notes&lt;/val&gt;<br>
+<strong>&nbsp;&nbsp;&lt;nullable&gt;true&lt;/nullable&gt; </strong><br>
+&lt;/column&gt;</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong>, to the see that the results for the 13333 document are returned even though it does not have a notes element:<br>
+    <br>
+    <img src="../images/unit05/nullable_notes.png" width="371" height="523" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In the return clause, change the document URI to <span class="code">/accounting/order-<strong>10991</strong>.xml</span>, a document that does have a notes element.</li>
+  <li class="exercise-step">Click <strong>Run</strong>, to see the results for the /accounting/order-10991.xml document returned:<br>
+    <br>
+  <img src="../images/unit05/notes_displayed.png" width="577" height="269" class="image-border"></li>
+  <li class="exercise-step"><strong>See</strong> the notes displayed.</li>
+</ol>
+<p>Add a column that calculates the price multiplied by the quantity:</p>
+<ol class="exercise-step" start="19">
+  <li class="exercise-step">In the template code, after the quantity column, <strong>add</strong> another column,  to calculate  price * quantity (<strong>ex03c.txt</strong>):<br>
+    <br>
+    <span class="code">&lt;column&gt;<br>
+&nbsp;&nbsp;&lt;name&gt;row_total&lt;/name&gt; <br>
+&nbsp;&nbsp;&lt;scalar-type&gt;decimal&lt;/scalar-type&gt; <br>
+&nbsp;&nbsp;&lt;val&gt;price * quantity&lt;/val&gt; <br>
+&nbsp;&nbsp;&lt;invalid-values&gt;ignore&lt;/invalid-values&gt; <br>
+&lt;/column&gt;</span><br>
+  </li>
+  <li class="exercise-step">Click <strong>Run</strong> to see the row total displayed:<br>
+    <br>
+    <img src="../images/unit05/rowtotal.png" width="480" height="288" class="image-border"><br>
+  </li>
+  <li class="exercise-step">In the return clause, change the document being used to<span class="code"> /accounting/order-14502.xml</span>:<br>
+    <br>
+  <span class="code">return tde:node-data-extract(fn:doc(&quot;/accounting/order-<strong>14502</strong>.xml&quot;), $purchases-template)</span></li>
+  <li class="exercise-step">Click Run, to see the row_total calculations:<br>
+    <br>
+    <img src="../images/unit05/rowtotal_14502.png" width="342" height="505" class="image-border"></li>
+</ol>
+<p>On your own:</p>
+<ol class="exercise-step" start="23">
+  <li class="exercise-step">In the template, as the first column element, define an optional column named <strong>company</strong>, based on the value of the   billing company.</li>
+  <li class="exercise-step">Run the template against the <strong>/accounting/order-14502.xml</strong> document.</li>
+  <li class="exercise-step">Check your result to see that the company of Rolling Fast Deliveries is returned:<br>
+    <br>
+    <img src="../images/unit05/optional_company_result.png" width="443" height="500" class="image-border"></li></ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0504_defining_variables.htm" class="exercise-link">Topic (Defining Variables)</a></p>
+<p>Back: <a href="0503_applying_a_template.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

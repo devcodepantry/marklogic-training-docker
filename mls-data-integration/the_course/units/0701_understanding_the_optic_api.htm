@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Understanding the Optic API</strong> <br>
+</p>
+<p>Available in  JavaScript, XQuery,  Java, and REST, the Optic API is a<strong> fluent query interface</strong> that provides the ability to make queries from  application code against  rows, documents, and triples  in a MarkLogic database.</p>
+<p>For example, imagine wanting to return all of the purchases, calls, marketing contacts, and relationships for a given customer, for display in a customer 360 application.</p>
+<p><img src="../images/unit07/app_ss.png" width="664" height="1451" class="image-border" border="0"></p>
+<p> <br>
+Example of a JavaScript Optic API <strong>rows</strong> query:</p>
+<p class="code">const op = require('/MarkLogic/optic'); </p>
+<p class="code">op.fromView('customer360', 'purchases') <br>
+  &nbsp;&nbsp;.where(op.eq(op.col('company'), 'Rolling Fast Deliveries'))<br>
+  &nbsp;&nbsp;.select(['order_date', 'product', 'price', 'quantity'])<br>
+  &nbsp;&nbsp;.orderBy(op.desc('order_date'))<br>
+  &nbsp;&nbsp;.result();</p>
+<p>Result:</p>
+<p><img src="../images/unit07/rows.png" width="477" height="364" class="image-border"></p>
+<p> Example of a JavaScript Optic API <strong>triples</strong> query:</p>
+<p class="code">const op = require('/MarkLogic/optic'); <br>
+  const resource = op.prefixer('http://procycling.com/resource/'); <br>
+const onto = op.prefixer('http://procycling.com/ontology/'); <br>
+const o = op.col('board_member'); </p>
+<p class="code">op.fromTriples([ <br>
+  op.pattern(resource('Rolling_Fast_Deliveries'), onto('boardMember'), o)<br>
+  ]) <br>
+  &nbsp;&nbsp;.result();</p>
+<p>Result:</p>
+<p><img src="../images/unit07/triples.png" width="565" height="217" class="image-border"></p>
+<p> Documentation on using the Optic API in <strong>XQuery</strong> and <strong>JavaScript</strong> is available in the Application Developer's Guide at <strong>docs.marklogic.com/guide/app-dev/OpticAPI</strong>. </p>
+<p>Documentation on using the Optic API in <strong>Java</strong> is available in the Java Application Developer's Guide at <strong>docs.marklogic.com/guide/java/OpticJava</strong>. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0701_x_learn_about_the_optic_api.htm" class="exercise-link">Exercise (Learn About the Optic API)</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

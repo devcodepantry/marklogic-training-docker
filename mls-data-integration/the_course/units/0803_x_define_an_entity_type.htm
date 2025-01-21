@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="exercise-heading">Exercise: <strong>Define an Entity Type</strong></p>
+<p>In this walkthrough exercise, you define a products entity.</p>
+<p>&nbsp;</p>
+<ol class="exercise-step">
+  <li class="exercise-step">In the <strong>procycling-model-desc.json</strong> file, add a definition for an entity type named Product:<br>
+    <br>
+    <span class="code">{ <br>
+&nbsp;    &quot;info&quot;: { <br>
+&nbsp;&nbsp;&nbsp;    &quot;title&quot;: &quot;procycling&quot;, <br>
+&nbsp;&nbsp;&nbsp;    &quot;version&quot;: &quot;0.0.1&quot;, <br>
+&nbsp;    &nbsp;    &quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;, <br>
+&nbsp;    &nbsp;    &quot;description&quot;: &quot;ProCycling schema to define entity types, such as for products, orders, and customers.&quot;<br>
+&nbsp;    }, <br>
+&nbsp;&nbsp;&quot;definitions&quot;: { <strong><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&quot;Product&quot;: {<br>
+    <br>
+&nbsp;&nbsp;&nbsp;&nbsp;}</strong><br>
+&nbsp; } <br>
+}</span>    <br>
+  </li>
+  <li class="exercise-step">Add properties to the Product definition (unit08/<strong>ex03a.txt</strong>):<br>
+    <br>
+    <span class="code">{ <br>
+&nbsp;    &quot;info&quot;: { <br>
+&nbsp;&nbsp;&nbsp;    &quot;title&quot;: &quot;procycling&quot;, <br>
+&nbsp;&nbsp;&nbsp;    &quot;version&quot;: &quot;0.0.1&quot;, <br>
+&nbsp;    &nbsp;    &quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;, <br>
+&nbsp;    &nbsp;    &quot;description&quot;: &quot;ProCycling schema to define entity types, such as for products, orders, and customers.&quot;<br>
+&nbsp;    }, <br>
+&nbsp;&nbsp;&quot;definitions&quot;: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;Product&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&quot;properties&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;id&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;price&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightKg&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightLb&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;material&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;gender&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;color&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;speeds&quot;: {&quot;datatype&quot;: &quot;decimal&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;recommend&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;datatype&quot;: &quot;array&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;items&quot;: {&quot;$ref&quot;: &quot;#/definitions/Product&quot;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp; } <br>
+}</span><br>
+  </li>
+  <li class="exercise-step">Optionally, define a primary key:<br>
+    <br>
+    <span class="code">{ <br>
+&nbsp;    &quot;info&quot;: { <br>
+&nbsp;&nbsp;&nbsp;    &quot;title&quot;: &quot;procycling&quot;, <br>
+&nbsp;&nbsp;&nbsp;    &quot;version&quot;: &quot;0.0.1&quot;, <br>
+&nbsp;    &nbsp;    &quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;, <br>
+&nbsp;    &nbsp;    &quot;description&quot;: &quot;ProCycling schema to define entity types for products, orders, and customers.&quot;<br>
+&nbsp;    }, <br>
+&nbsp;&nbsp;&quot;definitions&quot;: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;Product&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;properties&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;id&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;price&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightKg&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightLb&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;material&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;gender&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;color&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;speeds&quot;: {&quot;datatype&quot;: &quot;decimal&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;recommend&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;datatype&quot;: &quot;array&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;items&quot;: {&quot;$ref&quot;: &quot;#/definitions/Product&quot;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<strong>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;<strong>&quot;primaryKey&quot;: &quot;id&quot;<br>
+&nbsp;&nbsp;&nbsp;</strong>&nbsp;}<br>
+&nbsp; } <br>
+}</span></li>
+  <li class="exercise-step">Define required properties of <strong>name</strong> and <strong>price</strong>:<br>
+    <br>
+    <span class="code">{ <br>
+&nbsp;    &quot;info&quot;: { <br>
+&nbsp;&nbsp;&nbsp;    &quot;title&quot;: &quot;procycling&quot;, <br>
+&nbsp;&nbsp;&nbsp;    &quot;version&quot;: &quot;0.0.1&quot;, <br>
+&nbsp;    &nbsp;    &quot;baseUri&quot;: &quot;http://procycling.com/entity-types&quot;, <br>
+&nbsp;    &nbsp;    &quot;description&quot;: &quot;ProCycling schema to define entity types for products, orders, and customers.&quot;<br>
+&nbsp;    }, <br>
+&nbsp;&nbsp;&quot;definitions&quot;: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;Product&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;properties&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;id&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;price&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightKg&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;weightLb&quot;: {&quot;datatype&quot;: &quot;double&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;material&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;gender&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;color&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;: {&quot;datatype&quot;: &quot;string&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;speeds&quot;: {&quot;datatype&quot;: &quot;decimal&quot;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;recommend&quot;: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;datatype&quot;: &quot;array&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;items&quot;: {&quot;$ref&quot;: &quot;#/definitions/Product&quot;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&quot;primaryKey&quot;: &quot;id&quot;<strong>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;required&quot;: [&quot;name&quot;, &quot;price&quot;]<br>
+&nbsp;&nbsp;&nbsp;</strong>&nbsp;}<br>
+&nbsp; } <br>
+}</span><br>
+  </li>
+  <li class="exercise-step">Save the file.<br>
+  </li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0804_storing_a_model.htm" class="exercise-link">Topic (Storing a Model)</a></p>
+<p>Back: <a href="0803_defining_an_entity_type.htm">Previous</a><br>
+</p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

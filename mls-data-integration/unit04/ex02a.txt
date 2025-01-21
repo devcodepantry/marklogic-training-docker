@@ -1,0 +1,2 @@
+
+~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit04/triples.nt -input_file_type RDF -output_uri_prefix /triplestore/

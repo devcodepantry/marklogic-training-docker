@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MarkLogic Data Integration</title>
+<link href="../css/ml.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p><img src="../images/general/Marklogic-University-RGB.png" alt="" width="130" height="38" class="logo-padding"/></p>
+<p class="topic-heading"><strong>Executing SQL from XQuery or JavaScript</strong></p>
+<p>SQL queries can also be run from within XQuery or JavaScript application code. For example, imagine wanting to return row data from a template, for display within an XQuery or JavaScript application.</p>
+<p>To run a SQL query from <strong>XQuery</strong>, the <strong>xdmp:sql()</strong> function can be used.</p>
+<p class="code">xdmp:sql(&quot;SELECT * FROM purchases&quot;)<br>
+  <br>
+</p>
+<p>To run a SQL query from <strong>JavaScript</strong>, the <strong>xdmp.sql()</strong> function can be used.</p>
+<p class="code">xdmp.sql(&quot;SELECT * FROM purchases&quot;)</p>
+<p><br>
+In addition, by running a SQL query via the XQuery xdmp:sql() function or JavaScript xdmp.sql() function, additional criteria can be specified in the query, allowing for highly sophisticated queries, beyond what can be done with just SQL. (New in MarkLogic 9.)</p>
+<p>For example, imagine wanting to return rows from call documents that have the word 'rust' anywhere in them.</p>
+<p><span class="code">xdmp:sql(<br>  &quot;SELECT * FROM calls&quot;,  <br>
+  (),  <br>
+  (),  <br>
+  <strong>cts:word-query(&quot;rust&quot;)</strong>)</span><br>
+  <br>
+Including  document criteria (e.g. cts:word-query()) makes it so that only rows that come from documents that meet the  document criteria will have the SQL expression run against them. </p>
+<p>For another example, imagine wanting to view   the calls after 2017-01-31 that have the word 'gear' or 'chain'  anywhere in the document. </p>
+<p><span class="code">xdmp:sql(  <br>  
+  &quot;SELECT * FROM calls WHERE calls.date_time &gt; '2016-12-31T00:00:00'&quot;, <br>
+  (),  <br>
+  (),  <br>
+  <strong>cts:or-query((cts:word-query(&quot;gears&quot;), cts:word-query(&quot;chain&quot;)))</strong>)</span></p>
+<p>Or just the calls that have the word  'gear' or 'chain'  within a certain part of  the document.</p>
+<p class="code">xdmp:sql(  <br>  &quot;SELECT * FROM calls WHERE calls.date_time &gt; '2016-12-31T00:00:00'&quot;,  <br>
+(),  <br>
+(),  <br>
+cts:or-query((<strong>cts:json-property-word-query(&quot;reason&quot;,(&quot;gears&quot;, &quot;chain&quot;))</strong>)))</p>
+<p>Along with cts (core text search) functions like cts:and-query(), cts:not-query(), and cts:near-query(), document criteria can also include things like geospatial or bitemporal. With over 350 cts functions available in MarkLogic, extremely rich queries can be written to return highly sophisticated results.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next: <a href="0607_x_write_a_sql_and_document_search_query.htm" class="exercise-link">Exercise (Write a SQL and Document Search Query)</a></p>
+<p>Back: <a href="0606_x_use_mlsql.htm">Previous</a></p>
+<hr>
+<p class="copyright">©2017-2018 MarkLogic Corporation. All rights reserved. Copying, selling, or otherwise distributing any part of this course without prior written consent of an authorized representative of MarkLogic Corporation is prohibited.</p>
+</body>
+</html>

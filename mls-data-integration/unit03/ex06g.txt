@@ -1,0 +1,1 @@
+if ($content/contact/organization/data()) then element company {$content/contact/organization/data()} else (),

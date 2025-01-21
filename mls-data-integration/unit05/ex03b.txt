@@ -1,0 +1,6 @@
+        <column>
+          <name>notes</name>
+          <scalar-type>string</scalar-type>
+          <val>../../notes</val>
+          <invalid-values>ignore</invalid-values> 
+        </column>
