@@ -64,7 +64,7 @@ curl --anyauth --user admin:admin -X POST -d@"./mls-data-integration/unit01/cust
 
 ### Exercise: Load Documents
 
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/accounting-system -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/data/accounting-system/,'/accounting/'" -output_collections "raw"
 ```
@@ -83,7 +83,7 @@ docker run --rm  -v ./mls-data-integration/unit02/data/accounting-system:/tmp/ac
 
 ### Exercise: Split a Multiple-Record XML Document
 
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/marketing-system/contacts.xml -input_file_type aggregates -aggregate_record_element contact -output_uri_prefix /marketing/contact- -uri_id id -output_uri_suffix .xml -output_collections "raw"
 ```
@@ -112,7 +112,7 @@ curl --anyauth --user admin:admin -X GET "http://localhost:8055/v1/documents?uri
 ```
 
 ### Exercise: Load Records from a .csv File
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/support-system/tech-support-calls_20170123.csv -input_file_type delimited_text -output_uri_prefix /tech-support/ -uri_id id -output_uri_suffix .json -document_type json -output_collections "raw,from_csv"
 ```
@@ -144,7 +144,7 @@ xdmp:document-load("/tmp/mls-data-integration/unit02/ex06_transformation_module.
 </options>)
 ```
 
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input/ex06_doc.xml -transform_module /ex06_transformation_module.xqy -transform_namespace "http://marklogic.com/mlu/transform-date" -transform_param "value" -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/ex06_input/,''"
 ```
@@ -176,7 +176,7 @@ xdmp.documentLoad('/tmp/mls-data-integration/unit02/ex06_javascript_transformati
 ^ Refer to [Copy a Directory to a Docker Container](#copy-a-directory-to-a-docker-container) for instructions on copying a directory to your Docker container.
 
 ### Tramsform load using ex06_transformation_module.sjs module
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit02/ex06_input_json/ex06_doc.json -transform_module /ex06_transformation_module.sjs -transform_function transformDate -document_type json -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/ex06_input_json/,''"
 ```
@@ -197,7 +197,7 @@ docker run --rm -v ./mls-data-integration/unit02/ex06_input_json/ex06_doc.json:/
 ```
 
 ### Lab: Load Data
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -host localhost -port 8055 -username admin -password admin -mode local -input_file_path ~/Desktop/mls-data-integration/unit02/data/sales-system/factsheets -output_uri_replace "/home/cent/Desktop/mls-data-integration/unit02/data/sales-system/factsheets,'/factsheet'" -output_collections "raw"
 ```
@@ -218,7 +218,7 @@ docker run --rm -v ./mls-data-integration/unit02/data/sales-system/factsheets:/t
 ## Unit 3 Harmonizing Data
 
 ### Exercise: View Data to be Harmonized
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit03/data -output_uri_replace "home/cent/Desktop/mls-data-integration/unit03/data,'marketing'" -output_collections "raw"
 ```
@@ -245,7 +245,7 @@ Skip
 Refer to the instructions in [./corb-docker/README.md](./corb-docker/README.md)
 
 ## Unit 4 Using Triples for Harmonization
-Mlcp Binary Command (Adjust Paths)
+MLCP Binary Command (Adjust Paths as Needed)
 ```bash
 ~/Desktop/mlcp/bin/mlcp.sh import -mode local -host localhost -port 8055 -username admin -password admin -input_file_path ~/Desktop/mls-data-integration/unit04/triples.nt -input_file_type RDF -output_uri_prefix /triplestore/
 ```
