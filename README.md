@@ -70,7 +70,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 ```
 Equivalent Docker Command
 ```bash
-docker run --rm  -v ./mls-data-integration/unit02/data/accounting-system:/tmp/accounting-system devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/data/accounting-system:/tmp/accounting-system devcodepantry/mlcp mlcp.sh import \
   -username admin \
   -password admin \
   -mode local \
@@ -90,7 +90,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit02/data/marketing-system/contacts.xml:/tmp/contacts.xml devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/data/marketing-system/contacts.xml:/tmp/contacts.xml devcodepantry/mlcp mlcp.sh import \
   -username admin \
   -password admin \
   -host host.docker.internal \
@@ -119,7 +119,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit02/data/support-system/tech-support-calls_20170123.csv:/tmp/tech-support-calls_20170123.csv devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/data/support-system/tech-support-calls_20170123.csv:/tmp/tech-support-calls_20170123.csv devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
@@ -151,7 +151,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit02/ex06_input/ex06_doc.xml:/tmp/ex06_doc.xml devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/ex06_input/ex06_doc.xml:/tmp/ex06_doc.xml devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
@@ -183,7 +183,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit02/ex06_input_json/ex06_doc.json:/tmp/ex06_doc.json devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/ex06_input_json/ex06_doc.json:/tmp/ex06_doc.json devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
@@ -204,7 +204,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit02/data/sales-system/factsheets:/tmp/factsheets devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit02/data/sales-system/factsheets:/tmp/factsheets devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
@@ -225,7 +225,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit03/data:/tmp/data devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit03/data:/tmp/data devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
@@ -252,7 +252,7 @@ MLCP Binary Command (Adjust Paths as Needed)
 
 Equivalent Docker Command
 ```bash
-docker run --rm -v ./mls-data-integration/unit04/triples.nt:/tmp/triples.nt devcodepantry/mlcp mlcp.sh import \
+docker run --rm --name mlcp-container -v ./mls-data-integration/unit04/triples.nt:/tmp/triples.nt devcodepantry/mlcp mlcp.sh import \
   -host host.docker.internal \
   -port 8055 \
   -username admin \
