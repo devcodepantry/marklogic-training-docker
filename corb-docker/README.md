@@ -35,16 +35,16 @@ docker build -t corb-docker .
 ### Exercise: Use CoRB for a Batch Process
 Run the container using the `ex05.properties` file for a batch process:
 ```bash
-docker run --rm -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/ex05.properties
+docker run --rm --name corb-container -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/ex05.properties
 ```
 
 ### Lab: Add Canonical Data
 Run the container using the `laba.properties` file:
 ```bash
-docker run --rm -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/laba.properties
+docker run --rm --name corb-container -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/laba.properties
 ```
 
 Run the container using the `labb.properties` file:
 ```bash
-docker run --rm -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/labb.properties
+docker run --rm --name corb-container -v "$(pwd)/unit03/:/app/options" corb-docker /app/options/labb.properties
 ```
