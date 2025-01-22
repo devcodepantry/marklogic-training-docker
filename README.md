@@ -143,6 +143,7 @@ xdmp:document-load("/tmp/mls-data-integration/unit02/ex06_transformation_module.
   <uri>/ex06_transformation_module.xqy</uri>
 </options>)
 ```
+^ Refer to [Copy a Directory to a Docker Container](#copy-a-directory-to-a-docker-container) for instructions on copying a directory to your Docker container.
 
 MLCP Binary Command (Adjust Paths as Needed)
 ```bash
